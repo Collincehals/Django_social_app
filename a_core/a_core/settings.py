@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-)&$8i$@d0sdf#d16-qjt4aw(4!w$jvwlss$1cwohiwc7(pe3lc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['colltechgallery.onrender.com']
+ALLOWED_HOSTS = ['colltechgallery.onrender.com',
+                 '127.0.0.1'
+                ]
+
 
 
 # Application definition
