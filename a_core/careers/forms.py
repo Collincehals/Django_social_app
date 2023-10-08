@@ -6,7 +6,7 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import PasswordChangeForm
+
 
 
 class CreatePostForm(ModelForm):
@@ -34,9 +34,3 @@ class SignUpForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise ValidationError("Email already exists")
         return email
-    
-    
-class CustomPasswordChangeForm(PasswordChangeForm):
-    class Meta:
-        model = User
-        fields = '__all__'
