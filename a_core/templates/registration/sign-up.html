@@ -1,0 +1,13 @@
+{% extends 'layouts/b.html' %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <p>Have an Account? Login<a href="/login">Here</a>!</p>
+    <button type="submit" class="mt-1">Sign-up</button>
+</form>
+
+{% endblock %}
+
