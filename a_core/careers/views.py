@@ -17,6 +17,7 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            return redirect('home')
     return render(request, 'registration/sign-up.html', {'form': form})
 
 
