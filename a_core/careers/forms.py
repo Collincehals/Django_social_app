@@ -24,10 +24,11 @@ class CreatePostForm(ModelForm):
         
 class SignUpForm(UserCreationForm):
     email = forms.EmailField (required=True)
-    
+    first_name = forms.CharField (required=True)
+    last_name = forms.CharField (required=True)
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2'] 
+        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2'] 
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
