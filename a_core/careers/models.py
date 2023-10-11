@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Post(models.Model):
@@ -17,3 +17,14 @@ class Post(models.Model):
     
     class Meta:
         ordering = ['-created']
+        
+        
+class Notes(models.Model):
+    author = models.ForeignKey(User,null=False, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.title + "\n" + self.description

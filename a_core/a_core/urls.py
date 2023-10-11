@@ -26,5 +26,5 @@ urlpatterns = [
     path('home/', home_view, name='home'),
     path('post/create/',create_post_view, name="post-create"),
     path('sign-up/',signup_view, name="sign-up"),
-    
+    path('notes/create/',CreateNotesView, name="note-create"),
 ]

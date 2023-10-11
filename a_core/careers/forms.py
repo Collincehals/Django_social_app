@@ -35,3 +35,8 @@ class SignUpForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise ValidationError("Email already exists")
         return email
+
+class CreateNotes (ModelForm):
+    class Meta:
+        model = Notes
+        fields = "__all__"
