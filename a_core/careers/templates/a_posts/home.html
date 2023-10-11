@@ -39,5 +39,24 @@
                 </div>
             </div>
         </article>
- {% endfor %}   
+ {% endfor %} 
+ 
+
+ <h1 style="font-size: 30px;font-weight:700;font-family: sans-serif;padding-left:10px;color:darkorange;border-bottom: 5px solid #ccc;">FEATURED NOTES</h1>
+
+ {% for note in notes %}
+ <div  style="padding:20px; word-spacing: 2px;text-align: justify;background-color: rgb(209, 213, 213);border-radius: 15px;width:100%;">
+    <div style="margin-bottom:20px; color:darkblue; text-align: center;line-height: 20px;font-size: 19px;font-weight: 600;">
+        {{ note.title }}
+    </div>
+    <hr style="margin-bottom:10px;background-color:blue;opacity:1">
+    <div style="margin-bottom:20px; color:black; text-align: justify;line-height: 20px;font-size: 16px;">
+        {{ note.description }}
+    </div>
+    <p>Note Created by:  <span style="color:darkblue; font-weight: bold;">{{ note.author }}</span> on :{{ note.created_at }}</p>
+ </div>
+{% empty %}
+<p>No Posts yet :(</p>
+{% endfor %}
+
 {% endblock %}

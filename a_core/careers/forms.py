@@ -39,4 +39,9 @@ class SignUpForm(UserCreationForm):
 class CreateNotes (ModelForm):
     class Meta:
         model = Notes
-        fields = "__all__"
+        fields = ["title", "description",]
+        
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder':'Enter title...'}),
+            'description': forms.Textarea(attrs={'placeholder':'Enter your note here...', 'rows':5})
+        }

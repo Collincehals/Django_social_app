@@ -21,7 +21,7 @@ class Post(models.Model):
         
 class Notes(models.Model):
     author = models.ForeignKey(User,null=False, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, null=False)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
