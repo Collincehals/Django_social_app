@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin 
 from django.urls import path, include
-from careers.views import *
+from posts_app.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +26,7 @@ urlpatterns = [
     path('home/', home_view, name='home'),
     path('post/create/',create_post_view, name="post-create"),
     path('sign-up/',signup_view, name="sign-up"),
-    path('notes/create/',CreateNotesView, name="note-create"),
+    path('notes/create/',CreateNoteView, name="note-create"),
+    path('notes/',NotesView, name="notes"),
+    
 ]

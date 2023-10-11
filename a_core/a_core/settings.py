@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'careers' 
+    'posts_app' 
 ]
 
 MIDDLEWARE = [
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'a_core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'careers/templates'],
+        'DIRS': [BASE_DIR / 'posts_app/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -19,10 +19,10 @@
     x-transition:enter-end="opacity-100 translate-y-0">
         <ul class="flex items-center navitems flex-col md:flex-row gap-8 md:gap-0 justify-center h-full -translate-y-10 md:translate-y-0">
             <li><a href="/">Home</a></li>
+            <li><a href="{% url 'notes' %}">Notes</a></li>
             <li><a href="{% url 'post-create' %}">Create Post</a></li>
             <li><a href="{% url 'note-create' %}">Create a Note</a></li>
-            <li><a href="/admin">Admin</a></li>
-
+            
             {% if user.is_authenticated %}
             <li x-data="{ dropdownOpen: false }" class="relative">
                 <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none">

@@ -11,8 +11,7 @@ from django.contrib.auth.forms import PasswordResetForm, PasswordChangeForm
 # Create your views here.
 def home_view(request):
     posts = Post.objects.all()
-    notes = Notes.objects.all()
-    return render(request, 'a_posts/home.html', {'posts': posts, 'notes': notes})
+    return render(request, 'a_posts/home.html', {'posts': posts})
 
 @login_required(login_url="login")      
 def create_post_view(request):
@@ -47,15 +46,19 @@ def PasswordChangeDoneView(request):
     return render(request, 'registration/password_change_done.html')
 
 @login_required(login_url='login')
-def CreateNotesView(request):
-    form = CreateNotes
+def CreateNoteView(request):
+    form = CreateNote
     if request.method == 'POST':
-        form = CreateNotes(request.POST)
+        form = CreateNote(request.POST)
         if form.is_valid():
             note = form.save(commit=False)
             note.author  = request.user
             note.save()
             return redirect('home')
     else:
-        form = CreateNotes()
+        form = CreateNote()
     return render(request, 'a_posts/create_notes.html', {'form': form})
+
+def NotesView(request):
+    notes = Note.objects.all()
+    return render(request, 'a_posts/notes.html', {'notes': notes})

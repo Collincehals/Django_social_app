@@ -36,9 +36,9 @@ class SignUpForm(UserCreationForm):
             raise ValidationError("Email already exists")
         return email
 
-class CreateNotes (ModelForm):
+class CreateNote (ModelForm):
     class Meta:
-        model = Notes
+        model = Note
         fields = ["title", "description",]
         
         widgets = {

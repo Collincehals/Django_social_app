@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('careers', '0002_alter_post_options_post_artist_post_url_and_more'),
+        ('posts_app', '0002_alter_post_options_post_artist_post_url_and_more'),
     ]
 
     operations = [

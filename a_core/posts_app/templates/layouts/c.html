@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block layout %}
+
+<hero class="grid bg-gray-700 text-white text-center bg-cover  z-10 relative bg-[url('https://live.staticflickr.com/2308/2101348681_3950ea58c7_n.jpg')]">
+    <div class="col-start-1 row-start-1 bg-gray-800 bg-opacity-40 w-full h-full"></div>
+    <div class="col-start-1 row-start-1 py-24 px-10 ">
+        <h1 class="font1 text-6xl title-fadein">Create Great Stories & Expereinces</h1>
+        <p class="text-lg font-bold mb-5">Share your stories with the world...</p>
+    </div>
+</hero>
+
+
+<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-3 max-w-7xl mx-auto my-6 px-6">
+    <mobileSidebarNav class="md:hidden col-span-full mx-auto mb-6 z-10 relative">
+        <a @click="mobileSidebarOpen = !mobileSidebarOpen" class="flex items-center cursor-pointer select-none font-bold hover:bg-gray-200 rounded-lg p-3">
+            <span>Categories</span>
+            <img x-bind:class="mobileSidebarOpen && 'rotate-180 duration-300'" class="w-4 ml-1.5" src="https://img.icons8.com/small/32/000000/expand-arrow.png" />
+        </a>
+    </mobileSidebarNav>
+    <main class="col-span-full md:col-span-2 md:mr-[5%] lg:mx-[10%] order-2 md:order-1">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% include 'includes/sidebar.html' %}
+    
+    </content>
+
+{% endblock %}
