@@ -38,7 +38,7 @@
             font-family: var(--font1);
             font-weight:600;
         }
-        .button, button, [type='submit'], [type='button'] {
+        .button, button,[type=submit], [type='button'] {
             display: inline-flex;
             flex-wrap: wrap;
             align-items: center;
@@ -57,6 +57,48 @@
             background-color: var(--primary);
             width: fit-content;
         }
+
+        .deletebtn {
+            display: inline-flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            text-align: center;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            padding: 0 1rem;
+            min-height: 2rem;
+            font-weight: 600;
+            box-shadow: 0 4px 3px rgba(0, 0, 0, 0.1);
+            transition-property: transform;
+            transition-duration: .2s;
+            color: white;
+            background-color: red;
+            width: fit-content;
+        }
+
+        .editbtn {
+            display: inline-flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            text-align: center;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            padding: 0 1rem;
+            min-height: 2rem;
+            font-weight: 600;
+            box-shadow: 0 4px 3px rgba(0, 0, 0, 0.1);
+            transition-property: transform;
+            transition-duration: .2s;
+            color: white;
+            background-color:var(--primary);
+            width: fit-content;
+        }
+
+
         .button:hover, button:hover, [type='submit']:hover, [type='button']:hover {
             background-color: var(--primary-hover);
         }

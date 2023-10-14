@@ -28,3 +28,6 @@ class Note(models.Model):
     
     def __str__(self):
         return self.title + "\n" + self.description
+    class Meta:
+        ordering = ['-created_at']
+        

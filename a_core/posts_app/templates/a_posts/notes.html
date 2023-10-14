@@ -13,7 +13,20 @@
     <div style="margin-bottom:20px; color:black; text-align: justify;line-height: 20px;font-size: 16px;">
         {{ note.description|linebreaksbr }}
     </div>
-    <p>Note Created by:  <span style="color:darkblue; font-weight: bold;">{{ note.author }}</span> on :{{ note.created_at }}</p>
+    <div style="display: flex; flex-wrap: wrap;justify-content: space-between;">
+        <p>@ <span style="color:darkblue; font-weight: bold;">{{ note.author }}</span> on :{{ note.created_at }}</p>
+        {% if user == note.author %}
+        <form method="post" >
+            {% csrf_token %}
+            <a class="editbtn" type="submit">Edit Note</a>
+        </form>
+        <form method="post" >
+            {% csrf_token %}
+            <a class="deletebtn" type="submit">Delete Note</a>
+        </form>
+    {% endif %}
+    </div>
+    
  </div>
 {% empty %}
 <p>No Posts yet :(</p>

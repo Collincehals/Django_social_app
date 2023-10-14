@@ -19,7 +19,9 @@ def create_post_view(request):
     if request.method == 'POST':
         form = CreatePostForm(request.POST)
         if form.is_valid():
-            form.save()
+            post = form.save(commit= False)
+            post.author = request.user
+            post.save()
             return redirect('home')
     return render(request, 'a_posts/create_post.html', {'form': form})
 
@@ -54,7 +56,7 @@ def CreateNoteView(request):
             note = form.save(commit=False)
             note.author  = request.user
             note.save()
-            return redirect('home')
+            return redirect('notes')
     else:
         form = CreateNote()
     return render(request, 'a_posts/create_notes.html', {'form': form})
