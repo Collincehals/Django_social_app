@@ -64,3 +64,10 @@ def CreateNoteView(request):
 def NotesView(request):
     notes = Note.objects.all()
     return render(request, 'a_posts/notes.html', {'notes': notes})
+
+def NoteDeleteView(request,pk):
+    note  = Note.objects.get(id=pk)
+    if request.method == 'POST':
+        note.delete()
+        return redirect('notes')
+    return render(request, 'a_posts/note_delete.html', {'note': note})

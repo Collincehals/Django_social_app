@@ -26,7 +26,7 @@ urlpatterns = [
     path('home/', home_view, name='home'),
     path('post/create/',create_post_view, name="post-create"),
     path('sign-up/',signup_view, name="sign-up"),
-    path('notes/create/',CreateNoteView, name="note-create"),
+    path('note/create/',CreateNoteView, name="note-create"),
     path('notes/',NotesView, name="notes"),
-    
+    path('delete/note/<pk>/',NoteDeleteView, name="delete-note"),
 ]
