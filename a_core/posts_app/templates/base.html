@@ -13,12 +13,40 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Handlee&family=Shantell+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Shantell+Sans:wght@300&display=swap" rel="stylesheet">
     <style type="text/tailwindcss">
         [x-cloak] { 
             display: none !important; 
         }
+
+        *{
+            margin:0px; padding:0px;
+            box-sizing:border-box;
+            transition:all .2s linear;
+            text-decoration:none;
+            outline:none;
+            border:none;
+        }
+
+        html {
+            scroll-padding-top:10px;
+            scroll-behavior:smooth;
+            overflow-x:hidden;
+        }
+
+        /* WEBKIT SCROLLBAR STYLING STARTS HERE */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(45,45,45,0.3);
+            border-radius: 5px;
+        }
+
         :root {
             --primary: rgb(88, 40, 244);
             --primary-hover: rgb(58, 1, 245);
@@ -131,6 +159,12 @@
             border:1px solid #ccc;
         }
 
+        @media (max-width: 768px) {
+            .card {
+            width: 100%;
+        }
+        }
+        
         .hoverlist>* {
             @apply hover:bg-gray-100 rounded-md transition duration-150;
         }
@@ -161,7 +195,7 @@
             margin-bottom: 1rem;
         }
         label, input {
-          display: inline-block;
+          display: block;
         }
         form p label {
             width: 7rem;

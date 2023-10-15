@@ -11,7 +11,7 @@
                 <img x-show="!mobilenavOpen" class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/menu.png"/> 
                 <img x-show="mobilenavOpen" x-cloak class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/delete-sign.png"/>
             </a>
-        </mobileicon>
+        </mobileicon>  
     </div>
     <nav x-show="mobilenavOpen" x-cloak class="md:!block bg-gray-800 h-screen w-screen md:h-auto md:w-auto -mt-20 md:mt-0 absolute md:relative z-[-1]"
     x-transition:enter="duration-300 ease-out"
@@ -22,7 +22,6 @@
             <li><a href="{% url 'notes' %}">Notes</a></li>
             <li><a href="{% url 'post-create' %}">Create Post</a></li>
             <li><a href="{% url 'note-create' %}">Create a Note</a></li>
-            
             {% if user.is_authenticated %}
             <li x-data="{ dropdownOpen: false }" class="relative">
                 <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none">
@@ -46,7 +45,6 @@
             {% else %}
             <li><a href="/login">Login</a></li>
             {% endif %}
-            
         </ul>
     </nav>
 </header>

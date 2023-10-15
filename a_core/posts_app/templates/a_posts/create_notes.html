@@ -1,11 +1,49 @@
 {% extends 'layouts/b.html' %}
 
+
 {% block content %}
+<style>
+    .form {
+        max-width:600px;
+        width:100%;
+        border-radius:30px;
+        padding:30px;
+        background-color: rgb(241, 240, 253);
+        border:1px solid #ccc;
+    }
+
+    label {
+        display: inline-block;
+        margin-bottom: .5rem;
+    }
+  
+    .textarea, textarea, input {
+        padding: 1rem;
+        width:100%;
+        margin-bottom:10px;
+    }
+        
+    @media (max-width: 768px) {
+        .form {
+            font-size:90%;
+            padding:10px;
+        }
+        label {
+            display: block;
+            margin-bottom:.1rem;
+        }
+        
+        .textarea, textarea, input {
+            padding: .5rem;
+            width:100%;
+        }
+    }
+</style>
 <h1>Create Notes</h1>
-<div class="card !p-8">
+<div class="form">
     <form method='POST'>
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form }}
         <button type="submit" class="mt-1">Create Note</button>
         <a class="button secondaryAction ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
     </form>
