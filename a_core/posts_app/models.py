@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Post(models.Model):
+    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     artist = models.CharField(max_length=200, null=True)
     url = models.URLField(max_length=200, null=True)

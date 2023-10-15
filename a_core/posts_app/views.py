@@ -22,6 +22,7 @@ def create_post_view(request):
             post = form.save(commit= False)
             post.author = request.user
             post.save()
+            messages.success(request,'Post created successfully!')
             return redirect('home')
     return render(request, 'a_posts/create_post.html', {'form': form})
 
@@ -50,7 +51,7 @@ def PasswordChangeDoneView(request):
 
 @login_required(login_url='login')
 def CreateNoteView(request):
-    form = CreateNote
+    form = CreateNote()
     if request.method == 'POST':
         form = CreateNote(request.POST)
         if form.is_valid():
