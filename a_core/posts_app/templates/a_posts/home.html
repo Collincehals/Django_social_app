@@ -9,7 +9,7 @@
                 <div class="text-sm text-gray-400 truncate">flickr<a href="" class="hover:underline ml-1" target="blank">@John Doe</a></div>
             </div>
             <figure>
-                <p><a href=""><img class="w-full" src="{{ post.image }}"></a></p>
+                <p><a href="{% url 'view-post' post.id %}"><img class="w-full" src="{{ post.image }}"></a></p>
             </figure>
             <div class="p-4 pb-2">
                 <a class="flex items-center gap-1 mb-4" href="">
@@ -22,24 +22,21 @@
                     <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Animals</a>
                     <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Black & White</a>
                 </div>
-                <div class="flex items-center justify-between text-sm px-2">
-                    <a class="font-bold hover:underline" href="">
-                        Comments
-                        <span class="font-light text-gray-500 ml-1">3</span>
-                    </a>
-                    <div class="flex items-center gap-4 [&>a:hover]:underline">
-                        <div class="flex items-center gap-1">
-                            <img class="w-5 -mt-1" src="https://img.icons8.com/small/24/000000/fire-heart.png">       1
-                        </div>
-                        <a href="">Like</a>
-                        {% if user == post.author %}
-                        <a type="submit" href="">Edit</a>
-                        <a type="submit" href="">Delete</a>
-                        {% endif %}
-                    </div>
+                <div style="display: flex; flex-wrap: wrap;justify-content: flex-start; gap:30px;align-items: center;">
+                        <p><a class="font-bold hover:underline" href="{% url 'view-post' post.id %}">
+                        Comments<span class="font-light text-gray-500 ml-1">3</span></a>
+                        </p>
+                        <p style="display:flex; flex-wrap:wrap; gap:10px;align-items: center;">
+                            <img class="w-5 -mt-1" src="https://img.icons8.com/small/24/000000/fire-heart.png">1
+                        </p>
+                        <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:rgb(105, 71, 8);' href="">Like</a></p>
+                        <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:blue;' href="{% url 'edit-post' post.id %}">Edit</a></p>
+                        <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:red;' href="{% url 'delete-post' post.id %}">Delete</a></p>
                 </div>
             </div>
         </article>
+        {% empty %}
+        <p>No Posts Yet ;(</p>
  {% endfor %} 
 
 {% endblock %}

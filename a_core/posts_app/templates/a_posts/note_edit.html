@@ -1,0 +1,17 @@
+{% extends 'layouts/b.html' %}
+
+{% block content %}
+<h1>Edit Note</h1>
+<div class="card p-4">
+    <div class="pb-2">
+        <form method='POST'>
+            {% csrf_token %}
+            {{ form }}
+            <div class="pt-4">
+                <button class="deletebtn" type="submit">Submit</button>
+                <a class="editbtn" type="submit" href="{{ request.META.HTTP_REFERER }}">Go Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

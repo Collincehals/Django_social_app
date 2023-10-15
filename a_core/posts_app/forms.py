@@ -45,3 +45,21 @@ class CreateNote (ModelForm):
             'title': forms.TextInput(attrs={'placeholder':'Enter title...'}),
             'description': forms.Textarea(attrs={'placeholder':'Enter your note here...', 'rows':5})
         }
+        
+class PostEditForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'body',]
+        labels = {
+            'body':'',
+            'title': '',  
+        }
+        widgets = {
+            'body': forms.Textarea (attrs={'rows':5, 'placeholder':'Enter Caption here...', 'class': 'font1 text 4xl' }),
+        }
+  
+
+class NoteEditForm(ModelForm):
+    class Meta:
+        model = Note
+        fields = ['title','description', ]

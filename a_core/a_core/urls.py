@@ -29,4 +29,8 @@ urlpatterns = [
     path('note/create/',CreateNoteView, name="note-create"),
     path('notes/',NotesView, name="notes"),
     path('delete/note/<pk>/',NoteDeleteView, name="delete-note"),
+    path('delete/post/<pk>/',PostDeleteView, name="delete-post"),
+    path('post/edit/<pk>/',PostEditView, name="edit-post"),
+    path('note/edit/<pk>/',NoteEditView, name="edit-note"),
+    path('post/<pk>/',PostView, name="view-post"),
 ]

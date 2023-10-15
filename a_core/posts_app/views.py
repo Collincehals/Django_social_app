@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import PasswordResetForm, PasswordChangeForm
-
+from django.contrib import messages
 
 
 # Create your views here.
@@ -69,5 +69,51 @@ def NoteDeleteView(request,pk):
     note  = Note.objects.get(id=pk)
     if request.method == 'POST':
         note.delete()
+        messages.success(request,'Note deleted successfully')
         return redirect('notes')
     return render(request, 'a_posts/note_delete.html', {'note': note})
+
+def PostDeleteView(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    if request.method == 'POST':
+        post.delete()
+        messages.success(request, 'Post deleted successfully!')
+        return redirect('home')
+    return render(request, 'a_posts/post_delete.html', {'post': post})
+
+def PostEditView(request, pk):
+    post = Post.objects.get(id=pk)
+    form = PostEditForm(instance=post)
+    if request.method == 'POST':
+        form = PostEditForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Post updated successfully!')
+            return redirect('home')
+    context = {
+        'post': post,
+        'form': form
+        }
+    return render(request, 'a_posts/post_edit.html', context)
+
+
+
+def NoteEditView(request, pk):
+    note = Note.objects.get(id=pk)
+    form = NoteEditForm(instance=note)
+    if request.method == 'POST':
+        form = NoteEditForm(request.POST, instance=note)
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Note updated successfully!')
+            return redirect('notes')
+    context = {
+        'note': note,
+        'form': form
+    }
+    return render(request, 'a_posts/note_edit.html', context)
+
+
+def PostView(request, pk):
+    post = Post.objects.get(id=pk)
+    return render(request, 'a_posts/post_page.html', {'post': post})

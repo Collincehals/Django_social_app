@@ -1,0 +1,117 @@
+{% extends 'layouts/a.html' %}
+
+{% block content %}
+<article class="card">
+    <div class="flex items-center justify-between px-4 h-14">
+        <h3 class="text-start leading-5 mr-1">{{ post.title }}</h3>
+        <div class="text-sm text-gray-400 truncate">flickr<a href="" class="hover:underline ml-1" target="blank">@John Doe</a></div>
+    </div>
+    <figure>
+        <p><a href=""><img class="w-full" src="{{ post.image }}"></a></p>
+    </figure>
+    <div class="p-4 pb-2">
+        <a class="flex items-center gap-1 mb-4" href="">
+            <img class="w-8 h-8 object-cover rounded-full" src="https://img.icons8.com/small/96/A9A9A9/happy.png">
+            <span class="font-bold hover:underline">post.author</span>
+            <span class="text-sm text-gray-400">@post.author/span>
+        </a>
+        <p class="text-3xl mb-8 px-4 font1">{{ post.body }}</p>
+        <div class="flex items-center gap-2 text-sm mb-5 flex-wrap">
+            <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Animals</a>
+            <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Black & White</a>
+        </div>
+        <div style="display: flex; flex-wrap: wrap;justify-content: flex-start; gap:30px;align-items: center;">
+                <p><a class="font-bold hover:underline" href="">
+                Comments<span class="font-light text-gray-500 ml-1">3</span></a>
+                </p>
+                <p style="display:flex; flex-wrap:wrap; gap:10px;align-items: center;">
+                    <img class="w-5 -mt-1" src="https://img.icons8.com/small/24/000000/fire-heart.png">1
+                </p>
+                <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:rgb(105, 71, 8);' href="">Like</a></p>
+                <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:blue;' href="{% url 'edit-post' post.id %}">Edit</a></p>
+                <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:red;' href="{% url 'delete-post' post.id %}">Delete</a></p>
+        </div>
+    </div>
+</article>
+
+<div class="card !pb-0 -mt-3">
+    <form method="POST" class="flex items-center p-4" autocomplete="off">
+        <input type="text" name="comment" placeholder="Add comment ..." maxlength="150">
+        <button @click="open = false" class="block ml-2" type="submit">Submit</button>
+    </form>
+</div>
+
+<div class="mb-20">
+    <div id="tabs" class="ml-4 flex gap-1 mb-4">
+        <a class="tab selected">Newest First</a> 
+        <a class="tab">Top Comments</a>
+    </div>
+
+    <div id="tab-contents">
+
+        <comment class="card p-4 !mb-4">
+            <div class="flex justify-between items-center"> 
+                <a class="flex items-center gap-1 mb-2" href="">
+                    <img class="w-8 h-8 object-cover rounded-full" src="https://img.icons8.com/small/96/A9A9A9/happy.png"> 
+                    <span class="font-bold hover:underline">Bart</span>
+                    <span class="text-sm font-normal text-gray-400">@bartsimpson</span>
+                </a>
+            </div>
+            <p class="text-xl px-2">
+                This is a comment from Bart
+            </p>
+            <div x-data="{ repliesOpen: false }" class="flex items-center justify-between flex-wrap text-sm px-2">
+                <a @click="repliesOpen = !repliesOpen" class="font-bold hover:underline cursor-pointer">
+                    <div class="inline-block" x-bind:class="repliesOpen && 'rotate-90 duration-300'">
+                        <svg transform ="rotate(90)" width="9" height="9" viewBox="0 0 25 25">
+                            <path d="M24 22h-24l12-20z"/>
+                        </svg>
+                    </div>
+                    Replies
+                    <span class="font-light text-gray-500 ml-1">1</span>
+                </a>
+                <div class="flex items-center gap-4 [&>a:hover]:underline">
+                    <div class="flex items-center gap-1">
+                        <img class="w-5 -mt-1" src="https://img.icons8.com/small/24/000000/fire-heart.png">
+                        1
+                    </div>
+                    <a href="">Like</a>
+                    <a href="">Delete</a>
+                </div>
+
+                <div x-show="repliesOpen" x-cloak class="basis-full mt-3 pl-8 grid grid-cols-1">
+
+                    <reply class="flex items-end justify-between py-4 border-t">
+                        <div class="flex">
+                            <a href="">
+                                <img class="w-8 h-8 object-cover rounded-full mr-2" src="https://img.icons8.com/small/96/A9A9A9/happy.png">
+                            </a>
+                            <div class="w-fit">
+                                <a class="block" href="">
+                                    <span class="font-bold hover:underline">Homer</span>
+                                    <span class="text-sm text-gray-400">@homersimpson</span>
+                                </a>
+                                <div class="mr-3">This is a reply from Homer</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 [&>a:hover]:underline">
+                            <div class="flex items-center gap-1">
+                                <img class="w-5 -mt-1" src="https://img.icons8.com/small/24/000000/fire-heart.png">
+                                1
+                            </div>
+                            <a href="">Like</a>
+                            <a href="">Delete</a>
+                        </div>
+                    </reply>
+
+                    <form method="POST" class="replyform flex justify-between" autocomplete="off">
+                        <input type="text" name="reply" placeholder="Add reply ..." maxlength="150">
+                        <button class="block" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div> 
+        </comment>
+
+    </div>
+</div>
+{% endblock %}

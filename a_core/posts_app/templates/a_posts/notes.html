@@ -13,16 +13,15 @@
     <div style="margin-bottom:20px; color:black; text-align: justify;line-height: 20px;font-size: 16px;">
         {{ note.description|linebreaksbr }}
     </div>
-    <div style="display: flex; flex-wrap: wrap;justify-content: flex-start; gap:30px;">
-        <p>@ <span style="color:darkblue; font-weight: bold;">{{ note.author }}</span> on :{{ note.created_at }}</p>
+    <div style="display: flex; flex-wrap: wrap;justify-content: flex-start; gap:30px;align-items: center;">
+        <p>@ <span style="color:darkblue; font-weight: bold;">{{ note.author }}</span>  :{{ note.created_at }}</p>
+        <p style="display:flex; flex-wrap:wrap; gap:10px;align-items: center;">
+            <img class="w-5 -mt-1" src="https://img.icons8.com/small/24/000000/fire-heart.png">1
+        </p>
+        <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:rgb(105, 71, 8);' href="">Like</a></p>
         {% if user == note.author %}
-        <form method="post" >
-            {% csrf_token %}
-            <button class="editbtn" type="submit">Edit Note</button>
-        </form>
-        <div>
-            <a href="{% url 'delete-note' note.id %}" class="deletebtn">Delete Note</a>
-        </div>
+        <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:blue;' href="{% url 'edit-note' note.id %}">Edit</a></p>
+        <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:red;' href="{% url 'delete-note' note.id %}">Delete</a></p>
         {% endif %}
     </div>
     
@@ -30,6 +29,5 @@
 {% empty %}
 <p>No Posts yet :(</p>
 {% endfor %}
-
 
 {% endblock %}
