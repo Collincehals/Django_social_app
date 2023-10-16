@@ -3,3 +3,4 @@ gunicorn
 mysqlclient
 Pillow
 django_cleanup
+python-dotenv
