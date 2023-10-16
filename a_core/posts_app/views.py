@@ -58,6 +58,7 @@ def CreateNoteView(request):
             note = form.save(commit=False)
             note.author  = request.user
             note.save()
+            messages.success(request,'Note created successfully!')
             return redirect('notes')
     else:
         form = CreateNote()

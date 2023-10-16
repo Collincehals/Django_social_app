@@ -18,6 +18,11 @@ Including another URLconf
 from django.contrib import admin 
 from django.urls import path, include
 from posts_app.views import *
+from a_users.views import *
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,4 +38,11 @@ urlpatterns = [
     path('post/edit/<pk>/',PostEditView, name="edit-post"),
     path('note/edit/<pk>/',NoteEditView, name="edit-note"),
     path('post/<pk>/',PostView, name="view-post"),
+    path('profile/',ProfileView, name="view-profile"),
+    path('profile/edit/',EditProfileView, name="edit-profile"),
+    path('profile/delete/',DeleteProfileView, name="delete-profile"),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
