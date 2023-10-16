@@ -41,13 +41,23 @@ def Password_change_view(request):
     form = PasswordChangeForm ()
     return render(request, 'registration/password_change_form.html', {'form': form})
 
+def PasswordChangeDoneView(request):
+    return render(request, 'registration/password_change_done.html')
 
 def Password_reset_view(request):
     form = PasswordResetForm()
     return render(request, 'registration/password_reset_form.html', {'form': form})
 
-def PasswordChangeDoneView(request):
-    return render(request, 'registration/password_change_done.html')
+def PasswordResetDoneView(request):
+    return render(request, 'registration/password_reset_done.html')
+
+def PasswordResetConfirmView(request):
+    return render(request, 'registration/password_reset_confirm.html')
+
+def PasswordResetCompleteView(request):
+    return render(request, 'registration/password_reset_complete.html')
+
+
 
 @login_required(login_url='login')
 def CreateNoteView(request):
@@ -120,3 +130,17 @@ def NoteEditView(request, pk):
 def PostView(request, pk):
     post = Post.objects.get(id=pk)
     return render(request, 'a_posts/post_page.html', {'post': post})
+
+
+from django.core.mail import send_mail
+
+def send_email_view(request):
+    user_email = request.POST.get('email') or request.session.get('email')
+    send_mail(
+        'Hello from Colltech Team',
+        'This is a test email from Colltech.',
+        'colltechcareers@gmail.com',
+        [user_email],
+        fail_silently=False,
+    )
+    return HttpResponse('Email sent successfully.')

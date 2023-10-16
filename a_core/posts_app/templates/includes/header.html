@@ -38,8 +38,9 @@
                         <li><a href="{% url 'edit-profile' %}"><i class="fa-solid fa-user-pen" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Edit Profile</a></li>
                         <li><a href="/password_change"><i class="fa-solid fa-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Change Password</a></li>
                         <li><a href="/password_reset"><i class="fa-solid fa-user-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Reset Password</a></li>
+                        <li class="delete-profile"><a href="{% url 'delete-profile' %}"><i class="fa-solid fa-trash" style="font-size:larger;margin-right:10px;"></i>Delete Profile</a></li>
                         <li><a href="/logout"><i class="fa-solid fa-power-off" style="color:red;font-size:larger;margin-right:10px;"></i>Log Out</a></li>
-                        <li><a href="{% url 'delete-profile' %}"><i class="fa-solid fa-trash" style="color:red;font-size:larger;margin-right:10px;"></i>Delete Profile</a></li>
+                        
                     </ul>
                 </div>
             </li>

@@ -41,6 +41,8 @@ urlpatterns = [
     path('profile/',ProfileView, name="view-profile"),
     path('profile/edit/',EditProfileView, name="edit-profile"),
     path('profile/delete/',DeleteProfileView, name="delete-profile"),
+    path('send/email/',send_email_view, name="send-email"),
+    
 ]
 
 
