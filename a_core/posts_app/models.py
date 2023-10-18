@@ -10,6 +10,7 @@ class Post(models.Model):
     url = models.URLField(max_length=200, null=True)
     image = models.URLField(max_length=200)
     body = models.TextField()
+    likes = models.ManyToManyField(User, related_name="likedposts", through="LikedPost")
     created = models.DateTimeField(auto_now_add=True)
     id=models.CharField(max_length=100, unique=True, default=uuid.uuid4, primary_key=True, editable=False)
     
@@ -18,16 +19,38 @@ class Post(models.Model):
     
     class Meta:
         ordering = ['-created']
-        
+
+
+class LikedPost(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'{self.user.username} : {self.post.title}'
+     
         
 class Note(models.Model):
     author = models.ForeignKey(User,null=False, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, null=False)
     description = models.TextField()
+    likes = models.ManyToManyField(User, related_name='likednotes', through='LikedNote')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.title + "\n" + self.description
     class Meta:
-        ordering = ['-created_at']      
+        ordering = ['-created_at']  
+    
+    
+    
+        
+class LikedNote(models.Model):
+    note = models.ForeignKey(Note, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'{self.user.username} : {self.note.title}'
+    

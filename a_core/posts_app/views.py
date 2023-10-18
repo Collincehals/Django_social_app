@@ -132,6 +132,35 @@ def PostView(request, pk):
     return render(request, 'a_posts/post_page.html', {'post': post})
 
 
+def like_post(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    user_exists = post.likes.filter(username=request.user.username).exists()
+    
+    if post.author != request.user:
+        if user_exists:
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+    return redirect('view-post', post.id)
+
+
+def like_note (request, pk):
+    note = get_object_or_404(Note, id=pk)
+    user_exists = note.likes.filter(username=request.user.username).exists()
+    if note.author != request.user:
+        if user_exists:
+            note.likes.remove(request.user)
+        else:
+            note.likes.add(request.user)
+    return redirect('notes')
+
+
+
+
+
+
+
+
 from django.core.mail import send_mail
 
 def send_email_view(request):
