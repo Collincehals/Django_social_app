@@ -1,5 +1,7 @@
 {% extends 'layouts/a.html' %}
 
+{% block title %} Post - {{ post.title }} - {{ post.id }} {% endblock %}
+
 {% block content %}
 <article class="card">
     <div class="flex items-center justify-between px-4 h-14">
