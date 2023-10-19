@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Colltech Gallery{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="shortcut icon" type="image/png" href="https://img.icons8.com/small/64/000000/fire-heart.png"/>
+    <link rel="shortcut icon" type="image/png" href="/media/icons/logo-home.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
@@ -16,7 +16,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Shantell+Sans:wght@300&display=swap" rel="stylesheet">
-    <style type="text/tailwindcss">
+   
+   <style type="text/tailwindcss">
         [x-cloak] { 
             display: none !important; 
         }
@@ -53,6 +54,9 @@
             --primary-hover: rgb(58, 1, 245);
             --black: #1f2937;
             --font1: 'Shantell Sans', sans-serif;
+        }
+        #heading-home {
+            font-size:18px;
         }
         h1 {
             @apply text-4xl font-bold mb-4
@@ -164,13 +168,17 @@
             margin-bottom: 2rem;
             background-color: rgb(241, 240, 253);
             padding-bottom: 1rem;
-            width: 80%;
+            width: 70%;
             border:1px solid #ccc;
         }
 
         @media (max-width: 768px) {
             .card {
             width: 100%;
+        }
+        #heading-home {
+            font-size:17px;
+            text-align: center;
         }
         }
         

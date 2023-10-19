@@ -1,23 +1,16 @@
-<div style="display:flex;gap:10px;flex-wrap:wrap;align-items: center;">
+<div>
 {% if user.is_authenticated %}
-<p style="display:flex; flex-wrap:wrap; gap:10px;">
-    {% if user in post.likes.all %}
-    <img class="w-7 h-6" src="/media/icons/redheart.png">
-    {% else %}
-    <img class="w-6 h-6" src="/media/icons/whiteheart.png">
-    {% endif %}
-   {{ post.likes.count }}
-</p>
-
-<p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:rgb(105, 71, 8);cursor:pointer' 
-    hx-get="{% url 'like-post' post.id %}"
-    hx-target="closest div"
-    hx-swap="outerHTML">
-    {% if user in post.likes.all %}   
-    <b>Liked</b>
-    {% else %}
-    Like
-    {% endif %}
-</a></p>
+    <p style='display:flex; flex-wrap:wrap; gap:10px;cursor:pointer'>
+        <a  
+        hx-get="{% url 'like-post' post.id %}"
+        hx-target="closest div"
+        hx-swap="outerHTML">
+        {% if user in post.likes.all %}   
+        <img width="21" src="/media/icons/redheart.png">
+        {% else %}
+        <img width="21" src="/media/icons/whiteheart.png">
+        {% endif %}</a>
+        {{  post.likes.count}}
+    </p>
 {% endif %}
 </div>

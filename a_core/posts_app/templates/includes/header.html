@@ -2,12 +2,12 @@
     <div class="flex items-center justify-between h-20">
         <logo>
             <a class="flex items-center gap-1" href="/">
-                <img class="w-7 -mt-1" src="https://img.icons8.com/small/64/ffffff/fire-heart.png"/>
-                <span class="text-lg font-bold">Colltech Gallery</span>
+                <img  id="logo-home" class="w-9 -mt-1" src="/media/icons/logo-home.png">
+                <span id="heading-home" class="text-lg font-bold">Colltech Gallery</span>
             </a>
         </logo>
         <mobileicon class="md:hidden">
-            <a @click="mobilenavOpen = !mobilenavOpen" class="h-12 w-12 flex items-center justify-center cursor-pointer hover:bg-gray-700 rounded-lg">
+            <a @click="mobilenavOpen = !mobilenavOpen" class="h-10 w-10 flex items-center justify-center cursor-pointer hover:bg-gray-700 rounded-lg">
                 <img x-show="!mobilenavOpen" class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/menu.png"/> 
                 <img x-show="mobilenavOpen" x-cloak class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/delete-sign.png"/>
             </a>
@@ -17,11 +17,11 @@
     x-transition:enter="duration-300 ease-out"
     x-transition:enter-start="opacity-0 -translate-y-96"
     x-transition:enter-end="opacity-100 translate-y-0">
-        <ul class="flex items-center navitems flex-col md:flex-row gap-8 md:gap-0 justify-center h-full -translate-y-10 md:translate-y-0">
-            <li><a href="/">Home</a></li>
+        <ul class="flex items-center navitems flex-col md:flex-row gap-2 md:gap-0 justify-center h-full -translate-y-10 md:translate-y-0">
+            <li><a href="/">Posts</a></li>
             <li><a href="{% url 'notes' %}">Notes</a></li>
             <li><a href="{% url 'post-create' %}">Create Post</a></li>
-            <li><a href="{% url 'note-create' %}">Create a Note</a></li>
+            <li><a href="{% url 'note-create' %}">Create Note</a></li>
             {% if user.is_authenticated %}
             <li x-data="{ dropdownOpen: false }" class="relative">
                 <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none">
@@ -34,11 +34,11 @@
                 x-transition:enter-start="opacity-0 -translate-y-5 scale-90"
                 x-transition:enter-end="opacity-100 translate-y-0 scale-100">
                     <ul class="hoverlist [&>li>a]:justify-start">
-                        <li><a href="{% url 'view-profile' %}"><i class="fa-regular fa-user" style="color:darkblue;font-size:larger;margin-right:10px;"></i>My Profile</a></li>
-                        <li><a href="{% url 'edit-profile' %}"><i class="fa-solid fa-user-pen" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Edit Profile</a></li>
-                        <li><a href="/password_change"><i class="fa-solid fa-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Change Password</a></li>
-                        <li><a href="/password_reset"><i class="fa-solid fa-user-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Reset Password</a></li>
-                        <li class="delete-profile"><a href="{% url 'delete-profile' %}"><i class="fa-solid fa-trash" style="font-size:larger;margin-right:10px;"></i>Delete Profile</a></li>
+                        <li style="margin-bottom:-5px;"><a href="{% url 'view-profile' %}"><i class="fa-regular fa-user" style="color:darkblue;font-size:larger;margin-right:10px;"></i>My Profile</a></li>
+                        <li style="margin-bottom:-5px;"><a href="{% url 'edit-profile' %}"><i class="fa-solid fa-user-pen" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Edit Profile</a></li>
+                        <li style="margin-bottom:-5px;"><a href="/password_change"><i class="fa-solid fa-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Change Password</a></li>
+                        <li style="margin-bottom:-5px;"><a href="/password_reset"><i class="fa-solid fa-user-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Reset Password</a></li>
+                        <li style="margin-bottom:-5px;" class="delete-profile"><a href="{% url 'delete-profile' %}"><i class="fa-solid fa-trash" style="font-size:larger;margin-right:10px;"></i>Delete Profile</a></li>
                         <li><a href="/logout"><i class="fa-solid fa-power-off" style="color:red;font-size:larger;margin-right:10px;"></i>Log Out</a></li>
                         
                     </ul>

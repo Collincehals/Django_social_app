@@ -4,31 +4,29 @@
 
 {% block content %}
 <article class="card">
-    <div class="flex items-center justify-between px-4 h-14">
+    <div class="flex items-center justify-between px-4 h-9">
         <h3 class="text-start leading-5 mr-1">{{ post.title }}</h3>
-        <div class="text-sm text-gray-400 truncate">flickr<a href="" class="hover:underline ml-1" target="blank">@ {{ post.author }}</a></div>
+        <div class="text-sm text-gray-400 truncate"><a target="_blank" href="https://www.flickr.com/explore">flickr</a><a href="" class="hover:underline ml-1" target="blank">@ {{ post.author }}</a></div>
     </div>
     <figure>
-        <p><a href=""><img class="w-full" src="{{ post.image }}"></a></p>
+        <img class="w-full" src="{{ post.image }}">
     </figure>
-    <div class="p-4 pb-2">
+    <div class="pt-2 px-4  ">
         <a class="flex items-center gap-1 mb-4" href="">
             <img class="w-8 h-8 object-cover rounded-full" src="{{ post.author.profile.image.url }}">
             <span class="font-bold hover:underline">{{ post.author.first_name }}</span>
-            <span class="text-sm text-gray-400">@ {{ post.author }} </span>
+            <span class="text-sm text-gray-400">@ {{ post.author }}</span>
         </a>
-        <p class="text-3xl mb-8 px-4 font1">{{ post.body }}</p>
+        <p class="text-3xl mb-4 font1">{{ post.body }}</p>
         <div class="flex items-center gap-2 text-sm mb-5 flex-wrap">
             <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Animals</a>
             <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Black & White</a>
         </div>
-        <div style="display: flex; flex-wrap: wrap;justify-content: flex-start; gap:30px;align-items: center;">
+        <div style="display: flex; flex-wrap: wrap;justify-content: flex-start; align-items: center;gap:30px;">
                 <p><a class="font-bold hover:underline" href="">
                 Comments<span class="font-light text-gray-500 ml-1">3</span></a>
                 </p>
-
                 {% include 'snippets/posts_likes.html' %}
-
                 {% if user.is_superuser or user == post.author %}
                 <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:blue;' href="{% url 'edit-post' post.id %}">Edit</a></p>
                 <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:red;' href="{% url 'delete-post' post.id %}">Delete</a></p>
@@ -39,6 +37,7 @@
 
 <div class="card !pb-0 -mt-3">
     <form method="POST" class="flex items-center p-4" autocomplete="off">
+        {% csrf_token %}
         <input type="text" name="comment" placeholder="Add comment ..." maxlength="150">
         <button @click="open = false" class="block ml-2" type="submit">Submit</button>
     </form>
@@ -56,12 +55,12 @@
             <div class="flex justify-between items-center"> 
                 <a class="flex items-center gap-1 mb-2" href="">
                     <img class="w-8 h-8 object-cover rounded-full" src="https://img.icons8.com/small/96/A9A9A9/happy.png"> 
-                    <span class="font-bold hover:underline">Bart</span>
-                    <span class="text-sm font-normal text-gray-400">@bartsimpson</span>
+                    <span class="font-bold hover:underline">Hals</span>
+                    <span class="text-sm font-normal text-gray-400">@hals</span>
                 </a>
             </div>
             <p class="text-xl px-2">
-                This is a comment from Bart
+                Comment from Hals
             </p>
             <div x-data="{ repliesOpen: false }" class="flex items-center justify-between flex-wrap text-sm px-2">
                 <a @click="repliesOpen = !repliesOpen" class="font-bold hover:underline cursor-pointer">
@@ -91,10 +90,10 @@
                             </a>
                             <div class="w-fit">
                                 <a class="block" href="">
-                                    <span class="font-bold hover:underline">Homer</span>
-                                    <span class="text-sm text-gray-400">@homersimpson</span>
+                                    <span class="font-bold hover:underline">Coll</span>
+                                    <span class="text-sm text-gray-400">@Coll</span>
                                 </a>
-                                <div class="mr-3">This is a reply from Homer</div>
+                                <div class="mr-3">Reply from Coll</div>
                             </div>
                         </div>
                         <div class="flex items-center gap-4 [&>a:hover]:underline">

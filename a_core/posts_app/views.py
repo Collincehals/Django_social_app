@@ -158,9 +158,6 @@ def like_note (request, pk):
 
 
 
-
-
-
 from django.core.mail import send_mail
 
 def send_email_view(request):
