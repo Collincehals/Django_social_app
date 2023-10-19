@@ -20,6 +20,18 @@ class CreatePostForm(ModelForm):
         'body': forms.Textarea (attrs={'rows':3, 'placeholder':'Enter Caption here...', 'class': 'font1 text 4xl' }),
         'url': forms.TextInput (attrs={'placeholder':'Enter URL here...'})
         }
+        
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['body']
+        labels = {
+            'body': ''
+        }
+        widgets = {
+            'body': forms.TextInput(attrs={'placeholder':'Enter Comment here...' }),
+        }
+        
    
         
 class SignUpForm(UserCreationForm):

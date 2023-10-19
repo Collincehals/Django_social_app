@@ -36,10 +36,10 @@
 </article>
 
 <div class="card !pb-0 -mt-3">
-    <form method="POST" class="flex items-center p-4" autocomplete="off">
+    <form method="POST" action="{%  url 'sent-post-comment' post.id %}" class="flex items-center p-4" autocomplete="off">
         {% csrf_token %}
-        <input type="text" name="comment" placeholder="Add comment ..." maxlength="150">
-        <button @click="open = false" class="block ml-2" type="submit">Submit</button>
+        {{ commentform }}
+        <button @click="open = false" class="block ml-2" type="submit">Comment</button>
     </form>
 </div>
 
@@ -48,19 +48,19 @@
         <a class="tab selected">Newest First</a> 
         <a class="tab">Top Comments</a>
     </div>
-
     <div id="tab-contents">
-
+        {% for comment in post.comments.all %}
         <comment class="card p-4 !mb-4">
             <div class="flex justify-between items-center"> 
                 <a class="flex items-center gap-1 mb-2" href="">
-                    <img class="w-8 h-8 object-cover rounded-full" src="https://img.icons8.com/small/96/A9A9A9/happy.png"> 
-                    <span class="font-bold hover:underline">Hals</span>
-                    <span class="text-sm font-normal text-gray-400">@hals</span>
+                    <img class="w-8 h-8 object-cover rounded-full" src="{{ comment.author.profile.image.url }}"> 
+                    <span class="font-bold hover:underline">{{ comment.author.profile.realname }}</span>
+                    <span class="text-sm font-normal text-gray-400">@ {{ comment.author.username }}</span>
+                    <span class="text-sm font-normal ml-4">{{ comment.created }}</span>
                 </a>
             </div>
             <p class="text-xl px-2">
-                Comment from Hals
+                {{ comment.body }}
             </p>
             <div x-data="{ repliesOpen: false }" class="flex items-center justify-between flex-wrap text-sm px-2">
                 <a @click="repliesOpen = !repliesOpen" class="font-bold hover:underline cursor-pointer">
@@ -113,6 +113,7 @@
                 </div>
             </div> 
         </comment>
+        {% endfor %}
 
     </div>
 </div>

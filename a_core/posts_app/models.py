@@ -21,6 +21,22 @@ class Post(models.Model):
         ordering = ['-created']
 
 
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="comments")
+    parent_post= models.ForeignKey(Post, on_delete=models.CASCADE, related_name= "comments")
+    body = models.CharField(max_length=150)
+    created = models.DateTimeField(auto_now_add=True)
+    id = models.CharField(primary_key=True, max_length=50, unique=True, editable=False, default=uuid.uuid4)
+     
+    def __str__(self):
+        try:
+            return f'{self.auther.username}:{self.body[:30]}'
+        except:
+            return f'no author:{self.body[:30]}'
+
+
+
+
 class LikedPost(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -42,8 +58,6 @@ class Note(models.Model):
         return self.title + "\n" + self.description
     class Meta:
         ordering = ['-created_at']  
-    
-    
     
         
 class LikedNote(models.Model):

@@ -129,7 +129,24 @@ def NoteEditView(request, pk):
 
 def PostView(request, pk):
     post = Post.objects.get(id=pk)
-    return render(request, 'a_posts/post_page.html', {'post': post})
+    commentform = CommentForm()
+    context = {
+        'post': post, 
+        'commentform': commentform}
+    return render(request, 'a_posts/post_page.html', context)
+
+@login_required
+def post_comment_sent_view(request, pk):
+    post= get_object_or_404(Post,id=pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if  form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.parent_post = post
+            comment.save()
+    return redirect('view-post', post.id)
+    
 
 
 def like_post(request, pk):
@@ -155,8 +172,7 @@ def like_note (request, pk):
     return render(request, 'snippets/notes_likes.html',{'note':note})
 
 
-
-
+        
 
 from django.core.mail import send_mail
 

@@ -37,6 +37,7 @@ urlpatterns = [
     path('delete/post/<pk>/',PostDeleteView, name="delete-post"),
     path('post/edit/<pk>/',PostEditView, name="edit-post"),
     path('post/like/<pk>/',like_post, name="like-post"),
+    path('post/comment/<pk>/',post_comment_sent_view, name="sent-post-comment"),
     path('note/edit/<pk>/',NoteEditView, name="edit-note"),
     path('note/like/<pk>/',like_note, name="like-note"),
     path('post/<pk>/',PostView, name="view-post"),
