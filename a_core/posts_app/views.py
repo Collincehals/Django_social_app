@@ -141,7 +141,7 @@ def like_post(request, pk):
             post.likes.remove(request.user)
         else:
             post.likes.add(request.user)
-    return redirect('view-post', post.id)
+    return render(request, 'snippets/posts_likes.html', {'post': post})
 
 
 def like_note (request, pk):
@@ -152,7 +152,7 @@ def like_note (request, pk):
             note.likes.remove(request.user)
         else:
             note.likes.add(request.user)
-    return redirect('notes')
+    return render(request, 'snippets/notes_likes.html',{'note':note})
 
 
 

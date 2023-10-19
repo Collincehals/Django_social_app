@@ -1,0 +1,23 @@
+<div style="display:flex;flex-wrap:wrap;gap:10px;justify-content: center;">
+    
+    {% if user.is_authenticated %}
+    <div style="display:flex; flex-wrap:wrap; gap:10px;">
+        {% if user in note.likes.all %}
+        <img class="w-7 h-6 " src="/media/icons/redheart.png">
+        {% else %}
+        <img class="w-6 h-6" src="/media/icons/whiteheart.png">
+        {% endif %}
+        {{ note.likes.count }}
+    </div>
+    <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:rgb(105, 71, 8);cursor:pointer' 
+        hx-get="{% url 'like-note' note.id %}"
+        hx-target="closest div"
+        hx-swap="outerHTML">
+        {% if user in note.likes.all %}
+        <b>Liked</b>
+        {% else %}
+        Like
+        {% endif %}
+    </a></p>
+    {% endif %}
+</div>
