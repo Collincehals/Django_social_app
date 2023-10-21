@@ -32,7 +32,16 @@ class CommentForm(ModelForm):
             'body': forms.TextInput(attrs={'placeholder':'Enter Comment here...' }),
         }
         
-   
+class PostCommentReplyForm(ModelForm):
+    class Meta:
+        model = PostCommentReply
+        fields = ['body']
+        labels = {
+            'body': ''
+        }
+        widgets = {
+            'body': forms.TextInput(attrs={'placeholder':'Enter Reply here...' }),
+        }  
         
 class SignUpForm(UserCreationForm):
     email = forms.EmailField (required=True)

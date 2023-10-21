@@ -1,0 +1,25 @@
+
+        <reply class="flex items-end justify-between py-4 border-t">
+            <div class="flex">
+                <a href="">
+                    <img class="w-8 h-8 object-cover rounded-full mr-2" src="{{ reply.author.profile.image.url }}">
+                </a>
+                <div class="w-fit">
+                    <a class="block" href="">
+                        <span class="font-bold hover:underline">{{ reply.author.profile.realname }}</span>
+                        <span class="text-sm text-gray-400">@ {{ reply.author.username }}</span>
+                    </a>
+                    <div class="mr-3">{{ reply.body }}</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 [&>a:hover]:underline">
+                <div class="flex items-center gap-1">
+                    <img class="w-5 -mt-1" src="https://img.icons8.com/small/24/000000/fire-heart.png">
+                    1
+                </div>
+                <a href="">Like</a>
+                <a href="">Delete</a>
+            </div>
+        </reply>
+
+        

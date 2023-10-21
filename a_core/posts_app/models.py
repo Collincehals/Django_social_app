@@ -30,9 +30,28 @@ class Comment(models.Model):
      
     def __str__(self):
         try:
-            return f'{self.auther.username}:{self.body[:30]}'
+            return f'{self.author.username}:{self.body[:30]}'
+        except:
+            return f'No author : {self.body[:30]}' 
+    class Meta:
+        ordering = ['-created']
+        
+        
+class PostCommentReply(models.Model):
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="replies")
+    parent_comment= models.ForeignKey(Comment, on_delete=models.CASCADE, related_name= "replies")
+    body = models.CharField(max_length=150)
+    created = models.DateTimeField(auto_now_add=True)
+    id = models.CharField(primary_key=True, max_length=50, unique=True, editable=False, default=uuid.uuid4)
+     
+    def __str__(self):
+        try:
+            return f'{self.author.username}:{self.body[:30]}'
         except:
             return f'no author:{self.body[:30]}'
+        
+    class Meta:
+        ordering = ['-created']
 
 
 

@@ -1,0 +1,44 @@
+<comment class="card p-4 !mb-4">
+    <div class="flex justify-between items-center"> 
+        <a class="flex items-center gap-1 mb-2" href="">
+            <img class="w-8 h-8 object-cover rounded-full" src="{{ comment.author.profile.image.url }}"> 
+            <span class="font-bold hover:underline">{{ comment.author.profile.realname }}</span>
+            <span class="text-sm font-normal text-gray-400">@ {{ comment.author.username }}</span>
+            <span class="text-sm font-normal ml-4">{{ comment.created }}</span>
+        </a>
+    </div>
+    <p class="text-xl px-2">
+        {{ comment.body }}
+    </p>
+    <div x-data="{ repliesOpen: false }" class="flex items-center justify-between flex-wrap text-sm px-2">
+        <a @click="repliesOpen = !repliesOpen" class="font-bold hover:underline cursor-pointer">
+            <div class="inline-block" x-bind:class="repliesOpen && 'rotate-90 duration-300'">
+                <svg transform ="rotate(90)" width="9" height="9" viewBox="0 0 25 25">
+                    <path d="M24 22h-24l12-20z"/>
+                </svg>
+            </div>
+            Replies
+            <span class="font-light text-gray-500 ml-1">{{ comment.replies.count }}</span>
+        </a>
+        <div class="flex items-center gap-4 [&>a:hover]:underline">
+            <div class="flex items-center gap-1">
+                <img class="w-5 -mt-1" src="https://img.icons8.com/small/24/000000/fire-heart.png">
+                1
+            </div>
+            <a href="">Like</a>
+            {% if user == comment.author %}
+            <a href="{% url 'delete-post-comment' comment.id %}">Delete</a>
+            {% endif %}
+        </div>
+        <div x-show="repliesOpen" x-cloak class="basis-full mt-3 pl-8 grid grid-cols-1">
+        {% for reply in comment.replies.all %}
+        {% include 'snippets/post_comment_replies.html' %}
+        {% endfor %}
+        <form method="POST" action="{% url 'sent-post-comment-reply' comment.id %}" class="replyform flex justify-between" autocomplete="off">
+            {% csrf_token %}
+            {{ commentreplyform }}
+            <button class="block" type="submit">Submit</button>
+        </form>
+        </div>
+</div> 
+</comment>

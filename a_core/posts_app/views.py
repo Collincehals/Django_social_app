@@ -130,12 +130,19 @@ def NoteEditView(request, pk):
 def PostView(request, pk):
     post = Post.objects.get(id=pk)
     commentform = CommentForm()
+    commentreplyform = PostCommentReplyForm
     context = {
         'post': post, 
-        'commentform': commentform}
+        'commentform': commentform,
+        'commentreplyform': commentreplyform,
+        }
     return render(request, 'a_posts/post_page.html', context)
 
-@login_required
+
+
+
+
+@login_required(login_url='login')
 def post_comment_sent_view(request, pk):
     post= get_object_or_404(Post,id=pk)
     if request.method == 'POST':
@@ -146,7 +153,29 @@ def post_comment_sent_view(request, pk):
             comment.parent_post = post
             comment.save()
     return redirect('view-post', post.id)
-    
+
+
+@login_required(login_url='login')
+def post_comment_reply_sent_view(request, pk):
+    comment= get_object_or_404(Comment,id=pk)
+    if request.method == 'POST':
+        form = PostCommentReplyForm(request.POST)
+        if  form.is_valid():
+            reply = form.save(commit=False)
+            reply.author = request.user
+            reply.parent_comment = comment
+            reply.save()
+    return redirect('view-post', comment.parent_post.id) 
+
+
+#Delete Post comments view    
+def PostCommentDeleteView(request, pk):
+    comment = get_object_or_404(Comment, id=pk, author=request.user)
+    if request.method == 'POST':
+        comment.delete()
+        messages.success(request, 'Comment deleted successfully!')
+        return redirect('view-post',comment.parent_post.id)
+    return render(request, 'a_posts/comment_delete.html', {'comment': comment})
 
 
 def like_post(request, pk):

@@ -25,9 +25,13 @@
                     <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Black & White</a>
                 </div>
                 <div style="display: flex; flex-wrap: wrap;justify-content: flex-start; align-items: center;gap:30px;">
+                        {% if post.comments.count %}
                         <p><a class="font-bold hover:underline" href="{% url 'view-post' post.id %}">
-                        Comments<span class="font-light text-gray-500 ml-1">3</span></a>
+                        Comments<span class="font-light text-gray-500 ml-1">{{ post.comments.count }}</span></a>
                         </p>
+                        {% else %}
+                        <p style="font-weight:600;color: darkblue;text-decoration: underline;"><a href="{% url 'view-post' post.id %}">Add Comment</a></p>
+                        {% endif %}
                         {% include 'snippets/posts_likes.html' %}
                         {% if user.is_superuser or user == post.author %}
                         <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:blue;' href="{% url 'edit-post' post.id %}">Edit</a></p>
