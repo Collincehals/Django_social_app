@@ -27,8 +27,8 @@
                 </div>
                 <div style="display: flex; flex-wrap:wrap;justify-content:flex-start; gap:30px;">
                         {% if post.comments.count %}
-                        <p><a class="font-bold hover:underline" href="{% url 'view-post' post.id %}">
-                        Comments<span class="font-light text-gray-500 ml-1">{{ post.comments.count }}</span></a>
+                        <p><a class="font-bold hover:underline ml-2" href="{% url 'view-post' post.id %}">
+                        <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="font-light text-gray-500 ml-1">{{ post.comments.count }}</span></a>
                         </p>
                         {% else %}
                         <p style="font-weight:600;color: darkblue;text-decoration: underline;"><a href="{% url 'view-post' post.id %}">Add Comment</a></p>

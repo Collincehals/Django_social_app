@@ -1,8 +1,9 @@
+{% load static %}
 <header x-data="{ mobilenavOpen: false }" class="md:flex items-center justify-between [&>*]:px-8 bg-gray-800 h-20 text-white sticky top-0 z-40">
     <div class="flex items-center justify-between h-20">
         <logo>
             <a class="flex items-center gap-1" href="/">
-                <img  id="logo-home" class="w-9 -mt-1" src="/media/icons/logo-home.png">
+                <img  id="logo-home" class="w-9 -mt-1" src="{% static 'icons/logo-home.png' %}">
                 <span id="heading-home" class="text-lg font-bold">Colltech Gallery</span>
             </a>
         </logo>

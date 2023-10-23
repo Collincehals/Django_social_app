@@ -6,9 +6,9 @@
         hx-target="closest div"
         hx-swap="outerHTML">
         {% if user in note.likes.all %}
-        <img width="21px" src="/media/icons/redheart.png">
+        <i style="font-size:19px;" class="fa-regular fa-thumbs-up text-red-500"></i>
         {% else %}
-        <img width="21px" src="/media/icons/whiteheart.png">
+        <i style="font-size:19px;" class="fa-regular fa-thumbs-up text-blue-900 hover:text-red-600"></i>
         {% endif %}
         </a>
         {{ note.likes.count }}

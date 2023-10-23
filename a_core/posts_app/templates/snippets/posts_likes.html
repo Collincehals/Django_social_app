@@ -1,15 +1,14 @@
 <div>
 {% if user.is_authenticated %}
-{% load static %}
     <p style='display:flex; gap:10px;cursor:pointer; align-items: center;'>
         <a  
         hx-get="{% url 'like-post' post.id %}"
         hx-target="closest div"
         hx-swap="outerHTML">
         {% if user in post.likes.all %}   
-        <img width="19" src="{% static 'icons/redheart.png' %}">
+        <i style="font-size:19px;" class="fa-regular fa-thumbs-up text-red-500"></i>
         {% else %}
-        <img width="19" src="{% static 'icons/whiteheart.png' %}">
+        <i style="font-size:19px;" class="fa-regular fa-thumbs-up text-blue-900 hover:text-red-600"></i>
         {% endif %}</a>
         {{  post.likes.count }}
     </p>
