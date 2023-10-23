@@ -136,9 +136,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 import os
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = 'static/'
 STATICFILES_DIRS= [BASE_DIR / 'static']
 
@@ -157,7 +156,7 @@ LOGOUT_REDIRECT_URL = '/login'
 
 ACCOUNT_USERNAME_BLACKLIST = ['admin', 'accounts','profile','note','post', 'category' ]
 
-import os
+
 from dotenv import load_dotenv
 load_dotenv()
 

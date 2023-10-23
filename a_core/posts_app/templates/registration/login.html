@@ -45,10 +45,10 @@
         }
     }
 </style>
-
+{% load static %}
 <div class='login-container'>
     <div class="img-container">
-        <img class="img-fluid" src="/media/icons/signin.png" alt="login-img">
+        <img class="img-fluid" src="{% static 'icons/signin.png' %}" alt="login-img">
     </div>
     <div class="login-form-container">
         <form class="login-form" method="post">
