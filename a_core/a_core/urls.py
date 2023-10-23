@@ -50,11 +50,9 @@ urlpatterns = [
     path('<username>/',ProfileView, name="userprofile"),
     path('profile/edit/',EditProfileView, name="edit-profile"),
     path('profile/delete/',DeleteProfileView, name="delete-profile"),
-    path('send/email/',send_email_view, name="send-email"),
-    
+    path('send/email/',send_email_view, name="send-email"),  
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns = [
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
