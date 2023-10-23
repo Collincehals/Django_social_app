@@ -14,7 +14,7 @@
     <div class="pt-2 px-4  ">
         <a class="flex items-center gap-1 mb-4" href="{% url 'userprofile' post.author.username %}">
             <img class="w-8 h-8 object-cover rounded-full" src="{{ post.author.profile.image.url }}">
-            <span class="font-bold hover:underline">{{ post.author.first_name }}</span>
+            <span class="font-bold hover:underline">{{ post.author.profile.realname }}</span>
             <span class="text-sm text-gray-400">@ {{ post.author }}</span>
         </a>
         <p class="text-3xl mb-4 font1">{{ post.body }}</p>

@@ -37,15 +37,15 @@
                     <ul class="hoverlist [&>li>a]:justify-start">
                         <li style="margin-bottom:-5px;"><a href="{% url 'view-profile' %}"><i class="fa-regular fa-user" style="color:darkblue;font-size:larger;margin-right:10px;"></i>My Profile</a></li>
                         <li style="margin-bottom:-5px;"><a href="{% url 'edit-profile' %}"><i class="fa-solid fa-user-pen" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Edit Profile</a></li>
-                        <li style="margin-bottom:-5px;"><a href="/password_change"><i class="fa-solid fa-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Change Password</a></li>
-                        <li style="margin-bottom:-5px;"><a href="/password_reset"><i class="fa-solid fa-user-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Reset Password</a></li>
-                        <li><a href="/logout"><i class="fa-solid fa-power-off" style="color:red;font-size:larger;margin-right:10px;"></i>Log Out</a></li>
+                        <li style="margin-bottom:-5px;"><a href="{% url 'account_change_password' %}"><i class="fa-solid fa-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Change Password</a></li>
+                        <li style="margin-bottom:-5px;"><a href="{% url 'account_reset_password' %}"><i class="fa-solid fa-user-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Reset Password</a></li>
+                        <li><a href="{% url 'account_logout' %}"><i class="fa-solid fa-power-off" style="color:red;font-size:larger;margin-right:10px;"></i>Log Out</a></li>
                         
                     </ul>
                 </div>
             </li>
             {% else %}
-            <li><a href="/login">Login</a></li>
+            <li><a href="{% url 'account_login' %}">Login</a></li>
             {% endif %}
         </ul>
     </nav>

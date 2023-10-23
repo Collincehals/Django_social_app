@@ -13,19 +13,8 @@ def home_view(request):
     posts = Post.objects.all()
     return render(request, 'a_posts/home.html', {'posts': posts})
 
-def signup_view(request):
-    form = SignUpForm ()
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, 'Account created successfully!')
-            return redirect('home')
-    return render(request, 'registration/sign-up.html', {'form': form})
-
 #POSTS VIEWS
-@login_required(login_url="login")      
+@login_required(login_url="account_login")      
 def create_post_view(request):
     form = CreatePostForm ()
     if request.method == 'POST':
@@ -86,7 +75,7 @@ def like_post(request, pk):
     return render(request, 'snippets/posts_likes.html', {'post': post})
 
 
-@login_required(login_url='login')
+@login_required(login_url='account_login')
 def post_comment_sent_view(request, pk):
     post= get_object_or_404(Post,id=pk)
     if request.method == 'POST':
@@ -118,7 +107,7 @@ def PostCommentDeleteView(request, pk):
         return redirect('view-post',comment.parent_post.id)
     return render(request, 'a_posts/comment_delete.html', {'comment': comment})
 
-@login_required(login_url='login')
+@login_required(login_url='account_login')
 def post_comment_reply_sent_view(request, pk):
     comment= get_object_or_404(PostComment,id=pk)
     if request.method == 'POST':
@@ -142,7 +131,7 @@ def post_comment_reply_like_view(request, pk):
     return render(request, 'snippets/post_comment_reply_likes.html', {'reply': reply})
 
 
-@login_required(login_url='login')
+@login_required(login_url='account_login')
 def PostCommentReplyDeleteView(request, pk):
     reply = get_object_or_404(PostCommentReply, id=pk, author=request.user)
     if request.method == 'POST':
@@ -153,7 +142,7 @@ def PostCommentReplyDeleteView(request, pk):
 
 
 #NOTES VIEWS
-@login_required(login_url='login')
+@login_required(login_url='account_login')
 def CreateNoteView(request):
     form = CreateNote()
     if request.method == 'POST':
