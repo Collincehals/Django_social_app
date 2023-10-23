@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import Http404
+from django.contrib.auth import login, logout, authenticate
 # Create your views here.
 def ProfileView(request, username=None):
     if username:
@@ -31,9 +32,10 @@ def EditProfileView(request):
 
 
 def DeleteProfileView(request):
-    profile = request.user.profile
-    if request.method == 'POST':
-        profile.delete()
-        messages.success(request, "Profile deleted successfully")
-        return redirect('home')
-    return render(request, 'a_users/delete_profile.html')
+   user = request.user
+   if request.method == 'POST':
+       logout(request)
+       user.delete()
+       messages.success(request, "Profile deleted successfully")
+       return redirect('home')
+   return render(request, 'a_users/delete_profile.html')

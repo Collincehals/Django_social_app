@@ -11,11 +11,5 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     
-    
-    def delete(self, *args, **kwargs):
-        self.user.delete()
-        super(Profile, self).delete(*args, **kwargs)
-        
-        
     def __str__(self):
         return str(self.user)

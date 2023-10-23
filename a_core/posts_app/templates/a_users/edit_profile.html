@@ -3,26 +3,38 @@
 {% block title %} Edit Profile- {{ user.profile.realname }} {% endblock %}
 
 {% block content %}
-<div style="background-color: rgb(241, 240, 253);padding:25px; margin:0 auto;border:1px solid #ccc;border-radius:20px;">
-  <h1 class="mb-2">Edit Profile</h1>
+<style>
+    .profile-edit-form input {
+        padding:13px;
+    }
+    .profile-edit-page{
+        max-width:650px;
+        width:100%;
+        background-color: rgb(241, 240, 253);
+        padding:25px; margin:0 auto;
+        border:1px solid #ccc;border-radius:20px;
+    }
+    
+</style>
+<div class="profile-edit-page">
+  <h1 class="mb-2 text-center">Edit Profile</h1>
 <div class="text-center flex flex-col items-center">
-    <img id="avatar" class="w-36 h-36 rounded-full object-cover mb-4" src="{{ user.profile.image.url }}" />
+    <img id="avatar" class="w-20 h-20 rounded-full object-cover mb-4" src="{{ user.profile.image.url }}" />
     <div class="text-center max-w-md">
-        <h1 id="realname">{{ user.profile.realname }}</h1>
+        <h2 id="realname">{{ user.profile.realname }}</h2>
         <div class="text-gray-400 mb-2 -mt-3">@{{ user.username }}</div>
     </div>
 </div>
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data" class="profile-edit-form mb-5">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" >Submit</button>
-    <a class="button secondaryAction ml-1" href="">Cancel</a>
+    <a class="button secondaryAction ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
 </form>
-<a class="mt-12 hover:underline text-gray-500" href="">Delete Profile</a>
+<a class="flex justify-center hover:underline " href="{% url 'delete-profile' %}">Delete Profile</a>
 
 
 <script>
-    
     // This updates the avatar
     const fileInput = document.querySelector('input[type="file"]');
 

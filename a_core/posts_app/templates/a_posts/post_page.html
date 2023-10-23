@@ -6,7 +6,7 @@
 <article class="card">
     <div class="flex items-center justify-between px-4 h-9">
         <h3 class="text-start leading-5 mr-1">{{ post.title }}</h3>
-        <div class="text-sm text-gray-400 truncate"><a target="_blank" href="https://www.flickr.com/explore">flickr</a><a href="{% url 'userprofile' post.author.username %}" class="hover:underline ml-1" target="blank">@ {{ post.author }}</a></div>
+        <div class="text-sm text-gray-400 truncate"><a target="_blank" href="https://www.flickr.com/explore">flickr</a><a href="{% url 'userprofile' post.author.username %}" class="hover:underline ml-1" >@ {{ post.author }}</a></div>
     </div>
     <figure>
         <img class="w-full" src="{{ post.image }}">

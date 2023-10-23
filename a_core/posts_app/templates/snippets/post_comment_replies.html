@@ -12,9 +12,9 @@
                     <div class="mr-3">{{ reply.body }}</div>
                 </div>
             </div>
-            <div class="flex items-center gap-4 [&>a:hover]:underline">
+            <div class="flex gap-4 [&>a:hover]:underline">
                 {% include 'snippets/post_comment_reply_likes.html' %}
-                {% if user == reply.author %}
+                {% if user.is_superuser or user == reply.author %}
                 <a href="{% url 'post-comment-reply-delete' reply.id %}">Delete</a>
                 {% endif %}
             </div>

@@ -5,10 +5,11 @@
 {% block content %}
 
 {% for post in posts %}
+        {% load static %}
         <article class="card">
             <div class="flex items-center justify-between px-4 h-9">
                 <h3 class="text-start leading-5 mr-1">{{ post.title }}</h3>
-                <div class="text-sm text-gray-400 truncate"><a target="_blank" href="https://www.flickr.com/explore">flickr</a><a href="{% url 'userprofile' post.author.username %}" class="hover:underline ml-1" target="blank">@ {{ post.author }}</a></div>
+                <div class="text-sm text-gray-400 truncate"><a target="_blank" href="https://www.flickr.com/explore">flickr</a><a href="{% url 'userprofile' post.author.username %}" class="hover:underline ml-1">@ {{ post.author }}</a></div>
             </div>
             <figure>
                 <p><a href="{% url 'view-post' post.id %}"><img class="w-full" src="{{ post.image }}"></a></p>
@@ -24,7 +25,7 @@
                     <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Animals</a>
                     <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Black & White</a>
                 </div>
-                <div style="display: flex; flex-wrap: wrap;justify-content: flex-start; align-items: center;gap:30px;">
+                <div style="display: flex; flex-wrap:wrap;justify-content:flex-start; gap:30px;">
                         {% if post.comments.count %}
                         <p><a class="font-bold hover:underline" href="{% url 'view-post' post.id %}">
                         Comments<span class="font-light text-gray-500 ml-1">{{ post.comments.count }}</span></a>

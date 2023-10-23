@@ -9,11 +9,12 @@ class ProfileEditForm(ModelForm):
         
         exclude = ['user']
         labels = {
-            'realname': 'Full Name',
+            'realname': 'First Name',
+            'image': 'Profile Photo',
         }
         
         widgets = {
             'image': forms.FileInput(),
-            'bio': forms.Textarea(attrs={'rows':8})
+            'bio': forms.Textarea(attrs={'rows':3})
         }
     

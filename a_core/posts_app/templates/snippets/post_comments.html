@@ -20,9 +20,9 @@
             Replies
             <span class="font-light text-gray-500 ml-1">{{ comment.replies.count }}</span>
         </a>
-        <div class="flex items-center gap-4 [&>a:hover]:underline">
+        <div class="flex  gap-4 [&>a:hover]:underline">
             {% include 'snippets/posts_comment_likes.html' %}
-            {% if user == comment.author %}
+            {% if user.is_superuser or user == comment.author %}
             <a href="{% url 'delete-post-comment' comment.id %}">Delete</a>
             {% endif %}
         </div>
