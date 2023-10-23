@@ -9,7 +9,7 @@
  {% for note in notes %}
 
  <div  style="padding:20px;margin-bottom:20px; word-spacing: 3px;text-align: justify;background-color: rgb(240, 240, 250);border-radius: 15px;width:100%;border:1px solid #ccc;">
-    <a class="flex gap-1 mb-2" href="" style="background:rgb(249, 249, 251);padding:10px;border-radius:10px;">
+    <a class="flex gap-1 mb-2" href="{% url 'userprofile' note.author.username %}" style="background:rgb(249, 249, 251);padding:10px;border-radius:10px;">
         <img class="w-8 h-8 object-cover rounded-full" src="{{ note.author.profile.image.url }}">
         <p>@ <span style="color:darkblue; font-weight: bold;">{{ note.author }}</span>  :{{ note.created_at }}</p>
     </a>

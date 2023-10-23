@@ -6,11 +6,11 @@
         hx-target="closest div"
         hx-swap="outerHTML">
         {% if user in post.likes.all %}   
-        <img width="21" src="/media/icons/redheart.png">
+        <img width="19" src="/media/icons/redheart.png">
         {% else %}
-        <img width="21" src="/media/icons/whiteheart.png">
+        <img width="19" src="/media/icons/whiteheart.png">
         {% endif %}</a>
-        {{  post.likes.count}}
+        {{  post.likes.count }}
     </p>
 {% endif %}
 </div>

@@ -13,6 +13,18 @@ def home_view(request):
     posts = Post.objects.all()
     return render(request, 'a_posts/home.html', {'posts': posts})
 
+def signup_view(request):
+    form = SignUpForm ()
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Account created successfully!')
+            return redirect('home')
+    return render(request, 'registration/sign-up.html', {'form': form})
+
+#POSTS VIEWS
 @login_required(login_url="login")      
 def create_post_view(request):
     form = CreatePostForm ()
@@ -26,39 +38,121 @@ def create_post_view(request):
             return redirect('home')
     return render(request, 'a_posts/create_post.html', {'form': form})
 
-def signup_view(request):
-    form = SignUpForm ()
+def PostView(request, pk):
+    post = Post.objects.get(id=pk)
+    commentform = PostCommentForm()
+    commentreplyform = PostCommentReplyForm
+    context = {
+        'post': post, 
+        'commentform': commentform,
+        'commentreplyform': commentreplyform,
+        }
+    return render(request, 'a_posts/post_page.html', context)
+
+
+def PostEditView(request, pk):
+    post = Post.objects.get(id=pk)
+    form = PostEditForm(instance=post)
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = PostEditForm(request.POST, instance=post)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, 'Account created successfully!')
+            form.save()
+            messages.success(request, 'Post updated successfully!')
             return redirect('home')
-    return render(request, 'registration/sign-up.html', {'form': form})
-
-def Password_change_view(request):
-    form = PasswordChangeForm ()
-    return render(request, 'registration/password_change_form.html', {'form': form})
-
-def PasswordChangeDoneView(request):
-    return render(request, 'registration/password_change_done.html')
-
-def Password_reset_view(request):
-    form = PasswordResetForm()
-    return render(request, 'registration/password_reset_form.html', {'form': form})
-
-def PasswordResetDoneView(request):
-    return render(request, 'registration/password_reset_done.html')
-
-def PasswordResetConfirmView(request):
-    return render(request, 'registration/password_reset_confirm.html')
-
-def PasswordResetCompleteView(request):
-    return render(request, 'registration/password_reset_complete.html')
+    context = {
+        'post': post,
+        'form': form
+        }
+    return render(request, 'a_posts/post_edit.html', context)
 
 
+def PostDeleteView(request, pk):
+    post = get_object_or_404(Post, id=pk, author=request.user)
+    if request.method == 'POST':
+        post.delete()
+        messages.success(request, 'Post deleted successfully!')
+        return redirect('home')
+    return render(request, 'a_posts/post_delete.html', {'post': post})
 
+def like_post(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    user_exists = post.likes.filter(username=request.user.username).exists()
+    
+    if post.author != request.user:
+        if user_exists:
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+    return render(request, 'snippets/posts_likes.html', {'post': post})
+
+
+@login_required(login_url='login')
+def post_comment_sent_view(request, pk):
+    post= get_object_or_404(Post,id=pk)
+    if request.method == 'POST':
+        form = PostCommentForm(request.POST)
+        if  form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.parent_post = post
+            comment.save()
+    return redirect('view-post', post.id)
+
+def post_comment_like_view(request, pk):
+    comment = get_object_or_404(PostComment, id=pk)
+    user_exists = comment.likes.filter(username=request.user.username).exists()
+    
+    if comment.author != request.user:
+        if user_exists:
+            comment.likes.remove(request.user)
+        else:
+            comment.likes.add(request.user)
+    return render(request, 'snippets/posts_comment_likes.html', {'comment': comment})
+
+
+def PostCommentDeleteView(request, pk):
+    comment = get_object_or_404(PostComment, id=pk, author=request.user)
+    if request.method == 'POST':
+        comment.delete()
+        messages.success(request, 'Comment deleted successfully!')
+        return redirect('view-post',comment.parent_post.id)
+    return render(request, 'a_posts/comment_delete.html', {'comment': comment})
+
+@login_required(login_url='login')
+def post_comment_reply_sent_view(request, pk):
+    comment= get_object_or_404(PostComment,id=pk)
+    if request.method == 'POST':
+        form = PostCommentReplyForm(request.POST)
+        if  form.is_valid():
+            reply = form.save(commit=False)
+            reply.author = request.user
+            reply.parent_comment = comment
+            reply.save()
+    return redirect('view-post', comment.parent_post.id) 
+
+def post_comment_reply_like_view(request, pk):
+    reply = get_object_or_404(PostCommentReply, id=pk)
+    user_exists = reply.likes.filter(username=request.user.username).exists()
+    
+    if reply.author != request.user:
+        if user_exists:
+            reply.likes.remove(request.user)
+        else:
+            reply.likes.add(request.user)
+    return render(request, 'snippets/post_comment_reply_likes.html', {'reply': reply})
+
+
+@login_required(login_url='login')
+def PostCommentReplyDeleteView(request, pk):
+    reply = get_object_or_404(PostCommentReply, id=pk, author=request.user)
+    if request.method == 'POST':
+        reply.delete()
+        messages.success(request, 'Reply deleted!')
+        return redirect('view-post',reply.parent_comment.parent_post.id)
+    return render(request, 'a_posts/post_comment_reply_delete.html', {'reply': reply})
+
+
+#NOTES VIEWS
 @login_required(login_url='login')
 def CreateNoteView(request):
     form = CreateNote()
@@ -78,39 +172,6 @@ def NotesView(request):
     notes = Note.objects.all()
     return render(request, 'a_posts/notes.html', {'notes': notes})
 
-def NoteDeleteView(request,pk):
-    note  = Note.objects.get(id=pk)
-    if request.method == 'POST':
-        note.delete()
-        messages.success(request,'Note deleted successfully')
-        return redirect('notes')
-    return render(request, 'a_posts/note_delete.html', {'note': note})
-
-def PostDeleteView(request, pk):
-    post = get_object_or_404(Post, id=pk)
-    if request.method == 'POST':
-        post.delete()
-        messages.success(request, 'Post deleted successfully!')
-        return redirect('home')
-    return render(request, 'a_posts/post_delete.html', {'post': post})
-
-def PostEditView(request, pk):
-    post = Post.objects.get(id=pk)
-    form = PostEditForm(instance=post)
-    if request.method == 'POST':
-        form = PostEditForm(request.POST, instance=post)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Post updated successfully!')
-            return redirect('home')
-    context = {
-        'post': post,
-        'form': form
-        }
-    return render(request, 'a_posts/post_edit.html', context)
-
-
-
 def NoteEditView(request, pk):
     note = Note.objects.get(id=pk)
     form = NoteEditForm(instance=note)
@@ -126,69 +187,13 @@ def NoteEditView(request, pk):
     }
     return render(request, 'a_posts/note_edit.html', context)
 
-
-def PostView(request, pk):
-    post = Post.objects.get(id=pk)
-    commentform = CommentForm()
-    commentreplyform = PostCommentReplyForm
-    context = {
-        'post': post, 
-        'commentform': commentform,
-        'commentreplyform': commentreplyform,
-        }
-    return render(request, 'a_posts/post_page.html', context)
-
-
-
-
-
-@login_required(login_url='login')
-def post_comment_sent_view(request, pk):
-    post= get_object_or_404(Post,id=pk)
+def NoteDeleteView(request,pk):
+    note  = Note.objects.get(id=pk)
     if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if  form.is_valid():
-            comment = form.save(commit=False)
-            comment.author = request.user
-            comment.parent_post = post
-            comment.save()
-    return redirect('view-post', post.id)
-
-
-@login_required(login_url='login')
-def post_comment_reply_sent_view(request, pk):
-    comment= get_object_or_404(Comment,id=pk)
-    if request.method == 'POST':
-        form = PostCommentReplyForm(request.POST)
-        if  form.is_valid():
-            reply = form.save(commit=False)
-            reply.author = request.user
-            reply.parent_comment = comment
-            reply.save()
-    return redirect('view-post', comment.parent_post.id) 
-
-
-#Delete Post comments view    
-def PostCommentDeleteView(request, pk):
-    comment = get_object_or_404(Comment, id=pk, author=request.user)
-    if request.method == 'POST':
-        comment.delete()
-        messages.success(request, 'Comment deleted successfully!')
-        return redirect('view-post',comment.parent_post.id)
-    return render(request, 'a_posts/comment_delete.html', {'comment': comment})
-
-
-def like_post(request, pk):
-    post = get_object_or_404(Post, id=pk)
-    user_exists = post.likes.filter(username=request.user.username).exists()
-    
-    if post.author != request.user:
-        if user_exists:
-            post.likes.remove(request.user)
-        else:
-            post.likes.add(request.user)
-    return render(request, 'snippets/posts_likes.html', {'post': post})
-
+        note.delete()
+        messages.success(request,'Note deleted successfully')
+        return redirect('notes')
+    return render(request, 'a_posts/note_delete.html', {'note': note})
 
 def like_note (request, pk):
     note = get_object_or_404(Note, id=pk)
@@ -203,8 +208,18 @@ def like_note (request, pk):
 
         
 
-from django.core.mail import send_mail
 
+
+
+
+
+
+
+
+
+
+
+from django.core.mail import send_mail
 def send_email_view(request):
     user_email = request.POST.get('email') or request.session.get('email')
     send_mail(

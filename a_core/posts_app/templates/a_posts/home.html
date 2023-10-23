@@ -8,13 +8,13 @@
         <article class="card">
             <div class="flex items-center justify-between px-4 h-9">
                 <h3 class="text-start leading-5 mr-1">{{ post.title }}</h3>
-                <div class="text-sm text-gray-400 truncate"><a target="_blank" href="https://www.flickr.com/explore">flickr</a><a href="" class="hover:underline ml-1" target="blank">@ {{ post.author }}</a></div>
+                <div class="text-sm text-gray-400 truncate"><a target="_blank" href="https://www.flickr.com/explore">flickr</a><a href="{% url 'userprofile' post.author.username %}" class="hover:underline ml-1" target="blank">@ {{ post.author }}</a></div>
             </div>
             <figure>
                 <p><a href="{% url 'view-post' post.id %}"><img class="w-full" src="{{ post.image }}"></a></p>
             </figure>
             <div class="pt-2 px-4  ">
-                <a class="flex items-center gap-1 mb-4" href="">
+                <a class="flex items-center gap-1 mb-4" href="{% url 'userprofile' post.author.username %}">
                     <img class="w-8 h-8 object-cover rounded-full" src="{{ post.author.profile.image.url }}">
                     <span class="font-bold hover:underline">{{ post.author.first_name }}</span>
                     <span class="text-sm text-gray-400">@ {{ post.author }}</span>

@@ -14,10 +14,18 @@
                     <div class="text-gray-400 mb-2 -mt-3">@ {{ profile.user.username }}</div>
                     <div class="flex items-center justify-center mx-auto">
                         <img class="object-cover h-6 mr-1 opacity-60" src="https://img.icons8.com/material-outlined/50/000000/marker.png"> 
+                        {% if profile.location %}
                        {{ profile.location }}
+                       {% else %}
+                       <p>Planet Earth</p>
+                       {% endif %}
                     </div>
                     <div class="my-8">
+                        {% if profile.bio %}
                         {{ profile.bio }}
+                        {% else %}
+                        <p>Hello people!</p>
+                        {% endif %}
                     </div> 
                     
                 </div>

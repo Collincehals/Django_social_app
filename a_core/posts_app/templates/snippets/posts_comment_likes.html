@@ -1,0 +1,16 @@
+<div>
+    {% if user.is_authenticated %}
+        <p style='display:flex; flex-wrap:wrap; gap:10px;cursor:pointer'>
+            <a  
+            hx-get="{% url 'like-post-comment' comment.id %}"
+            hx-target="closest div"
+            hx-swap="outerHTML">
+            {% if user in comment.likes.all %}  
+            <img width="19" src="/media/icons/redheart.png">
+            {% else %}
+            <img width="19" src="/media/icons/whiteheart.png">
+            {% endif %}</a>
+            {{ comment.likes.count }}
+        </p>
+    {% endif %}
+</div> 

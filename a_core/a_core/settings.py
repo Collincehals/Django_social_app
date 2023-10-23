@@ -153,6 +153,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/login'
 
+ACCOUNT_USERNAME_BLACKLIST = ['admin', 'accounts','profile','note','post', 'category' ]
+
 import os
 from dotenv import load_dotenv
 load_dotenv()

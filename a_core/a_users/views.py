@@ -1,11 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.models import User
+from django.http import Http404
 # Create your views here.
-def ProfileView(request):
-    profile = request.user.profile
+def ProfileView(request, username=None):
+    if username:
+        profile = get_object_or_404(User, username=username).profile
+    else:
+        try:
+            profile = request.user.profile
+        except:
+            raise Http404()
     return render(request, 'a_users/profile.html', {"profile": profile})
 
 
