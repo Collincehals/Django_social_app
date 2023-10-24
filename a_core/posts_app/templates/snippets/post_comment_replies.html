@@ -15,9 +15,7 @@
             <div class="flex gap-4 [&>a:hover]:underline">
                 {% include 'snippets/post_comment_reply_likes.html' %}
                 {% if user.is_superuser or user == reply.author %}
-                <a href="{% url 'post-comment-reply-delete' reply.id %}">Delete</a>
+                <a href="{% url 'post-comment-reply-delete' reply.id %}"><i class="fa-regular fa-trash-can" style="color:darkblue;font-size:17px;"></i></a>
                 {% endif %}
             </div>
         </reply>
-
-        

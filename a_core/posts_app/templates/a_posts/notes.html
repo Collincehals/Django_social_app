@@ -27,8 +27,8 @@
         {% include 'snippets/notes_likes.html' %}
 
         {% if user == note.author or user.is_superuser %}
-        <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:blue;' href="{% url 'edit-note' note.id %}">Edit</a></p>
-        <p><a style='background:#ccc; border-radius: 15px;padding:5px 15px;color:red;' href="{% url 'delete-note' note.id %}">Delete</a></p>
+        <p><a href="{% url 'edit-note' note.id %}"><i class="fa-regular fa-pen-to-square" style="color:darkblue;font-size:17px;"></i></a></p>
+        <p><a href="{% url 'delete-note' note.id %}"><i class="fa-regular fa-trash-can" style="color:darkblue;font-size:17px;"></i></a></p>
         {% endif %}
     </div>
     

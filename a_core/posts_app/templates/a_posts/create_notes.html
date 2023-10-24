@@ -45,8 +45,8 @@
     <form method='POST'>
         {% csrf_token %}
         {{ form }}
-        <button type="submit" class="mt-1">Create Note</button>
-        <a class="button secondaryAction ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+        <button type="submit" class="successbtn mt-1">Create Note</button>
+        <a class="editbtn ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
     </form>
 </div>
 {% endblock %}

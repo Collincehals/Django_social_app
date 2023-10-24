@@ -26,7 +26,7 @@
         *{
             margin:0px; padding:0px;
             box-sizing:border-box;
-            transition:all .2s linear;
+            transition:all .3s linear;
             text-decoration:none;
             outline:none;
             border:none;
@@ -52,7 +52,8 @@
 
         :root {
             --primary: rgb(88, 40, 244);
-            --primary-hover: rgb(58, 1, 245);
+            --primary-dark: rgb(45, 0, 191);
+            --primary-hover: rgb(77, 22, 255);
             --black: #1f2937;
             --font1: 'Shantell Sans', sans-serif;
         }
@@ -72,7 +73,8 @@
             font-family: var(--font1);
             font-weight:600;
         }
-        .button, button,[type=submit], [type='button'] {
+
+        .successbtn {
             display: inline-flex;
             flex-wrap: wrap;
             align-items: center;
@@ -81,14 +83,14 @@
             text-align: center;
             border-radius: 0.5rem;
             cursor: pointer;
-            padding: 0 1rem;
-            min-height: 3.3rem;
+            padding: 0 1.2rem;
+            min-height: 2.5rem;
             font-weight: 600;
             box-shadow: 0 4px 3px rgba(0, 0, 0, 0.1);
             transition-property: transform;
             transition-duration: .2s;
             color: white;
-            background-color: var(--primary);
+            background-color:var(--primary-dark);
             width: fit-content;
         }
 
@@ -101,8 +103,8 @@
             text-align: center;
             border-radius: 0.5rem;
             cursor: pointer;
-            padding: 0 1rem;
-            min-height: 2rem;
+            padding: 0 1.2rem;
+            min-height: 2.5rem;
             font-weight: 600;
             box-shadow: 0 4px 3px rgba(0, 0, 0, 0.1);
             transition-property: transform;
@@ -121,8 +123,8 @@
             text-align: center;
             border-radius: 0.5rem;
             cursor: pointer;
-            padding: 0 1rem;
-            min-height: 2rem;
+            padding: 0 1.2rem;
+            min-height: 2.5rem;
             font-weight: 600;
             box-shadow: 0 4px 3px rgba(0, 0, 0, 0.1);
             transition-property: transform;
@@ -132,21 +134,14 @@
             width: fit-content;
         }
 
-
-        .button:hover, button:hover, [type='submit']:hover, [type='button']:hover {
+        .editbtn:hover,.successbtn:hover {
             background-color: var(--primary-hover);
+            box-shadow: 0 0 5px 0 rgba(0,0,250,0.5);  
         }
         .button:active, button:active, [type='submit']:active, [type='button']:active {
             transform: scale(0.95);
         }
-        .secondaryAction {
-            background-color: white;
-            color: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(0, 0, 0, 0.3);
-        }
-        .secondaryAction:hover, .button.secondaryAction:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
+        
         .navitems>li>a {
             @apply flex items-center gap-2 h-12 px-4 hover:bg-gray-700 rounded-lg;
         }
@@ -157,6 +152,7 @@
 
         .delete-profile:hover {
             color:red;
+            font-size: large;
         }
 
         .card {
@@ -170,6 +166,17 @@
             background-color: rgb(241, 240, 253);
             padding-bottom: 1rem;
             width: 70%;
+            border:1px solid #ccc;
+        }
+        .form-card {
+            border-radius: 1.2rem;
+            margin:auto !important;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            background-color: rgb(242, 241, 253);
+            padding-bottom: 1rem;
+            max-width:600px;
+            width: 100%;
             border:1px solid #ccc;
         }
 

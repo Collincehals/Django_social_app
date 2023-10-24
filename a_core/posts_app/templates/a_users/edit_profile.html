@@ -28,10 +28,10 @@
 <form method="POST" enctype="multipart/form-data" class="profile-edit-form mb-5">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" >Submit</button>
-    <a class="button secondaryAction ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+    <button class="successbtn" type="submit" >Submit</button>
+    <a class="editbtn ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
 </form>
-<a class="flex justify-center hover:underline " href="{% url 'delete-profile' %}">Delete Profile</a>
+<a class="delete-profile flex justify-center hover:underline " href="{% url 'delete-profile' %}">Delete Profile</a>
 
 
 <script>

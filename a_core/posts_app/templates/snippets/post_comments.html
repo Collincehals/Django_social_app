@@ -23,17 +23,22 @@
         <div class="flex  gap-4 [&>a:hover]:underline">
             {% include 'snippets/posts_comment_likes.html' %}
             {% if user.is_superuser or user == comment.author %}
-            <a href="{% url 'delete-post-comment' comment.id %}">Delete</a>
+            <a href="{% url 'delete-post-comment' comment.id %}"><i class="fa-regular fa-trash-can" style="color:darkblue;font-size:17px;"></i></a>
             {% endif %}
         </div>
         <div x-show="repliesOpen" x-cloak class="basis-full mt-3 pl-8 grid grid-cols-1">
         {% for reply in comment.replies.all %}
         {% include 'snippets/post_comment_replies.html' %}
         {% endfor %}
+        <style>
+            input{
+                padding:11px;
+            }
+        </style>
         <form method="POST" action="{% url 'sent-post-comment-reply' comment.id %}" class="replyform flex justify-between" autocomplete="off">
             {% csrf_token %}
             {{ commentreplyform }}
-            <button class="block" type="submit">Submit</button>
+            <button class="block" type="submit"><i style="background:rgb(214, 214, 226);color:darkblue;padding:10px 13px;border-radius: 50%;" class="fa-solid fa-chevron-right"></i></button>
         </form>
         </div>
 </div> 

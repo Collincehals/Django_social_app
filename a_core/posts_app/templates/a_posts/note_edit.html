@@ -10,7 +10,7 @@
             {% csrf_token %}
             {{ form }}
             <div class="pt-4">
-                <button class="deletebtn" type="submit">Submit</button>
+                <button class="successbtn" type="submit">Submit</button>
                 <a class="editbtn" type="submit" href="{{ request.META.HTTP_REFERER }}">Go Back</a>
             </div>
         </form>

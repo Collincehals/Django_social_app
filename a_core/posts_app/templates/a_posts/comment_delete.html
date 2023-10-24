@@ -11,7 +11,7 @@
 
 <form method='POST'>
     {% csrf_token %}
-    <button type="submit">Confirm</button>
-    <a class="button secondaryAction ml-1" href="{{ request.META.HTTP_REFERER }}">Go Back</a>
+    <button class="deletebtn" type="submit">Confirm</button>
+    <a class="editbtn" type="submit" href="{{ request.META.HTTP_REFERER }}">Go Back</a>
 </form>
 {% endblock %}
