@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations
-
-import allauth.socialaccount.fields
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -15,9 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="socialaccount",
             name="extra_data",
-            field=allauth.socialaccount.fields.JSONField(
-                default=dict, verbose_name="extra data"
-            ),
+            field=models.TextField(default="{}", verbose_name="extra data"),
             preserve_default=True,
         ),
     ]
