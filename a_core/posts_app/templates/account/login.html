@@ -50,17 +50,7 @@
   </div>
   <div class="login-form-container">
     <h2 style="text-align: center;padding-top: 1rem;">{% trans "Login to Colltech" %}</h2>
-    <form class="login-form" method="POST" action="{% url 'account_login' %}">
-      {% csrf_token %}
-      {{ form.as_p }}
-      {% if redirect_field_value %}
-      <div style="margin-bottom:40px;">
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-      </div>
-      {% endif %}
-      <a style="display:block;padding-bottom: 1.2rem;color:darkblue;" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-      <button class="primaryAction successbtn" type="submit">{% trans "Login" %}</button>
-    </form>
+    <div style="padding:15px;">
     {% if socialaccount_providers %}
       <p>{% blocktrans with site.name as site_name %}Please sign in with one
       of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
@@ -73,7 +63,6 @@
         </ul>
 
         <div class="login-or">{% trans 'or' %}</div>
-
       </div>
 
       {% include "socialaccount/snippets/login_extra.html" %}
@@ -82,6 +71,18 @@
       <p style="padding-left:1rem;">{% blocktrans %}Don't have an account?
       <a href="{{ signup_url }}" style="color:darkblue;text-decoration: underline;">sign up</a>{% endblocktrans %}</p>
       {% endif %}
+    </div>
+    <form class="login-form" method="POST" action="{% url 'account_login' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      {% if redirect_field_value %}
+      <div style="margin-bottom:40px;">
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      </div>
+      {% endif %}
+      <a style="display:block;padding-bottom: 1.2rem;color:darkblue;" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+      <button class="primaryAction successbtn" type="submit">{% trans "Login" %}</button>
+    </form>
   </div>
 </div>
 {% endblock content %}
