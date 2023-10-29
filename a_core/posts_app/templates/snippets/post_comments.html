@@ -35,10 +35,11 @@
                 padding:11px;
             }
         </style>
+        {% load static %}
         <form method="POST" action="{% url 'sent-post-comment-reply' comment.id %}" class="replyform flex justify-between" autocomplete="off">
             {% csrf_token %}
             {{ commentreplyform }}
-            <button class="block" type="submit"><i style="background:rgb(214, 214, 226);color:darkblue;padding:10px 13px;border-radius: 50%;" class="fa-solid fa-chevron-right"></i></button>
+            <button class="block" type="submit"><img style="width:25px;" src="{% static 'icons/send-icon.png' %}"></button>
         </form>
         </div>
 </div> 

@@ -40,12 +40,12 @@
     </div>
     </div>
 </article>
-
+{% load static %}
 <div class="card !pb-0 -mt-3">
     <form method="POST" action="{%  url 'sent-post-comment' post.id %}" class="flex items-center p-4" autocomplete="off">
         {% csrf_token %}
         {{ commentform }}
-        <button @click="open = false" class="block ml-2" type="submit"><i style="background:rgb(214, 214, 226);color:darkblue;padding:10px 13px;border-radius: 50%;" class="fa-solid fa-chevron-right"></i></button>
+        <button @click="open = false" class="block ml-2" type="submit"><img style="width:25px" src="{% static 'icons/send-icon.png' %}"></button>
     </form>
 </div>
 

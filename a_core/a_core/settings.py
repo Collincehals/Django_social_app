@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_cleanup.apps.CleanupConfig',
     'django.contrib.sites',
+    'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
     'allauth',
     'allauth.account',
@@ -92,19 +93,28 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+
 # Provider specific settings
+import os
+
 SOCIALACCOUNT_PROVIDERS = {
-    'github': {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
+    'google': {
         'APP': {
-            'client_id': '1fa2452fb162504a43fd',
-            'secret': 'bd3d13a92d53e2afdb1bd484e679c59481d2172a',
-            'key': ''
+            'client_id':os.environ.get('GOOGLE_CLIENT_ID'),
+            'secret': os.environ.get('GOOGLE_SECRET'),
+            'key': '',
+        }
+    },
+    
+    'github': {
+        'APP': {
+            'client_id': os.environ.get ('GITHUB_CLIENT_ID'),
+            'secret': os.environ.get('GITHUB_SECRET'),
+            'key': '',
         }
     }
 }
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

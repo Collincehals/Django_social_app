@@ -24,13 +24,15 @@
       border: 1px solid #ccc;
   }
   .login-form {
-      padding: 20px;
+      padding: 5px 15px;
   }
   input {
       background:rgb(241, 240, 253);
       padding: 13px;
       border-radius: 3px;
+      width:100%;
   }
+  
   @media (max-width: 768px) {
       .login-container {
           grid-template-columns:100%;
@@ -52,36 +54,33 @@
     <h2 style="text-align: center;padding-top: 1rem;">{% trans "Login to Colltech" %}</h2>
     <div style="padding:15px;">
     {% if socialaccount_providers %}
-      <p>{% blocktrans with site.name as site_name %}Please sign in with one
-      of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+      <p style="text-align: start;color:darkblue;">{% blocktrans with site.name as site_name %}Please sign in with one
+      of your existing third party accounts. Or, <a href="{{ signup_url }}"><span style="color:blue;text-decoration: underline;">sign up</span></a>
       for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+     
 
       <div class="socialaccount_ballot">
-
         <ul class="socialaccount_providers">
           {% include "socialaccount/snippets/provider_list.html" with process="login" %}
         </ul>
-
-        <div class="login-or">{% trans 'or' %}</div>
       </div>
 
       {% include "socialaccount/snippets/login_extra.html" %}
-
       {% else %}
+
       <p style="padding-left:1rem;">{% blocktrans %}Don't have an account?
       <a href="{{ signup_url }}" style="color:darkblue;text-decoration: underline;">sign up</a>{% endblocktrans %}</p>
       {% endif %}
     </div>
     <form class="login-form" method="POST" action="{% url 'account_login' %}">
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ form }}
       {% if redirect_field_value %}
       <div style="margin-bottom:40px;">
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
       </div>
       {% endif %}
-      <a style="display:block;padding-bottom: 1.2rem;color:darkblue;" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-      <button class="primaryAction successbtn" type="submit">{% trans "Login" %}</button>
+      <button style="margin-top:8px;" class="primaryAction successbtn" type="submit">{% trans "Login" %}</button>
     </form>
   </div>
 </div>
