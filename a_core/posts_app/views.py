@@ -4,8 +4,8 @@ from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import PasswordResetForm, PasswordChangeForm
 from django.contrib import messages
+from django.core.mail import send_mail
 
 
 # Create your views here.
@@ -24,7 +24,7 @@ def create_post_view(request):
             post.author = request.user
             post.save()
             messages.success(request,'Post created successfully!')
-            return redirect('home')
+            return redirect('view-profile')
     return render(request, 'a_posts/create_post.html', {'form': form})
 
 def PostView(request, pk):
@@ -63,17 +63,43 @@ def PostDeleteView(request, pk):
         return redirect('home')
     return render(request, 'a_posts/post_delete.html', {'post': post})
 
-def like_post(request, pk):
-    post = get_object_or_404(Post, id=pk)
-    user_exists = post.likes.filter(username=request.user.username).exists()
-    
-    if post.author != request.user:
-        if user_exists:
-            post.likes.remove(request.user)
-        else:
-            post.likes.add(request.user)
+def like_toggle(model):
+    def inner_func(func):
+        def wrapper(request, *args, **kwargs):
+            post = get_object_or_404(model, id=kwargs.get('pk'))
+            user_exists = post.likes.filter(username=request.user.username).exists()
+            
+            if post.author!= request.user:
+                if user_exists:
+                    post.likes.remove(request.user)
+                else:
+                    post.likes.add(request.user)
+            return func(request,post)
+        return wrapper
+    return inner_func
+
+#Posts, post comments and post comment replies likes:
+@like_toggle(Post)
+def like_post(request, post):
     return render(request, 'snippets/posts_likes.html', {'post': post})
 
+
+@like_toggle(PostComment)
+def post_comment_like_view(request, comment):
+    return render(request, 'snippets/posts_comment_likes.html', {'comment': comment})
+
+
+def post_comment_reply_like_view(request, pk):
+    reply = get_object_or_404(PostCommentReply, id=pk)
+    user_exists = reply.likes.filter(username=request.user.username).exists()
+    
+    if reply.author != request.user:
+        if user_exists:
+            reply.likes.remove(request.user)
+        else:
+            reply.likes.add(request.user)
+    return render(request, 'snippets/post_comment_reply_likes.html', {'reply': reply})
+#End likes list
 
 @login_required(login_url='account_login')
 def post_comment_sent_view(request, pk):
@@ -86,17 +112,6 @@ def post_comment_sent_view(request, pk):
             comment.parent_post = post
             comment.save()
     return redirect('view-post', post.id)
-
-def post_comment_like_view(request, pk):
-    comment = get_object_or_404(PostComment, id=pk)
-    user_exists = comment.likes.filter(username=request.user.username).exists()
-    
-    if comment.author != request.user:
-        if user_exists:
-            comment.likes.remove(request.user)
-        else:
-            comment.likes.add(request.user)
-    return render(request, 'snippets/posts_comment_likes.html', {'comment': comment})
 
 
 def PostCommentDeleteView(request, pk):
@@ -119,16 +134,6 @@ def post_comment_reply_sent_view(request, pk):
             reply.save()
     return redirect('view-post', comment.parent_post.id) 
 
-def post_comment_reply_like_view(request, pk):
-    reply = get_object_or_404(PostCommentReply, id=pk)
-    user_exists = reply.likes.filter(username=request.user.username).exists()
-    
-    if reply.author != request.user:
-        if user_exists:
-            reply.likes.remove(request.user)
-        else:
-            reply.likes.add(request.user)
-    return render(request, 'snippets/post_comment_reply_likes.html', {'reply': reply})
 
 
 @login_required(login_url='account_login')
@@ -152,7 +157,7 @@ def CreateNoteView(request):
             note.author  = request.user
             note.save()
             messages.success(request,'Note created successfully!')
-            return redirect('notes')
+            return redirect('view-profile')
     else:
         form = CreateNote()
     return render(request, 'a_posts/create_notes.html', {'form': form})
@@ -169,10 +174,19 @@ def NoteEditView(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request,'Note updated successfully!')
+            user_email = request.session.get('email')
+            print(f"User email from session: {user_email}")
+            send_mail(
+                'Hello from Colltech Team',
+                'This is a test email from Colltech.Note edited successfully',
+                'colltechcareers@gmail.com',
+                [user_email],
+                fail_silently=False,
+            )
             return redirect('notes')
     context = {
         'note': note,
-        'form': form
+        'form': form,
     }
     return render(request, 'a_posts/note_edit.html', context)
 
@@ -193,29 +207,3 @@ def like_note (request, pk):
         else:
             note.likes.add(request.user)
     return render(request, 'snippets/notes_likes.html',{'note':note})
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-from django.core.mail import send_mail
-def send_email_view(request):
-    user_email = request.POST.get('email') or request.session.get('email')
-    send_mail(
-        'Hello from Colltech Team',
-        'This is a test email from Colltech.',
-        'colltechcareers@gmail.com',
-        [user_email],
-        fail_silently=False,
-    )
-    return HttpResponse('Email sent successfully.')

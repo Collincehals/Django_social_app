@@ -1,0 +1,41 @@
+<card class="card">
+    <div class="flex items-center justify-between">
+    <a class="flex items-center gap-1 mb-2 mt-3 ml-1" href="{% url 'userprofile' post.author.username %}">
+        <img class="w-8 h-8 object-cover rounded-full" src="{{ post.author.profile.image.url }}">
+        <span class="font-bold hover:underline">{{ post.author.profile.realname }}</span>
+        <span class="text-sm text-gray-400">@ {{ post.author }}</span>
+    </a>
+    <div style="margin-right:10px;">
+        <div class="text-sm text-gray-400 truncate"><a target="_blank" href="https://www.flickr.com/explore">flickr</a><a href="{% url 'userprofile' post.author.username %}" class="hover:underline ml-1" >@ {{ post.author }}</a></div>
+    </div>
+   </div>
+    <h3 class="text-start pl-2 pt-0.3 pb-1">{{ post.title }}</h3>
+    <figure>
+        <a href="{% url 'view-post' post.id %}"><img class="w-full" src="{{ post.image }}"></a>
+    </figure>
+    <div class="pt-2 px-4  ">
+        
+        <p class="text-2xl mb-4 font1">{{ post.body }}</p>
+        <div class="flex items-center gap-2 text-sm mb-5 flex-wrap">
+            <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Animals</a>
+            <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Black & White</a>
+        </div>
+        <div style="display: flex; flex-wrap: wrap;justify-content: center; align-items: center;gap:30px;">
+            {% if post.comments.count %}
+            <p><a class="font-bold" href="{% url 'view-post' post.id %}">
+            <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="font-light text-gray-500 ml-1">{{ post.comments.count }}</span></a>
+            </p>
+            {% else %}
+            <p style="font-weight:600;color: darkblue;"><a href="{% url 'view-post' post.id %}">
+            <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="text-black-800">+</span></a>
+            </p>
+            {% endif %}
+            <p><a href="{% url 'edit-post' post.id %}"><i class="fa-solid fa-retweet" style="color:darkblue;font-size:20px;"></i></a></p>
+            {% include 'snippets/posts_likes.html' %}
+            {% if user.is_superuser or user == post.author %}
+            <p><a href="{% url 'edit-post' post.id %}"><i class="fa-regular fa-pen-to-square" style="color:darkblue;font-size:17px;"></i></a></p>
+            <p><a href="{% url 'delete-post' post.id %}"><i class="fa-regular fa-trash-can" style="color:darkblue;font-size:17px;"></i></a></p>
+            {% endif %}
+    </div>
+    </div>
+</card>

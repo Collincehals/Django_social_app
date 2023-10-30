@@ -10,7 +10,11 @@
             <div class="text-center flex flex-col items-center">
                 <img class="w-20 h-20 rounded-full object-cover mb-4" src="{{ profile.image.url }}" />
                 <div class="text-center max-w-md">
+                    {% if profile.realname %}
                     <h2>{{ profile.realname }}</h2>
+                    {% else %}
+                    <h2>{{ profile.user.username }}</h2>
+                    {% endif %}
                     <div class="text-gray-400 mb-2 -mt-3">@ {{ profile.user.username }}</div>
                     <div class="flex items-center justify-center mx-auto">
                         <img class="object-cover h-6 mr-1 opacity-60" src="https://img.icons8.com/material-outlined/50/000000/marker.png"> 
@@ -33,118 +37,101 @@
         </div>
     </div>
 
-    <div id="tabs" class="flex justify-center my-4 gap-2 flex-wrap" > 
+    <div id="tabs" style="display:flex; justify-content:center; margin: 40px auto; gap:20px; flex-wrap:wrap" > 
         <a class="tab selected">Latest</a>
         <a class="tab">Top Posts</a>  
         <a class="tab">Top Comments</a>
         <a class="tab">Liked Posts</a>
     </div>
-
-    <div id="tab-contents" class="w-full flex flex-col items-center">
-        
-        <div class="grid place-items-center max-w-xl mx-auto lg:grid-cols-2 lg:max-w-5xl xl:grid-cols-3 xl:max-w-7xl">
-
-        <article class="card">
-            <div class="flex items-center justify-between px-4 h-14">
-                <h3 class="text-start leading-5 mr-1">{{ user.username }}</h3>
-                <div class="text-sm text-gray-400 truncate">flickr<a href="" class="hover:underline ml-1" target="blank">@John Doe</a></div>
-            </div>
-            <figure>
-                <a href=""><img class="w-full" src="https://live.staticflickr.com/65535/50618365686_36f887ab88_c.jpg"></a>
-            </figure>
-            <div class="p-4 pb-2">
-                <a class="flex items-center gap-1 mb-4" href="">
-                    <img class="w-8 h-8 object-cover rounded-full" src="https://img.icons8.com/small/96/A9A9A9/happy.png">
-                    <span class="font-bold hover:underline">Lisa</span>
-                    <span class="text-sm text-gray-400">@lisasimpson</span>
+        {% if user == profile.user %}
+        <div style="width:90%;max-width:300px;margin:20px auto;font-weight:700;font-family: sans-serif;text-align:center;color:darkorange;border-bottom: 2px solid #ccc;"><h2>Your Posts</h2></div>
+        {% else %}
+        <div style="width:90%;max-width:300px;margin:20px auto;font-weight:700;font-family: sans-serif;text-align:center;color:darkorange;border-bottom: 2px solid #ccc;"><h2>Posts by {{ profile.user.username }}</h2></div>
+        {% endif %}
+        <div class="grid gap:2 lg:gap-8 overflow-hidden mb-10 max-w-xl mx-4 lg:mx-8  lg:grid-cols-2 lg:max-w-5xl xl:grid-cols-3 xl:max-w-7xl">
+        {% for post in posts %}
+        <article class="profile-post">
+            <div class="flex items-center justify-between">
+                <a class="flex items-center gap-1 mb-2 mt-3 ml-1" href="{% url 'userprofile' post.author.username %}">
+                    <img class="w-8 h-8 object-cover rounded-full" src="{{ post.author.profile.image.url }}">
+                    <span class="font-bold hover:underline">{{ post.author.profile.realname }}</span>
+                    <span class="text-sm text-gray-400">@ {{ post.author }}</span>
                 </a>
-                <p class="text-5xl mb-10 px-4 font1">Jedi Kitty protects the street</p>
+                <div style="margin-right:10px;">
+                    <div class="text-sm text-gray-400 truncate"><a target="_blank" href="https://www.flickr.com/explore">flickr</a><a href="{% url 'userprofile' post.author.username %}" class="hover:underline ml-1" >@ {{ post.author }}</a></div>
+                </div>
+               </div>
+                <h3 class="text-start pl-2 pt-0.3 pb-1">{{ post.title }}</h3>
+            <figure>
+                <a href="{% url 'view-post' post.id %}"><img class="w-full" src="{{ post.image }}"></a>
+            </figure>
+            <div class="pt-2 px-4  ">
+                <p class="text-2xl mb-4 font1">{{ post.body }}</p>
                 <div class="flex items-center gap-2 text-sm mb-5 flex-wrap">
-                    <a class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white" href="">Animals</a>
-                    <a class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white" href="">Black & White</a>
+                    <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Animals</a>
+                    <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Black & White</a>
                 </div>
-                <div class="flex items-center justify-between text-sm px-2">
-                    <a class="font-bold hover:underline" href="">Comments<span class="font-light text-gray-500 ml-2">3</span></a>
-                    <div class="flex items-center gap-4 [&>a:hover]:underline">
-                        <div class="flex items-center gap-1">
-                            <img class="w-5 -mt-1" src="https://img.icons8.com/small/24/000000/fire-heart.png">1</div>
-                        <a href="">Like</a>
-                        <a href="">Edit</a>
-                        <a href="">Delete</a>
-                    </div>
-                </div>
+                <div style="display: flex; flex-wrap: wrap;justify-content: center; align-items: center;gap:30px;">
+                    {% if post.comments.count %}
+                    <p><a class="font-bold" href="{% url 'view-post' post.id %}">
+                    <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="font-light text-gray-500 ml-1">{{ post.comments.count }}</span></a>
+                    </p>
+                    {% else %}
+                    <p style="font-weight:600;color: darkblue;"><a href="{% url 'view-post' post.id %}">
+                    <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="text-black-800">+</span></a>
+                    </p>
+                    {% endif %}
+                    <p><a href="{% url 'edit-post' post.id %}"><i class="fa-solid fa-retweet" style="color:darkblue;font-size:20px;"></i></a></p>
+                    {% include 'snippets/posts_likes.html' %}
+                    {% if user.is_superuser or user == post.author %}
+                    <p><a href="{% url 'edit-post' post.id %}"><i class="fa-regular fa-pen-to-square" style="color:darkblue;font-size:17px;"></i></a></p>
+                    <p><a href="{% url 'delete-post' post.id %}"><i class="fa-regular fa-trash-can" style="color:darkblue;font-size:17px;"></i></a></p>
+                    {% endif %}
+            </div>
             </div>
         </article>
-
-        <article class="card">
-            <div class="flex items-center justify-between px-4 h-14">
-                <h3 class="text-start leading-5 mr-1">Little Jedi</h3>
-                <div class="text-sm text-gray-400 truncate">flickr<a href="" class="hover:underline ml-1" target="blank">@John Doe</a></div>
-            </div>
-            <figure>
-                <a href=""><img class="w-full" src="https://live.staticflickr.com/65535/50618365686_36f887ab88_c.jpg"></a>
-            </figure>
-            <div class="p-4 pb-2">
-                <a class="flex items-center gap-1 mb-4" href="">
-                    <img class="w-8 h-8 object-cover rounded-full" src="https://img.icons8.com/small/96/A9A9A9/happy.png">
-                    <span class="font-bold hover:underline">Lisa</span>
-                    <span class="text-sm text-gray-400">@lisasimpson</span>
-                </a>
-                <p class="text-5xl mb-10 px-4 font1">Jedi Kitty protects the street</p>
-                <div class="flex items-center gap-2 text-sm mb-5 flex-wrap">
-                    <a class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white" href="">Animals</a>
-                    <a class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white" href="">Black & White</a>
-                </div>
-                <div class="flex items-center justify-between text-sm px-2">
-                    <a class="font-bold hover:underline" href="">Comments<span class="font-light text-gray-500 ml-2">3</span></a>
-                    <div class="flex items-center gap-4 [&>a:hover]:underline">
-                        <div class="flex items-center gap-1">
-                            <img class="w-5 -mt-1" src="https://img.icons8.com/small/24/000000/fire-heart.png">1</div>
-                        <a href="">Like</a>
-                        <a href="">Edit</a>
-                        <a href="">Delete</a>
-                    </div>
-                </div>
-            </div>
-
-        </article>
-
-        <article class="card">
-            <div class="flex items-center justify-between px-4 h-14">
-                <h3 class="text-start leading-5 mr-1">Little Jedi</h3>
-                <div class="text-sm text-gray-400 truncate">flickr<a href="" class="hover:underline ml-1" target="blank">@John Doe</a></div>
-            </div>
-            <figure>
-                <a href=""><img class="w-full" src="https://live.staticflickr.com/65535/50618365686_36f887ab88_c.jpg"></a>
-            </figure>
-            <div class="p-4 pb-2">
-                <a class="flex items-center gap-1 mb-4" href="">
-                    <img class="w-8 h-8 object-cover rounded-full" src="https://img.icons8.com/small/96/A9A9A9/happy.png">
-                    <span class="font-bold hover:underline">Lisa</span>
-                    <span class="text-sm text-gray-400">@lisasimpson</span>
-                </a>
-                <p class="text-5xl mb-10 px-4 font1">Jedi Kitty protects the street</p>
-                <div class="flex items-center gap-2 text-sm mb-5 flex-wrap">
-                    <a class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white" href="">Animals</a>
-                    <a class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white" href="">Black & White</a>
-                </div>
-                <div class="flex items-center justify-between text-sm px-2">
-                    <a class="font-bold hover:underline" href="">Comments<span class="font-light text-gray-500 ml-2">3</span></a>
-                    <div class="flex items-center gap-4 [&>a:hover]:underline">
-                        <div class="flex items-center gap-1">
-                            <img class="w-5 -mt-1" src="https://img.icons8.com/small/24/000000/fire-heart.png">1</div>
-                        <a href="">Like</a>
-                        <a href="">Edit</a>
-                        <a href="">Delete</a>
-                    </div>
-                </div>
-            </div>
-
-        </article>
-
+        {% empty %}
+        <div style="display: flex; justify-content: center;align-items: center; color:darkblue;font-weight: 600;margin-top:60px;">
+            <h3>No Posts Yet :(</h3>
+        </div> 
+        {% endfor %}
         </div>
+  
+        {% if user == profile.user %}
+        <div style="width:90%;max-width:300px;margin:20px auto;font-weight:700;font-family: sans-serif;text-align:center;color:darkorange;border-bottom: 2px solid #ccc;"><h2>Your Notes</h2></div>
+        {% else %}
+        <div style="width:90%;max-width:300px;margin:20px auto;font-weight:700;font-family: sans-serif;text-align:center;color:darkorange;border-bottom: 2px solid #ccc;"><h2>Notes by {{ profile.user.username }}</h2></div>
+        {% endif %}
 
+ {% for note in notes %}
+ <div  style="padding:25px;margin:20px auto; word-spacing: 3px;text-align: justify;background-color: rgb(240, 240, 250);border-radius: 15px;max-width:800px; width:100%;border:1px solid #ccc;">
+    <a class="flex gap-1 mb-2" href="{% url 'userprofile' note.author.username %}" style="background:rgb(249, 249, 251);padding:10px;border-radius:10px;">
+        <img class="w-8 h-8 object-cover rounded-full" src="{{ note.author.profile.image.url }}">
+        <p>@ <span style="color:darkblue; font-weight: bold;">{{ note.author.profile.realname }}</span>  :{{ note.created_at }}</p>
+    </a>
+    <div style="margin-bottom:8px;padding-bottom: 10px; color:darkblue; text-align: justify;line-height: 18px;font-size: 18px;font-weight: 600;border-bottom: 1px solid #ccc;">
+        {{ note.title }}
     </div>
+   
+    <div style="margin-bottom:20px; color:black; text-align: justify;line-height: 20px;font-size: 16px;">
+        {{ note.description|linebreaksbr }}
+    </div>
+    <div style="display: flex; flex-wrap: wrap;justify-content: flex-start; gap:30px;align-items: center;">
+        <p><a class="font-bold hover:underline" href=""><i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="font-light text-gray-500 ml-1">3</span></a>
+        </p>
+        
+        {% include 'snippets/notes_likes.html' %}
 
+        {% if user == note.author or user.is_superuser %}
+        <p><a href="{% url 'edit-note' note.id %}"><i class="fa-regular fa-pen-to-square" style="color:darkblue;font-size:17px;"></i></a></p>
+        <p><a href="{% url 'delete-note' note.id %}"><i class="fa-regular fa-trash-can" style="color:darkblue;font-size:17px;"></i></a></p>
+        {% endif %}
+    </div>
+ </div>
+{% empty %}
+<div style="display: flex; justify-content: center;align-items: center; color:darkblue;font-weight: 600;margin-top:60px;">
+    <h3>No Notes Yet :(</h3>
+</div> 
+{% endfor %}
 </div>
 {% endblock %}

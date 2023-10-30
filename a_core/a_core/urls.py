@@ -34,6 +34,7 @@ urlpatterns = [
     path('notes/',NotesView, name="notes"),
     path('delete/note/<pk>/',NoteDeleteView, name="delete-note"),
     path('delete/post/<pk>/',PostDeleteView, name="delete-post"),
+    path('post/<pk>/',PostView, name="view-post"),
     path('post/edit/<pk>/',PostEditView, name="edit-post"),
     path('post/like/<pk>/',like_post, name="like-post"),
     path('post/comment/<pk>/',post_comment_sent_view, name="sent-post-comment"),
@@ -44,12 +45,10 @@ urlpatterns = [
     path('delete/post/comment/<pk>/',PostCommentDeleteView, name="delete-post-comment"),
     path('note/edit/<pk>/',NoteEditView, name="edit-note"),
     path('note/like/<pk>/',like_note, name="like-note"),
-    path('post/<pk>/',PostView, name="view-post"),
     path('profile/',ProfileView, name="view-profile"),
     path('<username>/',ProfileView, name="userprofile"),
     path('profile/edit/',EditProfileView, name="edit-profile"),
     path('profile/delete/',DeleteProfileView, name="delete-profile"),
-    path('send/email/',send_email_view, name="send-email"),  
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -28,11 +28,12 @@ class CreatePostForm(ModelForm):
         model = Post
         fields = ['title', 'image', 'body']
         labels = {
-            'body': 'Caption'
+            'body': 'Caption',
+            'image':'Image URL',
         }
         widgets = {
         'body': forms.Textarea (attrs={'rows':3, 'placeholder':'Enter Caption here...', 'class': 'font1 text 4xl' }),
-        'url': forms.TextInput (attrs={'placeholder':'Enter URL here...'})
+        'image': forms.TextInput (attrs={'placeholder':'Enter URL here...'})
         }
         
 class PostCommentForm(ModelForm):

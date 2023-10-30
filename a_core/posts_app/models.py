@@ -5,9 +5,7 @@ from django.contrib.auth.models import User
 class Post(models.Model):
     author = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    artist = models.CharField(max_length=200, null=True)
-    url = models.URLField(max_length=200, null=True)
-    image = models.URLField(max_length=200)
+    image = models.URLField(max_length=200, null=True)
     body = models.TextField()
     likes = models.ManyToManyField(User, related_name="likedposts", through="LikedPost")
     created = models.DateTimeField(auto_now_add=True)

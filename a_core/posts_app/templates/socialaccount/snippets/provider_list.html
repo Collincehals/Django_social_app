@@ -2,8 +2,9 @@
 {% get_providers as socialaccount_providers %}
 {% if socialaccount_providers %}
     {% element provider_list %}
-    <div style="display: flex; flex-wrap:wrap; gap:30px; align-items: center; justify-content: center; color:darkblue;font-weight:600;background:rgb(241,243,253);padding:10px;border-radius:20px;">
+   
         {% for provider in socialaccount_providers %}
+        <div style="text-align: center;color:darkblue;font-weight:600;background:rgb(241,243,253);padding:10px;border-radius:20px; margin-bottom:10px;">
             {% if provider.id == "openid" %}
                 {% for brand in provider.get_brands %}
                     {% provider_login_url provider openid=brand.openid_url process=process as href %}
@@ -14,7 +15,8 @@
             {% provider_login_url provider process=process scope=scope auth_params=auth_params as href %}
             {% element provider name=provider.name provider_id=provider.id href=href %}
             {% endelement %}
+        </div>
         {% endfor %}
-    </div>
+    
     {% endelement %}
 {% endif %}
