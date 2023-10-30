@@ -1,5 +1,4 @@
 <div>
-{% if user.is_authenticated %}
     <p style='display:flex; gap:10px;cursor:pointer; align-items: center;'>
         <a  
         hx-get="{% url 'like-post' post.id %}"
@@ -12,5 +11,4 @@
         {% endif %}</a>
         {{  post.likes.count }}
     </p>
-{% endif %}
 </div>

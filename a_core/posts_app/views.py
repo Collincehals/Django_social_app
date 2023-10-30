@@ -79,11 +79,11 @@ def like_toggle(model):
     return inner_func
 
 #Posts, post comments and post comment replies likes:
+  
 @like_toggle(Post)
 def like_post(request, post):
     return render(request, 'snippets/posts_likes.html', {'post': post})
-
-
+  
 @like_toggle(PostComment)
 def post_comment_like_view(request, comment):
     return render(request, 'snippets/posts_comment_likes.html', {'comment': comment})

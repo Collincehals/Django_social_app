@@ -30,12 +30,14 @@
             <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="text-black-800">+</span></a>
             </p>
             {% endif %}
-            <p><a href="{% url 'edit-post' post.id %}"><i class="fa-solid fa-retweet" style="color:darkblue;font-size:20px;"></i></a></p>
+            
+            <p><a href="{% url 'view-post' post.id %}"><i class="fa-solid fa-retweet" style="color:darkblue;font-size:20px;"></i></a></p>
             {% include 'snippets/posts_likes.html' %}
             {% if user.is_superuser or user == post.author %}
             <p><a href="{% url 'edit-post' post.id %}"><i class="fa-regular fa-pen-to-square" style="color:darkblue;font-size:17px;"></i></a></p>
             <p><a href="{% url 'delete-post' post.id %}"><i class="fa-regular fa-trash-can" style="color:darkblue;font-size:17px;"></i></a></p>
             {% endif %}
+            
     </div>
     </div>
 </card>
