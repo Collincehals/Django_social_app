@@ -23,8 +23,9 @@
         <div style="display: flex; flex-wrap: wrap;justify-content: center; align-items: center;gap:30px;">
             {% if post.comments.count %}
             <p><a class="font-bold" href="{% url 'view-post' post.id %}">
-            <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="font-light text-gray-500 ml-1">{{ post.comments.count }}</span></a>
-            </p>
+            <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i>
+            <span id="commentscount-{{ post.id }}" class="font-light text-gray-500 ml-1">{{ post.comments.count }}</span>
+            </a></p>
             {% else %}
             <p style="font-weight:600;color: darkblue;"><a href="{% url 'view-post' post.id %}">
             <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="text-black-800">+</span></a>
@@ -36,8 +37,7 @@
             {% if user.is_superuser or user == post.author %}
             <p><a href="{% url 'edit-post' post.id %}"><i class="fa-regular fa-pen-to-square" style="color:darkblue;font-size:17px;"></i></a></p>
             <p><a href="{% url 'delete-post' post.id %}"><i class="fa-regular fa-trash-can" style="color:darkblue;font-size:17px;"></i></a></p>
-            {% endif %}
-            
+            {% endif %} 
     </div>
     </div>
 </card>

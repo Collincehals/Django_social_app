@@ -104,6 +104,7 @@ def post_comment_reply_like_view(request, pk):
 @login_required(login_url='account_login')
 def post_comment_sent_view(request, pk):
     post= get_object_or_404(Post,id=pk)
+    commentreplyform = PostCommentReplyForm()
     if request.method == 'POST':
         form = PostCommentForm(request.POST)
         if  form.is_valid():
@@ -111,9 +112,16 @@ def post_comment_sent_view(request, pk):
             comment.author = request.user
             comment.parent_post = post
             comment.save()
-    return redirect('view-post', post.id)
-
-
+            messages.success(request,"Comment added successfully")
+    context ={
+        'comment':comment,
+        'post': post,
+        'commentreplyform': commentreplyform
+    }
+    return render(request, 'snippets/add_postcomment.html', context)
+    
+ 
+ 
 def PostCommentDeleteView(request, pk):
     comment = get_object_or_404(PostComment, id=pk, author=request.user)
     if request.method == 'POST':
@@ -125,14 +133,20 @@ def PostCommentDeleteView(request, pk):
 @login_required(login_url='account_login')
 def post_comment_reply_sent_view(request, pk):
     comment= get_object_or_404(PostComment,id=pk)
+    commentreplyform = PostCommentReplyForm()
     if request.method == 'POST':
         form = PostCommentReplyForm(request.POST)
-        if  form.is_valid():
+        if  form.is_valid(): 
             reply = form.save(commit=False)
             reply.author = request.user
             reply.parent_comment = comment
             reply.save()
-    return redirect('view-post', comment.parent_post.id) 
+    context ={
+        'comment':comment,
+        'reply':reply,
+        'commentreplyform': commentreplyform,
+    }
+    return render(request, 'snippets/add_postcommentreply.html', context)
 
 
 

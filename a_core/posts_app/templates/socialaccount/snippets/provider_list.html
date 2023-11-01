@@ -4,7 +4,7 @@
     {% element provider_list %}
    
         {% for provider in socialaccount_providers %}
-        <div style="text-align: center;color:darkblue;font-weight:600;background:rgb(241,243,253);padding:10px;border-radius:20px; margin-bottom:10px;">
+        <div style="width:90%; max-width:300px;margin:0 auto; text-align: center;color:darkblue;font-weight:600;background:rgb(241,243,253);padding:10px;border-radius:5px; margin-bottom:10px;border:0.2px solid rgb(210, 210, 227);">
             {% if provider.id == "openid" %}
                 {% for brand in provider.get_brands %}
                     {% provider_login_url provider openid=brand.openid_url process=process as href %}

@@ -8,15 +8,14 @@
 {% block content %}
 <style>
   .login-container {
-      max-width: 700px;
+      max-width:800px;
       border: 1px solid #ccc;
       display:grid;
       grid-template-columns:repeat(2, 1fr);
       justify-content: center;
   }
   .img-container {
-      overflow:hidden;
-      padding:20px; 
+      object-fit: cover;
       background-color: rgb(241, 240, 253);
   }
   .login-form-container {
@@ -24,15 +23,16 @@
       border: 1px solid #ccc;
   }
   .login-form {
-      padding: 5px 15px;
+      padding: 0px 15px;
   }
   input {
       background:rgb(241, 240, 253);
       padding: 13px;
       border-radius: 3px;
       width:100%;
+      border:0.2px solid rgb(210, 210, 227);
   }
-  
+
   @media (max-width: 768px) {
       .login-container {
           grid-template-columns:100%;
@@ -48,17 +48,16 @@
 
 <div class='login-container'>
   <div class="img-container">
-      <img class="img-fluid" src="{% static 'icons/signin.png' %}" alt="login-img">
+      <img style="height:300px;width:auto;margin-top:100px; "  src="{% static 'icons/login.png' %}" alt="login-img">
   </div>
   <div class="login-form-container">
-    <h2 style="text-align: center;padding-top: 1rem;">{% trans "Login to Colltech" %}</h2>
-    <div style="padding:15px;">
+    <div style="display:flex; justify-content:center; align-items:center; gap:10px;margin-top:20px;">
+      <img  id="logo-home" class="w-9 -mt-1" src="{% static 'icons/logo-home.png' %}">
+      <h2 style="color:darkblue;">{% trans "Login to Colltech" %}</h2>
+  </div>
+    <div style="padding:10px;">
     {% if socialaccount_providers %}
-      <p style="text-align: start;color:darkblue;">{% blocktrans with site.name as site_name %}Please sign in with one
-      of your existing third party accounts. Or, <a href="{{ signup_url }}"><span style="color:blue;text-decoration: underline;">sign up</span></a>
-      for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
-     
-
+      <p style="text-align: center;color:darkblue;">Continue with...</p>
       <div class="socialaccount_ballot">
         <ul class="socialaccount_providers">
           {% include "socialaccount/snippets/provider_list.html" with process="login" %}
@@ -72,15 +71,21 @@
       <a href="{{ signup_url }}" style="color:darkblue;text-decoration: underline;">sign up</a>{% endblocktrans %}</p>
       {% endif %}
     </div>
+    <div style="display:flex; justify-content:center; align-items: center; color:blue;font-size:16px;margin:0 auto;">
+      <span>------------------</span><b>or</b><span>------------------</span>
+    </div>
+    <p style="text-align:center;color:darkblue;padding:10px 20px;">{% blocktrans with site.name as site_name %}<a href="{{ signup_url }}"><span style="color:blue;">Sign up</span></a>
+      for a {{ site_name }} account and sign in below:{% endblocktrans %}
+    </p>
+
     <form class="login-form" method="POST" action="{% url 'account_login' %}">
       {% csrf_token %}
-      {{ form }}
+      {{ form.as_p }}
+      <div style="margin-bottom:10px;">Forgot Password?<span style="color:blue;text-decoration: underline;"><a href="{% url 'account_reset_password' %}">Reset</a></span></div>
       {% if redirect_field_value %}
-      <div style="margin-bottom:40px;">
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-      </div>
       {% endif %}
-      <button style="margin-top:8px;" class="primaryAction successbtn" type="submit">{% trans "Login" %}</button>
+      <button style="margin-top:2px;margin-bottom:10px;" class="primaryAction successbtn" type="submit">{% trans "Login" %}&raquo;</button>
     </form>
   </div>
 </div>

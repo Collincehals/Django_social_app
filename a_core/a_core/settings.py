@@ -194,7 +194,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/home'
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 
 ACCOUNT_USERNAME_BLACKLIST = ['admin', 'accounts','profile','note','post', 'category' ]

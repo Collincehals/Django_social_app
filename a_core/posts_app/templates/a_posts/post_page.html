@@ -3,15 +3,22 @@
 {% block title %} Post - {{ post.title }} - {{ post.id }} {% endblock %}
 
 {% block content %}
-{% include 'includes/article.html' %}
+{% include 'a_posts/post.html' %}
 {% load static %}
+
+{% if user.is_authenticated %}
 <div class="card !pb-0 -mt-3">
-    <form method="POST" action="{%  url 'sent-post-comment' post.id %}" class="flex items-center p-4" autocomplete="off">
+    <form  class="flex items-center p-4" autocomplete="off" 
+     hx-post="{% url 'sent-post-comment' post.id %}"
+     hx-target="#tab-contents"
+     hx-swap="beforeend"
+     _="on htmx:afterRequest reset() me">
         {% csrf_token %}
         {{ commentform }}
         <button @click="open = false" class="block ml-2" type="submit"><img style="width:25px" src="{% static 'icons/send-icon.png' %}"></button>
     </form>
 </div>
+{% endif %}
 
 {% if post.comments.count %}
 <div class="mb-20">
@@ -19,11 +26,13 @@
         <a class="tab selected">Newest First</a> 
         <a class="tab">Top Comments</a>
     </div>
+   
     <div id="tab-contents">
         {% for comment in post.comments.all %}
-        {% include 'snippets/post_comments.html' %}
+        {% include 'a_posts/post_comments.html' %}
         {% endfor %}
     </div>
+    
 </div>
 {% endif %}
 {% endblock %}
