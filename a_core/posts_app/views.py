@@ -6,12 +6,28 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
+from django.db.models import Count
 
 
 # Create your views here.
 def home_view(request):
     posts = Post.objects.all()
-    return render(request, 'a_posts/home.html', {'posts': posts})
+    paginator = Paginator(posts, 3)
+    page = int(request.GET.get('page', 1))
+    try:
+        posts = paginator.page(page)
+    except:
+        return HttpResponse('<div>End of posts</div>')
+    context={
+        'posts': posts,
+        'page': page,
+        }
+     
+    if request.htmx:
+        return render(request, 'snippets/loops_home_posts.html', context)  
+    return render(request, 'a_posts/home.html', context)
+
 
 #POSTS VIEWS
 @login_required(login_url="account_login")      
@@ -31,6 +47,15 @@ def PostView(request, pk):
     post = Post.objects.get(id=pk)
     commentform = PostCommentForm()
     commentreplyform = PostCommentReplyForm
+    
+    if request.htmx:
+        if 'top' in request.GET:
+            comments = post.comments.annotate(num_likes=Count('likes')).filter(num_likes__gt=0).order_by('-num_likes')
+        else:    
+            comments = post.comments.all()
+        return render(request, 'snippets/loop_postpage_comments.html', {'comments': comments, 'commentreplyform': commentreplyform})
+    
+    
     context = {
         'post': post, 
         'commentform': commentform,
