@@ -24,7 +24,7 @@
         <p><a class="font-bold hover:underline" href=""><i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="font-light text-gray-500 ml-1">3</span></a>
         </p>
         {% include 'snippets/notes_likes.html' %}
-        <p><a href="{% url 'edit-note' note.id %}"><i class="fa-solid fa-retweet" style="color:darkblue;font-size:20px;"></i></a></p>
+        <p><a href="{% url 'notes'%}"><i class="fa-solid fa-retweet" style="color:darkblue;font-size:20px;"></i></a></p>
         {% if user == note.author or user.is_superuser %}
         <p><a href="{% url 'edit-note' note.id %}"><i class="fa-regular fa-pen-to-square" style="color:darkblue;font-size:17px;"></i></a></p>
         <p><a href="{% url 'delete-note' note.id %}"><i class="fa-regular fa-trash-can" style="color:darkblue;font-size:17px;"></i></a></p>
@@ -34,7 +34,7 @@
  </div>
 {% empty %}
 <div style="display: flex; justify-content: center;align-items: center; color:darkblue;font-weight: 600;margin-top:60px;">
-    <h3>No Notes Yet ;(</h3>
+    <h3>No Notes Yet :(</h3>
 </div> 
 {% endfor %}
 
