@@ -11,7 +11,7 @@
     <form  class="flex items-center p-4" autocomplete="off" 
      hx-post="{% url 'sent-post-comment' post.id %}"
      hx-target="#tab-contents"
-     hx-swap="beforeend"
+     hx-swap="afterbegin"
      _="on htmx:afterRequest reset() me">
         {% csrf_token %}
         {{ commentform }}
