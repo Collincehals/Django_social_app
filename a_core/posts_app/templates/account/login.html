@@ -81,8 +81,7 @@
     <form class="login-form" method="POST" action="{% url 'account_login' %}">
       {% csrf_token %}
       {{ form }}
-      <div style="margin-top:10px;">Forgot Password?<span style="color:blue;text-decoration: underline;"><a href="{% url 'account_reset_password' %}">Reset</a></span></div>
-      <button style="margin-top:10px;margin-bottom:10px;" class="primaryAction successbtn" type="submit">{% trans "Login" %}&raquo;</button>
+      <button style="margin-top:10px;margin-bottom:20px;" class="primaryAction successbtn" type="submit">{% trans "Login" %}&raquo;</button>
     </form>
   </div>
 </div>
