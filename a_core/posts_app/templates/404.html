@@ -3,9 +3,13 @@
 {% block title %} 404- Page Not Found {% endblock %}
 
 {% block content %}
-<div class="text-center mt-8 mb-8">
-    <h1>Page not found</h1>
+{% load static %}
+
+
+<div style="margin:50px auto; text-align:center; width:100%; max-width:500px;">
+    <img style="margin-left:60px;" src="{% static 'icons/error.png' %}" alt="404-img" >
+    <h1 style="color:red;">Page not found</h1>
     <p class="my-6 mb-8"><b>Error 404 - This page doesn't exist or is unavailable</b></p>
-    <a class="button" href="/">Go Back to Home</a>
+    <a class="successbtn" href="/">Homepage</a>
 </div>
-{% endblock}
+{% endblock %}

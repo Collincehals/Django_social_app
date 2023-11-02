@@ -44,7 +44,7 @@ def create_post_view(request):
     return render(request, 'a_posts/create_post.html', {'form': form})
 
 def PostView(request, pk):
-    post = Post.objects.get(id=pk)
+    post = get_object_or_404(Post, id=pk)
     commentform = PostCommentForm()
     commentreplyform = PostCommentReplyForm
     
@@ -65,7 +65,7 @@ def PostView(request, pk):
 
 
 def PostEditView(request, pk):
-    post = Post.objects.get(id=pk)
+    post = get_object_or_404(Post, id=pk)
     form = PostEditForm(instance=post)
     if request.method == 'POST':
         form = PostEditForm(request.POST, instance=post)
@@ -206,7 +206,7 @@ def NotesView(request):
     return render(request, 'a_posts/notes.html', {'notes': notes})
 
 def NoteEditView(request, pk):
-    note = Note.objects.get(id=pk)
+    note =get_object_or_404(Note, id=pk)
     form = NoteEditForm(instance=note)
     if request.method == 'POST':
         form = NoteEditForm(request.POST, instance=note)
@@ -230,7 +230,7 @@ def NoteEditView(request, pk):
     return render(request, 'a_posts/note_edit.html', context)
 
 def NoteDeleteView(request,pk):
-    note  = Note.objects.get(id=pk)
+    note = get_object_or_404(Note, id=pk)
     if request.method == 'POST':
         note.delete()
         messages.success(request,'Note deleted successfully')
