@@ -6,3 +6,4 @@ django_cleanup
 python-dotenv
 django-allauth
 django_htmx
+django-crispy-forms

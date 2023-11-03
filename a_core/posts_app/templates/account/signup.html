@@ -8,10 +8,10 @@
 <h2 style="font-size:1.6rem;text-align: center;">{% trans "Sign Up" %}</h2>
 
 <p>{% blocktrans %}Already have an account? Then please <a style="color:darkblue;text-decoration: underline;" href="{{ login_url }}">Sign in</a>.{% endblocktrans %}</p>
-
+{% load crispy_forms_tags %}
 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}
-  {{ form.as_p }}
+  {{ form|crispy:'bootstrap5' }}
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}

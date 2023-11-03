@@ -45,7 +45,7 @@
 {% load static %}
 
 {% get_providers as socialaccount_providers %}
-
+{% load crispy_forms_tags %}
 <div class='login-container'>
   <div class="img-container">
       <img style="height:300px;width:auto;margin-top:100px; "  src="{% static 'icons/login.png' %}" alt="login-img">
@@ -80,7 +80,7 @@
 
     <form class="login-form" method="POST" action="{% url 'account_login' %}">
       {% csrf_token %}
-      {{ form }}
+      {{ form|crispy }}
       <button style="margin-top:10px;margin-bottom:20px;" class="primaryAction successbtn" type="submit">{% trans "Login" %}&raquo;</button>
     </form>
   </div>

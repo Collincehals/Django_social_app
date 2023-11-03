@@ -22,8 +22,6 @@ from a_users.views import *
 from django.conf import settings
 from django.conf.urls.static import static
 
-
-
 urlpatterns = [
     path('hals/', admin.site.urls),
     path('accounts/', include('allauth.urls')),

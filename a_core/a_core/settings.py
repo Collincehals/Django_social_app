@@ -24,7 +24,7 @@ import os
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['colltechgallery.onrender.com',
                  '127.0.0.1'
@@ -50,14 +50,20 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'posts_app',
     'a_users',
-    "django_htmx",  
+    "django_htmx", 
+    'crispy_forms', 
+    'crispy_bootstrap5',
 ]
 
 SITE_ID = 1
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -92,15 +98,12 @@ WSGI_APPLICATION = 'a_core.wsgi.application'
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
     # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-
 # Provider specific settings
 import os
-
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
@@ -109,7 +112,6 @@ SOCIALACCOUNT_PROVIDERS = {
             'key': '',
         }
     },
-    
     'github': {
         'APP': {
             'client_id': os.environ.get ('GITHUB_CLIENT_ID'),
@@ -181,14 +183,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 import os
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 STATIC_URL = 'static/'
 STATICFILES_DIRS= [BASE_DIR / 'static']
 
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    
+    
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
