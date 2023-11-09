@@ -26,6 +26,7 @@ urlpatterns = [
     path('hals/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path("", home_view, name= "home"),
+    path("category/<tag>/", home_view, name= "category"),
     path('home/', home_view, name='home'),
     path('post/create/',create_post_view, name="post-create"),
     path('note/create/',CreateNoteView, name="note-create"),

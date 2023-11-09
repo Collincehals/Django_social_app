@@ -7,6 +7,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     image = models.URLField(max_length=200, null=True)
     body = models.TextField()
+    tags= models.ManyToManyField('Tag')
     likes = models.ManyToManyField(User, related_name="likedposts", through="LikedPost")
     created = models.DateTimeField(auto_now_add=True)
     id=models.CharField(max_length=100, unique=True, default=uuid.uuid4, primary_key=True, editable=False)
@@ -15,6 +16,17 @@ class Post(models.Model):
         return str(self.title)
     class Meta:
         ordering = ['-created']
+
+class Tag(models.Model):
+    name = models.CharField(max_length=20)
+    slug = models.SlugField(max_length=20, unique=True)
+    order  = models.IntegerField(null=True)
+    
+    def __str__(self):
+        return str(self.name)
+    class Meta:
+        ordering = ['order']
+
 
 class LikedPost(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

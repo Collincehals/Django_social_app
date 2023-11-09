@@ -11,8 +11,13 @@ from django.db.models import Count
 
 
 # Create your views here.
-def home_view(request):
-    posts = Post.objects.all()
+def home_view(request, tag=None):
+    if tag:
+        posts = Post.objects.filter(tags__slug=tag)
+        tag = get_object_or_404(Tag, slug=tag)
+    else:
+        posts = Post.objects.all()
+    categories = Tag.objects.all()
     paginator = Paginator(posts, 3)
     page = int(request.GET.get('page', 1))
     try:
@@ -22,6 +27,8 @@ def home_view(request):
     context={
         'posts': posts,
         'page': page,
+        'categories': categories,
+        'tag':tag
         }
      
     if request.htmx:
@@ -39,6 +46,7 @@ def create_post_view(request):
             post = form.save(commit= False)
             post.author = request.user
             post.save()
+            form.save_m2m()
             messages.success(request,'Post created successfully!')
             return redirect('view-profile')
     return render(request, 'a_posts/create_post.html', {'form': form})

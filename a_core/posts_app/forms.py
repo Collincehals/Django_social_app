@@ -26,16 +26,33 @@ class SignUpForm(UserCreationForm):
 class CreatePostForm(ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'image', 'body']
+        fields = ['title', 'image', 'body', 'tags']
         labels = {
             'body': 'Caption',
             'image':'Image URL',
+            'tags': 'Category'
         }
         widgets = {
         'body': forms.Textarea (attrs={'rows':3, 'placeholder':'Enter Caption here...', 'class': 'font1 text 4xl' }),
-        'image': forms.TextInput (attrs={'placeholder':'Enter URL here...'})
+        'image': forms.TextInput (attrs={'placeholder':'Enter URL here...'}),
+        'tags':forms.CheckboxSelectMultiple(),
         }
+
+class PostEditForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'body','tags']
+        labels = {
+            'body':'',
+            'title': '', 
+            'tags': 'Category' 
+        }
+        widgets = {
+            'body': forms.Textarea (attrs={'rows':5, 'placeholder':'Enter Caption here...', 'class': 'font1 text 4xl' }),
+             'tags':forms.CheckboxSelectMultiple(),
+        }  
         
+          
 class PostCommentForm(ModelForm):
     class Meta:
         model = PostComment
@@ -58,18 +75,6 @@ class PostCommentReplyForm(ModelForm):
             'body': forms.TextInput(attrs={'placeholder':'Enter Reply here...' }),
         }  
         
-class PostEditForm(ModelForm):
-    class Meta:
-        model = Post
-        fields = ['title', 'body',]
-        labels = {
-            'body':'',
-            'title': '',  
-        }
-        widgets = {
-            'body': forms.Textarea (attrs={'rows':5, 'placeholder':'Enter Caption here...', 'class': 'font1 text 4xl' }),
-        }
-  
 class CreateNote (ModelForm):
     class Meta:
         model = Note
