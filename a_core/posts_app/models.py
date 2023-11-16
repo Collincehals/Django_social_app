@@ -20,6 +20,7 @@ class Post(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=20)
     slug = models.SlugField(max_length=20, unique=True)
+    image = models.ImageField(upload_to="category_images", null=True, blank=True)
     order  = models.IntegerField(null=True)
     
     def __str__(self):
