@@ -9,3 +9,4 @@ django_htmx
 django-crispy-forms
 crispy_bootstrap5
 whitenoise
+psycopg2
