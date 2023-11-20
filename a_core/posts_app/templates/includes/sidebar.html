@@ -8,7 +8,7 @@
                 {% for category in categories %}
                 <li class="{% if category.slug == tag.slug %} highlight {% endif %}">
                     <a href="{% url 'category' category.slug %}">
-                        <img class="w-8 h-8 object-cover mr-2" src="{{ category.image.url }}">
+                        <img class="w-8 h-8 object-cover mr-2" src="{{ category.imageURL }}">
                         <span class="font-bold text-sm">{{ category.name }}</span>
                     </a>
                 </li>

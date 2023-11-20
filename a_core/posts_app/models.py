@@ -22,7 +22,16 @@ class Tag(models.Model):
     slug = models.SlugField(max_length=20, unique=True)
     image = models.ImageField(upload_to="category_images", null=True, blank=True)
     order  = models.IntegerField(null=True)
-    
+
+    @property
+    def imageURL(self):
+        try:
+            url=self.image.url
+        except:
+            url=''
+        return url
+            
+            
     def __str__(self):
         return str(self.name)
     class Meta:

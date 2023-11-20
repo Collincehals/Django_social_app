@@ -51,14 +51,9 @@ INSTALLED_APPS = [
     'posts_app',
     'a_users',
     "django_htmx", 
-    'crispy_forms', 
-    'crispy_bootstrap5',
 ]
 
 SITE_ID = 1
-
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 MIDDLEWARE = [
@@ -124,7 +119,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -145,6 +140,7 @@ DATABASES = {
     }
 }
 
+"""
 """
 DATABASES = {
   'default': {
