@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+import dj_database_url
+
+from environ import Env
+env = Env()
+Env.read_env()
+
+ENVIRONMENT = env('ENVIRONMENT', default='production')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,14 +28,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+if ENVIRONMENT == 'development':
+    DEBUG = True
+else:
+    DEBUG = False
+    
 ALLOWED_HOSTS = ['colltechgallery.onrender.com',
                  '127.0.0.1'
                 ]
+INTERNAL_IPS = ('127.0.0.1','localhost:8000')
 
 
 
@@ -50,7 +61,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'posts_app',
     'a_users',
-    "django_htmx", 
+    "django_htmx",
+    'admin_honeypot', 
 ]
 
 SITE_ID = 1
@@ -75,7 +87,7 @@ ROOT_URLCONF = 'a_core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'posts_app/templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -102,15 +114,15 @@ import os
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id':os.environ.get('GOOGLE_CLIENT_ID'),
-            'secret': os.environ.get('GOOGLE_SECRET'),
+            'client_id':env('GOOGLE_CLIENT_ID'),
+            'secret':env('GOOGLE_SECRET'),
             'key': '',
         }
     },
     'github': {
         'APP': {
-            'client_id': os.environ.get ('GITHUB_CLIENT_ID'),
-            'secret': os.environ.get('GITHUB_SECRET'),
+            'client_id':env('GITHUB_CLIENT_ID'),
+            'secret': env('GITHUB_SECRET'),
             'key': '',
         }
     }
@@ -126,34 +138,12 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3', 
     }
 }
-"""
-from dotenv import load_dotenv
-load_dotenv()
-DATABASES = {
-    'default': {
-        'ENGINE':'django.db.backends.postgresql',
-        'NAME':  os.environ.get('NAME'),  
-        'USER': os.environ.get('USER'),
-        'PASSWORD': os.environ.get('PASSWORD'), 
-        'HOST': os.environ.get('HOST'), 
-        'PORT': os.environ.get('PORT'), 
-    }
-}
 
-"""
-"""
-DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': os.environ.get('DB_NAME'),
-    'HOST': os.environ.get('DB_HOST'),
-    'PORT': os.environ.get('DB_PORT'),
-    'USER': os.environ.get('DB_USER'),
-    'PASSWORD': os.environ.get('DB_PASSWORD'),
-    'OPTIONS': {'ssl': {'ca': os.environ.get('MYSQL_ATTR_SSL_CA')}}
-  }
-}
-"""
+POSTGRES_LOCALLY = False
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
+    DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
+
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -213,16 +203,14 @@ LOGOUT_REDIRECT_URL = '/home'
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 
-ACCOUNT_USERNAME_BLACKLIST = ['admin', 'accounts','profile','note','post', 'category' ]
+ACCOUNT_USERNAME_BLACKLIST = ['admin', 'accounts','profile','note','post', 'category','boss', ]
 
 
-from dotenv import load_dotenv
-load_dotenv()
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'in-v3.mailjet.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
