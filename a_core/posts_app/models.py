@@ -3,7 +3,7 @@ import uuid
 from django.contrib.auth.models import User
 
 class Post(models.Model):
-    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='posts')
     title = models.CharField(max_length=200)
     image = models.URLField(max_length=200, null=True)
     body = models.TextField()

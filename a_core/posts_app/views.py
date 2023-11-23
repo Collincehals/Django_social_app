@@ -17,17 +17,15 @@ def home_view(request, tag=None):
         tag = get_object_or_404(Tag, slug=tag)
     else:
         posts = Post.objects.all()
-    categories = Tag.objects.all()
     paginator = Paginator(posts, 3)
     page = int(request.GET.get('page', 1))
     try:
         posts = paginator.page(page)
     except:
-        return HttpResponse('<div>End of posts</div>')
+        return HttpResponse('<div>No more posts</div>')
     context={
         'posts': posts,
         'page': page,
-        'categories': categories,
         'tag':tag
         }
      
@@ -53,6 +51,7 @@ def create_post_view(request):
 
 def PostView(request, pk):
     post = get_object_or_404(Post, id=pk)
+  
     commentform = PostCommentForm()
     commentreplyform = PostCommentReplyForm
     
@@ -62,7 +61,6 @@ def PostView(request, pk):
         else:    
             comments = post.comments.all()
         return render(request, 'snippets/loop_postpage_comments.html', {'comments': comments, 'commentreplyform': commentreplyform})
-    
     
     context = {
         'post': post, 
