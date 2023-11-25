@@ -77,7 +77,6 @@
     }
 
 </style>
-<div class="p-12">
     <div class="inbox-container">
         <div class="contacts-wrapper">
            
@@ -100,46 +99,22 @@
                 <p>@{{user.username}}</p>
             </div>
             <!--sent-->
+            {% for message in conversation.messages.all %}
             <div class="sent-message-box">
-                <img style="width:35px;height:35px; border-radius:50%; object-fit:cover;" src="{{user.profile.image.url}}" alt="...">
+                <img style="width:35px;height:35px; border-radius:50%; object-fit:cover;" src="{{message.sender.profile.image.url}}" alt="...">
                 <div style="border:1px solid #ccc; padding:10px; border-radius: 10px; width:100%;">
                     <div style="display:flex;justify-content: space-between;align-items: center;">
-                        <p style="font-size: 13px;color:darkblue;"><b>{{user.profile.realname}}</b><span style="padding-left:5px;">@{{user.username}}</span></p>
-                        <p style="font-size: 13px;color:darkblue;">Nov 23,2023 12:12pm (2 hours ago) </p>
+                        <p style="font-size: 13px;color:darkblue;"><b>{{message.sender.profile.realname}}</b><span style="padding-left:5px;">@{{message.sender.username}}</span></p>
+                        <p style="font-size: 13px;color:darkblue;">{{message.created_at}} ({{message.created_at|timesince}})</p>
                     </div>
-                    <P>Hello there, just passing my regards!</P>
+                    <P>{{message.body}}</P>
                 </div>
             </div>
-            <!--Reply-->
-            <div class="sent-message-box">
-                <img style="width:35px;height:35px; border-radius:50%; object-fit:cover;" src="{{user.profile.image.url}}" alt="...">
-                <div style="border:1px solid #ccc; padding:10px; border-radius: 10px; width:100%;">
-                    <div style="display:flex;justify-content: space-between;align-items: center;">
-                        <p style="font-size: 13px;color:darkblue;"><b>{{user.profile.realname}}</b><span style="padding-left:5px;">@{{user.username}}</span></p>
-                        <p style="font-size: 13px;color:darkblue;">Nov 23,2023 12:12pm (2 hours ago) </p>
-                    </div>
-                    <P>Hello there, just passing my regards!</P>
-                </div>
-            </div>
-
-               <!--sent-->
-               <div class="sent-message-box">
-                <img style="width:35px;height:35px; border-radius:50%; object-fit:cover;" src="{{user.profile.image.url}}" alt="...">
-                <div style="border:1px solid #ccc; padding:10px; border-radius: 10px; width:100%;">
-                    <div style="display:flex;justify-content: space-between;align-items: center;">
-                        <p style="font-size: 13px;color:darkblue;"><b>{{user.profile.realname}}</b><span style="padding-left:5px;">@{{user.username}}</span></p>
-                        <p style="font-size: 13px;color:darkblue;">Nov 23,2023 12:12pm (2 hours ago) </p>
-                    </div>
-                    <P>Hello there, just passing my regards!</P>
-                </div>
-            </div>
+            {% endfor %}
             <!--Reply button-->
             <div style="margin-top:50px;margin-bottom:20px;">
                 <a style="padding:8px 15px;background:rgb(37, 36, 36);color:white;border-radius:25px;" href=""><i class="fa-solid fa-reply mx-2"></i>Reply</a>
             </div>
         </div>
     </div>
-    
-</div>
-
 {% endblock %}
