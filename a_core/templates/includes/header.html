@@ -23,6 +23,7 @@
             <li><a href="{% url 'notes' %}">Notes</a></li>
             <li><a href="{% url 'post-create' %}">Create Post</a></li>
             <li><a href="{% url 'note-create' %}">Create Note</a></li>
+            <li><a href="{% url 'inbox' %}">Inbox</a></li>
             {% if user.is_authenticated %}
             <li x-data="{ dropdownOpen: false }" class="relative">
                 <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none">

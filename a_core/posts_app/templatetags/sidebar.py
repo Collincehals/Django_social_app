@@ -8,8 +8,8 @@ register = Library()
 @register.inclusion_tag('includes/sidebar.html')
 def sidebar_view(tag=None, user=None):
       categories = Tag.objects.all()
-      top_posts = Post.objects.annotate(num_likes=Count('likes')).filter(num_likes__gt=3).order_by('-num_likes')
-      top_comments = PostComment.objects.annotate(num_likes=Count('likes')).filter(num_likes__gt=3).order_by('-num_likes')
+      top_posts = Post.objects.annotate(num_likes=Count('likes')).filter(num_likes__gt=2).order_by('-num_likes')
+      top_comments = PostComment.objects.annotate(num_likes=Count('likes')).filter(num_likes__gt=1).order_by('-num_likes')
       context = {
           'categories': categories,
           'tag': tag,

@@ -1,0 +1,145 @@
+{% extends "layouts/d.html" %}
+{% block title %} Inbox {% endblock %}
+
+
+
+{% block content %}
+<style>
+    * {
+        padding:0;
+        margin:0;
+        box-sizing: border-box;
+    }
+    .inbox-container {
+        display:grid;
+        grid-template-columns:1fr 3fr;
+        background:rgb(241,240,253);
+        border-radius: 12px;
+        box-shadow: 0 0 12px rgba(255,255,255,.3);
+        max-width:1000px;
+        width:100%;
+        margin:0 auto;
+        
+    }
+    .contact-inbox {
+        padding:20px;
+    }
+    .contact-inbox a  {
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+        margin-bottom:15px;
+        padding:10px 10px;
+        background:rgb(240,241,253,0.3);
+        border-radius:10px;
+        
+    }
+
+    .contact-inbox a:hover  {
+        background:rgb(197, 198, 210);
+        border-radius:10px;
+        
+    }
+    .contacts-wrapper {
+        padding:20px 10px;
+    }
+    .messages-wrapper {
+        padding:30px;
+        background:white;
+    }
+    .new-message {
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        background:blue;
+        padding:10px 25px;
+        border-radius: 20px;
+        text-align: center;
+        color:white;
+    }
+    .sent-message-box {
+        display:flex;
+        flex-wrap: nowrap;
+        gap:20px;
+        justify-content: flex-start;
+        margin-bottom:20px;
+    }
+    @media (max-width:768px) {
+        .inbox-container {
+            grid-template-columns:100%;
+        }
+        .messages-wrapper {
+            padding:10px;
+        }
+        .sent-message-box {
+            flex-wrap: wrap;
+        }
+    }
+
+</style>
+<div class="p-12">
+    <div class="inbox-container">
+        <div class="contacts-wrapper">
+           
+            <a href="" class="new-message"> <i class="fa-regular fa-pen-to-square mx-2"></i>New Message</a>
+            
+            <ul class="contact-inbox">
+                <a href=""><img style="width:35px;height:35px; border-radius: 50%;object-fit:cover;" src="{{user.profile.image.url}}">Collince</a>
+                <a href=""><img style="width:35px;height:35px; border-radius: 50%;object-fit:cover;" src="{{user.profile.image.url}}">Shee</a>
+                <a href=""><img style="width:35px;height:35px; border-radius: 50%;object-fit:cover;" src="{{user.profile.image.url}}">Hals</a>
+                <a href=""><img style="width:35px;height:35px; border-radius: 50%;object-fit:cover;" src="{{user.profile.image.url}}">Melanie</a>
+                <a href=""><img style="width:35px;height:35px; border-radius: 50%;object-fit:cover;" src="{{user.profile.image.url}}">Collince</a>
+            </ul>
+        </div>
+        <div class="messages-wrapper">
+            <div style="display: flex;align-items: center;justify-content: center;">
+                <img style="width:40px;height:40px; border-radius:50%; object-fit:cover;"  src="{{user.profile.image.url}}" alt="...">
+            </div>
+            <div style="display: flex;align-items: center;justify-content: center;margin-bottom:50px;gap:5px;" >
+                <p>{{user.profile.realname}}</p>
+                <p>@{{user.username}}</p>
+            </div>
+            <!--sent-->
+            <div class="sent-message-box">
+                <img style="width:35px;height:35px; border-radius:50%; object-fit:cover;" src="{{user.profile.image.url}}" alt="...">
+                <div style="border:1px solid #ccc; padding:10px; border-radius: 10px; width:100%;">
+                    <div style="display:flex;justify-content: space-between;align-items: center;">
+                        <p style="font-size: 13px;color:darkblue;"><b>{{user.profile.realname}}</b><span style="padding-left:5px;">@{{user.username}}</span></p>
+                        <p style="font-size: 13px;color:darkblue;">Nov 23,2023 12:12pm (2 hours ago) </p>
+                    </div>
+                    <P>Hello there, just passing my regards!</P>
+                </div>
+            </div>
+            <!--Reply-->
+            <div class="sent-message-box">
+                <img style="width:35px;height:35px; border-radius:50%; object-fit:cover;" src="{{user.profile.image.url}}" alt="...">
+                <div style="border:1px solid #ccc; padding:10px; border-radius: 10px; width:100%;">
+                    <div style="display:flex;justify-content: space-between;align-items: center;">
+                        <p style="font-size: 13px;color:darkblue;"><b>{{user.profile.realname}}</b><span style="padding-left:5px;">@{{user.username}}</span></p>
+                        <p style="font-size: 13px;color:darkblue;">Nov 23,2023 12:12pm (2 hours ago) </p>
+                    </div>
+                    <P>Hello there, just passing my regards!</P>
+                </div>
+            </div>
+
+               <!--sent-->
+               <div class="sent-message-box">
+                <img style="width:35px;height:35px; border-radius:50%; object-fit:cover;" src="{{user.profile.image.url}}" alt="...">
+                <div style="border:1px solid #ccc; padding:10px; border-radius: 10px; width:100%;">
+                    <div style="display:flex;justify-content: space-between;align-items: center;">
+                        <p style="font-size: 13px;color:darkblue;"><b>{{user.profile.realname}}</b><span style="padding-left:5px;">@{{user.username}}</span></p>
+                        <p style="font-size: 13px;color:darkblue;">Nov 23,2023 12:12pm (2 hours ago) </p>
+                    </div>
+                    <P>Hello there, just passing my regards!</P>
+                </div>
+            </div>
+            <!--Reply button-->
+            <div style="margin-top:50px;margin-bottom:20px;">
+                <a style="padding:8px 15px;background:rgb(37, 36, 36);color:white;border-radius:25px;" href=""><i class="fa-solid fa-reply mx-2"></i>Reply</a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

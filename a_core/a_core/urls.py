@@ -25,6 +25,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('boss/', admin.site.urls),
+    path('inbox/', include('a_inbox.urls')),
     path('accounts/', include('allauth.urls')),
     path("", home_view, name= "home"),
     path("category/<tag>/", home_view, name= "category"),
@@ -49,6 +50,7 @@ urlpatterns = [
     path('<username>/',ProfileView, name="userprofile"),
     path('profile/edit/',EditProfileView, name="edit-profile"),
     path('profile/delete/',DeleteProfileView, name="delete-profile"),
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

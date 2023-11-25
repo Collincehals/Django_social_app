@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'a_users',
     "django_htmx",
     'admin_honeypot', 
+    'a_inbox',
 ]
 
 SITE_ID = 1
@@ -141,7 +142,7 @@ DATABASES = {
     }
 }
 
-POSTGRES_LOCALLY = False
+POSTGRES_LOCALLY = True
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
     DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
 
@@ -212,7 +213,7 @@ LOGOUT_REDIRECT_URL = '/home'
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 
-ACCOUNT_USERNAME_BLACKLIST = ['admin', 'accounts','profile','note','post', 'category','boss', ]
+ACCOUNT_USERNAME_BLACKLIST = ['admin', 'accounts','profile','note','post', 'category','boss','inbox', ]
 
 
 
