@@ -99,7 +99,7 @@
                 <p>@{{user.username}}</p>
             </div>
             <!--sent-->
-            {% for message in conversation.messages.all %}
+            {% for message in conversation.messages.all reversed %}
             <div class="sent-message-box">
                 <img style="width:35px;height:35px; border-radius:50%; object-fit:cover;" src="{{message.sender.profile.image.url}}" alt="...">
                 <div style="border:1px solid #ccc; padding:10px; border-radius: 10px; width:100%;">
