@@ -1,0 +1,20 @@
+<style>
+    .user-details{
+        display:flex;
+        justify-content: flex-start;
+        gap:5px;
+    }
+</style>
+
+<div class="user-details">
+    <p>To: </p>
+    <img style="width:25px;height:25px;border-radius: 50%;" src="{{recipient.profile.image.url}}">
+    <a href="">{{recipient.profile.realname}}<span>@{{recipient.username}}</span></a>
+</div>
+
+<form method="POST" action="{% url 'create_message' recipient.id %}">
+    {% csrf_token %}
+    {{new_message_form}}
+    <button type="submit" class="successbtn">Send Message</button>
+    <a href="{{request.META.HTTP_REFERER}}" class="deletebtn">Cancel</a>
+</form>

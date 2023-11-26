@@ -54,6 +54,7 @@
         border-radius: 20px;
         text-align: center;
         color:white;
+        cursor:pointer;
     }
     .sent-message-box {
         display:flex;
@@ -77,7 +78,8 @@
 </style>
     <div class="inbox-container">
         <div class="contacts-wrapper">
-            <a href="" class="new-message"> <i class="fa-regular fa-pen-to-square mx-2"></i>New Message</a>
+            <a id="new-message-button" class="new-message"> <i class="fa-regular fa-pen-to-square mx-2"></i>New Message</a>
+            {% include 'a_inbox/search_users.html' %}
             {% include 'a_inbox/my_conversations.html' %}
         </div>
 
@@ -85,4 +87,19 @@
         {% include 'a_inbox/messages.html' %}
         </div>
     </div>
+
+    <script>
+        const messagebtn = document.getElementById('new-message-button');
+        const searchpopup= document.getElementById('popup-layout');
+        const cancelbtn= document.getElementById('cancelbtn');
+
+        messagebtn.addEventListener('click',function() {
+            searchpopup.style.display='flex';
+        });
+
+        cancelbtn.addEventListener('click',function() {
+            searchpopup.style.display='none';
+        });
+
+    </script>
 {% endblock %}

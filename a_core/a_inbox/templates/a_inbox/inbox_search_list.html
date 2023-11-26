@@ -1,0 +1,12 @@
+<ul class="users-list">
+    {% for user in users %}
+    <li>
+        <img style="width:25px;height:25px;border-radius: 50%;" src="{{user.profile.image.url}}">
+        <a 
+        hx-get="{% url 'create_message' user.id %}"
+        hx-target="#new-message"
+        hx-swap="innerHTML">
+        {{user.profile.realname}}<span>@{{user.username}}</span></a>
+    </li>
+    {% endfor %}
+</ul>

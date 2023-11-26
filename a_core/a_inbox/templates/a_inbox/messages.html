@@ -15,7 +15,7 @@
     {% endfor %}
     <!--Message-->
     {% for message in conversation.messages.all reversed %}
-    <div class="sent-message-box">
+    <div id="conversations" class="sent-message-box">
         {% if message.sender.profile.image.url %}
         <img style="width:35px;height:35px; border-radius:50%; object-fit:cover;" src="{{message.sender.profile.image.url}}" alt="...">
         {% else %} 
@@ -31,8 +31,12 @@
     </div>
     {% endfor %}
     <!--Reply button-->
-    <div style="margin-top:50px;margin-bottom:20px;">
-        <a style="padding:8px 15px;background:rgb(37, 36, 36);color:white;border-radius:25px;" href=""><i class="fa-solid fa-reply mx-2"></i>Reply</a>
+    <div style="margin-top:50px;margin-bottom:20px;" class="hover:cursor-pointer">
+        <a style="padding:8px 15px;background:rgb(37, 36, 36);color:white;border-radius:25px;" 
+        hx-get="{% url 'inbox-newreply' conversation.id %}"
+        hx-target="this"
+        hx-swap="outerHTML scroll:#conversations:bottom">
+        <i class="fa-solid fa-reply mx-2"></i>Reply</a>
     </div>
 {% else %}
 <P class="flex h-full items-center justify-center p-3"><i class="fa-solid fa-circle-plus mx-2"></i> Select a conversation or create a new message</P>
