@@ -1,0 +1,11 @@
+<ul class="contact-inbox">
+    {% for c in my_conversations %}
+    <a href="{% url 'inbox' c.id %}" class="{% if conversation == c %} bg-gray-500 {% endif %}">
+        {% for participant in c.participants.all %}
+            {% if participant != request.user %}
+            <img style="width:35px;height:35px; border-radius: 50%;object-fit:cover;" src="{{ participant.profile.image.url }}">{{ participant.profile.realname }}
+            {% endif %}
+        {% endfor %}
+    </a>
+    {% endfor %}
+</ul>
