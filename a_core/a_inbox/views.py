@@ -2,11 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.contrib import messages
+from cryptography.fernet import Fernet
+from django.conf import settings
 from django.db.models import Q
 from a_users.models import *
 from .models import *
 from .forms import InboxMessageForm
 
+f = Fernet(settings.ENCRYPT_KEY)
 
 @login_required
 def Inbox(request,conversation_id=None):
@@ -23,7 +26,6 @@ def Inbox(request,conversation_id=None):
         'conversation': conversation,
         'my_conversations': my_conversations,
     }
-    print('Participants:', my_conversations)
     return render(request, 'a_inbox/inbox.html', context)
 
 
@@ -51,6 +53,14 @@ def create_message(request, recipient_id):
         form = InboxMessageForm(request.POST)
         if form.is_valid():
             message= form.save(commit=False)
+            
+            #encrypt the message
+            message_original = form.cleaned_data['body']
+            message_bytes = message_original.encode('utf-8')
+            message_encrypted = f.encrypt(message_bytes)
+            message_decoded = message_encrypted.decode('utf-8')
+            message.body = message_decoded
+    
             message.sender = request.user
             
             my_conversations = request.user.conversations.all()
@@ -85,6 +95,14 @@ def new_reply(request, conversation_id):
         form = InboxMessageForm(request.POST)
         if form.is_valid():
             message= form.save(commit=False)
+            
+            #encrypt the message-reply
+            message_original = form.cleaned_data['body']
+            message_bytes = message_original.encode('utf-8')
+            message_encrypted = f.encrypt(message_bytes)
+            message_decoded = message_encrypted.decode('utf-8')
+            message.body = message_decoded
+            
             message.sender = request.user
             message.conversation = conversation
             message.save()
@@ -107,7 +125,7 @@ def notify_newmessage(request, conversation_id):
            return render(request, 'a_inbox/notify_icon.html')
     
     else:
-        HttpResponse('')
+        return HttpResponse('')
     
     
 def  notify_inbox(request):

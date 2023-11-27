@@ -7,10 +7,11 @@
             <img style="width:40px;height:40px; border-radius:50%; object-fit:cover;"  src="{{participant.profile.image.url}}" alt="...">
         </div>
         
-        <a href="{% url 'userprofile' participant.username %}" style="display: flex;align-items: center;justify-content: center;margin-bottom:50px;gap:5px;" >
-            <p>{{participant.profile.realname}}</p>
-            <p>@{{participant.username}}</p>
-        </a>
+        <div style="display: flex;align-items: center;justify-content: center;margin-bottom:50px;" >
+            <a href="{% url 'userprofile' participant.username %}">
+                <p>{{participant.profile.realname}}<span class="ml-1">@{{participant.username}}</span></p>
+            </a>
+        </div>
         {% endif %}
     {% endfor %}
     <!--Message-->
@@ -26,7 +27,7 @@
                 <a href="{% url 'userprofile' message.sender.username %}" style="font-size: 13px;color:darkblue;"><b>{{message.sender.profile.realname}}</b><span style="padding-left:5px;">@{{message.sender.username}}</span></a>
                 <p style="font-size: 13px;color:darkblue;">{{message.created_at}} ({{message.created_at|timesince}})</p>
             </div>
-            <P>{{message.body}}</P>
+            <P class="whitespace-pre-wrap">{{message.body_decrypted}}</P>
         </div>
     </div>
     {% endfor %}
