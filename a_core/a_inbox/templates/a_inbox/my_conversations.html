@@ -1,11 +1,26 @@
+<style>
+    .dot-container {
+        position: absolute;
+        left:55px;
+    }
+</style>
+
 <ul class="contact-inbox">
     {% for c in my_conversations %}
-    <a href="{% url 'inbox' c.id %}" class="{% if conversation == c %} bg-gray-500 {% endif %}">
+    <a href="{% url 'inbox' c.id %}" class="{% if conversation == c %} highlight {% endif %}">
         {% for participant in c.participants.all %}
             {% if participant != request.user %}
+            <div class="dot-container"
+                hx-get="{% url 'notify-newmessage' c.id %}"
+                hx-trigger = 'load'
+                hx-target = 'this'
+                hx-swap='innerHTML'>
+            </div>
             <img style="width:35px;height:35px; border-radius: 50%;object-fit:cover;" src="{{ participant.profile.image.url }}">{{ participant.profile.realname }}
             {% endif %}
         {% endfor %}
     </a>
     {% endfor %}
 </ul>
+
+                

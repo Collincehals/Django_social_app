@@ -1,4 +1,15 @@
 {% load static %}
+<style>
+.inbox-wrapper{
+    position: relative;
+    padding:5px;
+}
+.notify-container {
+    position: absolute;
+    bottom: 32px;
+    left:58px;
+}
+</style>
 <header x-data="{ mobilenavOpen: false }" class="md:flex items-center justify-between [&>*]:px-8 bg-gray-800 h-20 text-white sticky top-0 z-40">
     <div class="flex items-center justify-between h-20">
         <logo>
@@ -23,7 +34,15 @@
             <li><a href="{% url 'notes' %}">Notes</a></li>
             <li><a href="{% url 'post-create' %}">Create Post</a></li>
             <li><a href="{% url 'note-create' %}">Create Note</a></li>
-            <li><a href="{% url 'inbox' %}">Inbox</a></li>
+            <li class="inbox-wrapper">
+                <div class="notify-container"
+                    hx-get="{% url 'notify-inbox' %}"
+                    hx-trigger = 'load'
+                    hx-target = 'this'
+                    hx-swap='innerHTML'>
+                </div>
+                <a href="{% url 'inbox' %}">Inbox</a>
+            </li>
             {% if user.is_authenticated %}
             <li x-data="{ dropdownOpen: false }" class="relative">
                 <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none">
