@@ -29,7 +29,7 @@
             <span id="commentscount-{{ post.id }}" class="font-light text-gray-500 ml-1">{{ post.comments.count }}</span>
             </a></p>
             {% else %}
-            <p style="font-weight:600;color: darkblue;"><a href="{% url 'view-post' post.id %}">
+            <p id="commentbtn" style="font-weight:600;color: darkblue;cursor:pointer;"><a>
             <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="text-black-800">+</span></a>
             </p>
             {% endif %}

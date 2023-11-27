@@ -4,13 +4,14 @@
 
 {% block content %}
 
+{% load static %}
+
 {% for post in posts %}
-        {% load static %}
-        {% include 'a_posts/post.html' %}
-        {% empty %}
-        <div style="display: flex; justify-content: center;align-items: center; color:darkblue;font-weight: 600;margin-top:60px;">
-            <h3>No Posts Yet :(</h3>
-        </div>  
+    {% include 'a_posts/post.html' %}
+    {% empty %}
+    <div style="display: flex; justify-content: center;align-items: center; color:darkblue;font-weight: 600;margin-top:60px;">
+        <h3>No Posts Yet :(</h3>
+    </div>  
  {% endfor %} 
 
  <div hx-get="{% if tag %}{% url 'category' tag.slug %}{% else %}
