@@ -24,7 +24,7 @@
       
         <div style="display: flex; flex-wrap: wrap;justify-content: center; align-items: center;gap:30px;">
             {% if post.comments.count %}
-            <p><a class="font-bold" href="{% url 'view-post' post.id %}">
+            <p id="commentbtn"><a class="font-bold cursor-pointer">
             <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i>
             <span id="commentscount-{{ post.id }}" class="font-light text-gray-500 ml-1">{{ post.comments.count }}</span>
             </a></p>

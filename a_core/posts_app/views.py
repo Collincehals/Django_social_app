@@ -132,6 +132,7 @@ def post_comment_reply_like_view(request, pk):
     return render(request, 'snippets/post_comment_reply_likes.html', {'reply': reply})
 #End likes list
 
+#post-comments here
 @login_required(login_url='account_login')
 def post_comment_sent_view(request, pk):
     post= get_object_or_404(Post,id=pk)

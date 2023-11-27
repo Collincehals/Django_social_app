@@ -3,14 +3,20 @@
 {% block title %} Post - {{ post.title }} - {{ post.id }} {% endblock %}
 
 {% block content %}
+<style>
+    #comment-form{
+        display:none;
+    }
+</style>
+
 {% include 'a_posts/post.html' %}
 {% load static %}
 
 {% if user.is_authenticated %}
-<div class="card !pb-0 -mt-3">
+<div class="card !pb-0 -mt-3" id="comment-form">
     <form  class="flex items-center p-4" autocomplete="off" 
      hx-post="{% url 'sent-post-comment' post.id %}"
-     hx-target="#tab-contents"
+     hx-target=".comment-lists"
      hx-swap="afterbegin"
      _="on htmx:afterRequest reset() me">
         {% csrf_token %}
@@ -20,20 +26,29 @@
 </div>
 {% endif %}
 
-{% if post.comments.count %}
+
 <div class="mb-20">
+    {% if post.comments.count %}
     <div id="tabs" class="ml-4 flex gap-1 mb-4" hx-target="#tab-contents" hx-swap="innerHTML"
     _="on htmx:afterOnLoad take .selected for event.target">
         <a hx-get="{%  url 'view-post' post.id %}" class="tab selected">Newest First</a> 
         <a hx-get="{%  url 'view-post' post.id %}?top" class="tab">Top Comments</a>
     </div>
-    
-    <div id="tab-contents">
+    {% endif %}
+    <div id="tab-contents" class="comment-lists">
         {% for comment in post.comments.all %}
         {% include 'a_posts/post_comments.html' %}
         {% endfor %}
     </div>
-    
 </div>
-{% endif %}
+
+<script>
+    const commentbutton = document.getElementById('commentbtn');
+    const commentform = document.getElementById('comment-form');
+
+    commentbutton.addEventListener('click', () =>{
+        commentform.style.display='block';
+    });
+    
+</script>
 {% endblock %}
