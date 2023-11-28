@@ -1,11 +1,11 @@
 from django.db import models
 import uuid
 from django.contrib.auth.models import User
-
+from .validators import file_size
 class Post(models.Model):
     author = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='posts')
     title = models.CharField(max_length=200)
-    image = models.URLField(max_length=200, null=True)
+    media = models.FileField(upload_to="user-uploads", null=True, blank=True, validators=[file_size])
     body = models.TextField()
     tags= models.ManyToManyField('Tag')
     likes = models.ManyToManyField(User, related_name="likedposts", through="LikedPost")
@@ -18,8 +18,8 @@ class Post(models.Model):
         ordering = ['-created']
 
 class Tag(models.Model):
-    name = models.CharField(max_length=20)
-    slug = models.SlugField(max_length=20, unique=True)
+    name = models.CharField(max_length=20, null=True, blank=True)
+    slug = models.SlugField(max_length=20, unique=True, null=True, blank=True)
     image = models.ImageField(upload_to="category_images", null=True, blank=True)
     order  = models.IntegerField(null=True)
 
@@ -92,30 +92,4 @@ class LikedPostCommentReply(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f'{self.user.username} : {self.reply}'   
-
-
-
-#NOTES MODELS        
-class Note(models.Model):
-    author = models.ForeignKey(User,null=False, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200, null=False)
-    description = models.TextField()
-    likes = models.ManyToManyField(User, related_name='likednotes', through='LikedNote')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    def __str__(self):
-        return self.title + "\n" + self.description
-    class Meta:
-        ordering = ['-created_at']  
-    
-        
-class LikedNote(models.Model):
-    note = models.ForeignKey(Note, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return f'{self.user.username} : {self.note.title}'
-    
+        return f'{self.user.username} : {self.reply}'

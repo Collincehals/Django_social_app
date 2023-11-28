@@ -1,8 +1,6 @@
 from django.forms import ModelForm
 from django import forms
 from .models import *
-
-#for user registration
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
@@ -16,25 +14,18 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2'] 
     
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exists():
-            raise ValidationError("Email already exists")
-        return email
-
-
 class CreatePostForm(ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'image', 'body', 'tags']
+        fields = ['title', 'media', 'body', 'tags']
         labels = {
             'body': 'Caption',
-            'image':'Image URL',
+            'media':'Attach file',
             'tags': 'Category'
         }
         widgets = {
-        'body': forms.Textarea (attrs={'rows':3, 'placeholder':'Enter Caption here...', 'class': 'font1 text 4xl' }),
-        'image': forms.TextInput (attrs={'placeholder':'Enter URL here...'}),
+        'body': forms.Textarea (attrs={'rows':3, 'placeholder':'Go ahead, tell your story...'}),
+        'media': forms.FileInput(),
         'tags':forms.CheckboxSelectMultiple(),
         }
 
@@ -74,22 +65,3 @@ class PostCommentReplyForm(ModelForm):
         widgets = {
             'body': forms.TextInput(attrs={'placeholder':'Enter Reply here...' }),
         }  
-        
-class CreateNote (ModelForm):
-    class Meta:
-        model = Note
-        fields = ["title", "description",]
-        
-        widgets = {
-            'title': forms.TextInput(attrs={'placeholder':'Enter title...'}),
-            'description': forms.Textarea(attrs={'placeholder':'Enter your note here...', 'rows':6})
-        }
-        
-class NoteEditForm(ModelForm):
-    class Meta:
-        model = Note
-        fields = ['title','description', ]
-        
-        widgets = {
-            'description': forms.Textarea(attrs={'rows':6})
-        }

@@ -3,13 +3,37 @@
 {% block title %} Create Post {% endblock %}
 
 {% block content %}
-<h1>Create Post</h1>
+<style>
+    form input {
+        border:none;
+        padding:8px;
+        background:none;
+        border-bottom:1px solid blue;
+        border-radius: 0;
+    }
+    form input[type="file"] {
+        border:none;
+        outline:none;
+        background: none;
+    }
+    form textarea {
+        border:none;
+        padding:8px;
+        background:none;
+        border-bottom:1px solid blue;
+        border-radius: 0;
+       
+    }
+    form textarea:focus,
+    form input:focus {
+        outline:none;
+        border:none;
+        border-bottom:1px solid blue;
+    }
+</style>
 <div class="card !p-8">
-    <div class="flex items-center mb-6">
-        <img class="h-5 object-cover mr-1" src="https://img.icons8.com/small/96/333333/search--v1.png"/>
-        <a href="https://www.flickr.com/explore" target="_blank" class="hover:underline text-gray-500">Find an image on Flickr</a>
-    </div>
-    <form method='POST'>
+    <h2 class="text-orange-500 font-extrabold">Create Post</h2>
+    <form method='POST' enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="successbtn mt-1">Create Post</button>

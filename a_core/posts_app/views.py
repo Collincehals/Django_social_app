@@ -39,7 +39,7 @@ def home_view(request, tag=None):
 def create_post_view(request):
     form = CreatePostForm ()
     if request.method == 'POST':
-        form = CreatePostForm(request.POST)
+        form = CreatePostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit= False)
             post.author = request.user
@@ -191,59 +191,7 @@ def PostCommentReplyDeleteView(request, pk):
         return redirect('view-post',reply.parent_comment.parent_post.id)
     return render(request, 'a_posts/post_comment_reply_delete.html', {'reply': reply})
 
-
-#NOTES VIEWS
-@login_required(login_url='account_login')
-def CreateNoteView(request):
-    form = CreateNote()
-    if request.method == 'POST':
-        form = CreateNote(request.POST)
-        if form.is_valid():
-            note = form.save(commit=False)
-            note.author  = request.user
-            note.save()
-            messages.success(request,'Note created successfully!')
-            return redirect('view-profile')
-    else:
-        form = CreateNote()
-    return render(request, 'a_posts/create_notes.html', {'form': form})
-
-def NotesView(request):
-    notes = Note.objects.all()
-    return render(request, 'a_posts/notes.html', {'notes': notes})
-
-def NoteEditView(request, pk):
-    note =get_object_or_404(Note, id=pk)
-    form = NoteEditForm(instance=note)
-    if request.method == 'POST':
-        form = NoteEditForm(request.POST, instance=note)
-        if form.is_valid():
-            form.save()
-            messages.success(request,'Note updated successfully!')
-            user_email = request.session.get('email')
-            print(f"User email from session: {user_email}")
-            send_mail(
-                'Hello from Colltech Team',
-                'This is a test email from Colltech.Note edited successfully',
-                'colltechcareers@gmail.com',
-                [user_email],
-                fail_silently=False,
-            )
-            return redirect('notes')
-    context = {
-        'note': note,
-        'form': form,
-    }
-    return render(request, 'a_posts/note_edit.html', context)
-
-def NoteDeleteView(request,pk):
-    note = get_object_or_404(Note, id=pk)
-    if request.method == 'POST':
-        note.delete()
-        messages.success(request,'Note deleted successfully')
-        return redirect('notes')
-    return render(request, 'a_posts/note_delete.html', {'note': note})
-
+"""
 def like_note (request, pk):
     note = get_object_or_404(Note, id=pk)
     user_exists = note.likes.filter(username=request.user.username).exists()
@@ -253,3 +201,4 @@ def like_note (request, pk):
         else:
             note.likes.add(request.user)
     return render(request, 'snippets/notes_likes.html',{'note':note})
+"""

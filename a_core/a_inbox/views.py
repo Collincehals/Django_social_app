@@ -134,5 +134,19 @@ def  notify_inbox(request):
         latest_message = c.messages.first()
         if latest_message.sender != request.user:
             return render(request,'a_inbox/home_notify_icon.html')
+        else:
+            return HttpResponse('')
+
+def notify_inbox(request):
+    my_conversations = Conversation.objects.filter(participants=request.user, is_seen=False)
+    show_notification = False
+
+    for c in my_conversations:
+        latest_message = c.messages.first()
+        if latest_message.sender != request.user:
+            show_notification = True
+            break
+    if show_notification:
+        return render(request, 'a_inbox/home_notify_icon.html')
+    else:
         return HttpResponse('')
-    

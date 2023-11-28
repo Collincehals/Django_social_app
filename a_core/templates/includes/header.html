@@ -30,10 +30,8 @@
     x-transition:enter-start="opacity-0 -translate-y-96"
     x-transition:enter-end="opacity-100 translate-y-0">
         <ul class="flex items-center navitems flex-col md:flex-row gap-2 md:gap-0 justify-center h-full -translate-y-10 md:translate-y-0">
-            <li><a href="/">Posts</a></li>
-            <li><a href="{% url 'notes' %}">Notes</a></li>
-            <li><a href="{% url 'post-create' %}">Create Post</a></li>
-            <li><a href="{% url 'note-create' %}">Create Note</a></li>
+            <li><a href="/">Timeline</a></li>
+            <li><a href="{% url 'post-create' %}">Add Post</a></li>
             <li class="inbox-wrapper">
                 <div class="notify-container"
                     hx-get="{% url 'notify-inbox' %}"

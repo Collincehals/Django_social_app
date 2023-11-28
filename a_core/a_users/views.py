@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import Http404
-from posts_app.models import Post, Note
+from posts_app.models import Post
 from django.contrib.auth import login, logout, authenticate
 from django.db.models import Count
 from posts_app.forms import PostCommentReplyForm
@@ -16,12 +16,10 @@ def ProfileView(request, username=None):
         user = get_object_or_404(User, username=username)
         profile = user.profile
         #posts = Post.objects.filter(author=user)
-        notes = Note.objects.filter(author=user)
     else:
         try:
             profile = request.user.profile
             #posts = Post.objects.filter(author=request.user)
-            notes =Note.objects.filter(author=request.user)
         except:
             raise Http404()
     posts = profile.user.posts.all()
@@ -39,7 +37,6 @@ def ProfileView(request, username=None):
     context = {
         'profile': profile,
         'posts': posts,
-        'notes': notes,
     }
     return render(request, 'a_users/profile.html', context)
 
