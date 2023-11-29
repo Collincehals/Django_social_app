@@ -3,25 +3,14 @@
 {% block title %} Delete Post- {{ post.id }} {% endblock %}
 
 {% block content %}
-<style>
-    
-    @media (max-width:768px) {
-        #backbtn {
-        display: none;
-    }
-    }
-</style>
 <div class="md:flex items-center">
-    <div class="w-full md:max-w-sm mr-6 md:[&>*>*>p]:text-4xl">
-        <article class="card">
+    <div class="w-full mr-2">
+        <article class="post-item-card">
             <a class="flex items-center gap-1 m-2" href="">
                 <img class="w-6 h-6 object-cover rounded-full" src="{{post.author.profile.image.url}}">
                 <span class="font-bold hover:underline">{{ post.author }}</span>
                 <span class="text-sm text-gray-400"> @ {{ post.author }} </span>
             </a>
-            <div class="px-2 h-10">
-                <h3 class="text-start leading-5 mr-1">{{ post.title }}</h3>
-            </div>
             {% if post.media %}
                 {% if 'mp4' in post.media.url %}
                 <video src="{{post.media.url}}" type="mp4" controls ></video>
@@ -33,7 +22,7 @@
             {% else %}
             {% endif %}
             <div class="p-2 px-4">
-                <p class="text-lg mb-4 font1">{{ post.body }}</p>
+                <p class="text-lg">{{ post.body }}</p>
                 {% if not post.media or 'mp4' in post.media.url %}
                 {% else %}
                     {% for tag in post.tags.all %}
@@ -46,7 +35,7 @@
         </article>
     </div>
     <div>
-        <h1>Delete Post</h1>
+        <h1 class="text-blue-900 font-bold text-2xl pt-2">Delete Post</h1>
         <p class="mb-6">Are you sure you want to delete this post?</p>
         
         <form method='POST'>

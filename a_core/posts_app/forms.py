@@ -38,7 +38,7 @@ class PostEditForm(ModelForm):
             'tags': 'Category' 
         }
         widgets = {
-            'body': forms.Textarea (attrs={'rows':5, 'placeholder':'Enter Caption here...', 'class': 'font1 text 4xl' }),
+            'body': forms.Textarea (attrs={'rows':5, 'placeholder':'Enter Caption here...'}),
             'tags':forms.CheckboxSelectMultiple(),
         }  
         
