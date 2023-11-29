@@ -3,7 +3,10 @@
 {% block layout %}
 
     <content class="max-w-3xl block mx-auto my-12 px-6">
-
+        <div class="flex justify-start md:hidden ">
+            <a href="{{ request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left mr-4 text-blue-700 font-bold text-lg"></i></a>
+            <p class="text-blue-700 font-bold text-lg">Post</p>
+        </div>
         {% block content %}
         {% endblock %}
     

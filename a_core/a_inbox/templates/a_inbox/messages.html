@@ -1,6 +1,6 @@
 {% load static %}
 
-{% if conversation %}
+    {% if conversation %}
     {% for participant in conversation.participants.all %}
         {% if participant != request.user %}
         <div style="display: flex;align-items: center;justify-content: center;">
@@ -42,3 +42,4 @@
 {% else %}
 <P class="flex h-full items-center justify-center p-3"><i class="fa-solid fa-circle-plus mx-2"></i> Select a conversation or create a new message</P>
 {% endif %}
+

@@ -3,27 +3,45 @@
 {% block title %} Delete Post- {{ post.id }} {% endblock %}
 
 {% block content %}
+<style>
+    
+    @media (max-width:768px) {
+        #backbtn {
+        display: none;
+    }
+    }
+</style>
 <div class="md:flex items-center">
     <div class="w-full md:max-w-sm mr-6 md:[&>*>*>p]:text-4xl">
         <article class="card">
-            <div class="flex items-center justify-between px-2 h-10">
+            <a class="flex items-center gap-1 m-2" href="">
+                <img class="w-6 h-6 object-cover rounded-full" src="{{post.author.profile.image.url}}">
+                <span class="font-bold hover:underline">{{ post.author }}</span>
+                <span class="text-sm text-gray-400"> @ {{ post.author }} </span>
+            </a>
+            <div class="px-2 h-10">
                 <h3 class="text-start leading-5 mr-1">{{ post.title }}</h3>
-                <div class="text-sm text-gray-400 truncate"><a target="_blank" href="https://www.flickr.com/explore">flickr</a><a href="" class="hover:underline ml-1" target="blank">@ {{ post.author }}</a></div>
             </div>
-            <figure>
-                <p><a href=""><img class="w-full" src="{{ post.image }}"></a></p>
-            </figure>
+            {% if post.media %}
+                {% if 'mp4' in post.media.url %}
+                <video src="{{post.media.url}}" type="mp4" controls ></video>
+                {% else %}
+                <figure>
+                    <a href="{% url 'view-post' post.id %}"><img class="w-full" src="{{ post.media.url }}"></a>
+                </figure>
+                {% endif %}
+            {% else %}
+            {% endif %}
             <div class="p-2 px-4">
-                <a class="flex items-center gap-1 mb-2" href="">
-                    <img class="w-6 h-6 object-cover rounded-full" src="https://img.icons8.com/small/96/A9A9A9/happy.png">
-                    <span class="font-bold hover:underline">{{ post.author }}</span>
-                    <span class="text-sm text-gray-400"> @ {{ post.author }} </span>
-                </a>
                 <p class="text-lg mb-4 font1">{{ post.body }}</p>
-                <div class="flex items-center gap-2 text-sm mb-2 flex-wrap">
-                    <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Animals</a>
-                    <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">Black & White</a>
-                </div>
+                {% if not post.media or 'mp4' in post.media.url %}
+                {% else %}
+                    {% for tag in post.tags.all %}
+                    <div class="flex items-center gap-2 text-sm mb-2 flex-wrap">
+                        <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">{{tag}}</a>
+                    </div>
+                    {% endfor %}
+                {% endif %}
             </div>
         </article>
     </div>
@@ -34,7 +52,7 @@
         <form method='POST'>
             {% csrf_token %}
             <button class="deletebtn" type="submit">Confirm</button>
-            <a class="editbtn" type="submit" href="{{ request.META.HTTP_REFERER }}">Go Back</a>
+            <a id="backbtn" class="editbtn" type="submit" href="{{ request.META.HTTP_REFERER }}">Go Back</a>
         </form>
     </div>
 </div>

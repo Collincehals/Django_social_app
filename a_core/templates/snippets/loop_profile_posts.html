@@ -13,7 +13,6 @@ _="on load transition my opacity to 1 over 0.3 seconds">
             <span class="text-sm text-gray-400">@ {{ post.author }}</span>
         </a>
        </div>
-        <h3 class="text-start pl-2 pt-0.3 pb-1">{{ post.title }}</h3>
     {% if post.media %}
         {% if 'mp4' in post.media.url %}
         <video src="{{post.media.url}}" type="mp4" alt="Video not supported" controls></video>  

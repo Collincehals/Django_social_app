@@ -5,10 +5,10 @@
 {% block content %}
 <style>
     .profile-edit-form input {
-        padding:13px;
+        padding:11px;
     }
-    .profile-edit-page{
-        max-width:650px;
+    .profile-edit-page {
+        max-width:600px;
         width:100%;
         background-color: rgb(241, 240, 253);
         padding:25px; margin:0 auto;
@@ -17,7 +17,7 @@
     
 </style>
 <div class="profile-edit-page">
-  <h1 class="mb-2 text-center">Edit Profile</h1>
+  <h2 class="text-blue-900 mb-2 text-center">Edit Profile</h2>
 <div class="text-center flex flex-col items-center">
     <img id="avatar" class="w-20 h-20 rounded-full object-cover mb-4" src="{{ user.profile.image.url }}" />
     <div class="text-center max-w-md">

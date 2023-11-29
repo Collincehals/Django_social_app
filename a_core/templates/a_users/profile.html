@@ -51,11 +51,5 @@
     <div id="tab-contents">
         {% include 'snippets/loop_profile_posts.html' %}
     </div>
-  
-        {% if user == profile.user %}
-        <div style="width:90%;max-width:300px;margin:20px auto;font-weight:700;font-family: sans-serif;text-align:center;color:darkorange;border-bottom: 2px solid #ccc;"><h2>Your Notes</h2></div>
-        {% else %}
-        <div style="width:90%;max-width:300px;margin:20px auto;font-weight:700;font-family: sans-serif;text-align:center;color:darkorange;border-bottom: 2px solid #ccc;"><h2>Notes by {{ profile.user.username }}</h2></div>
-        {% endif %}
 </div>
 {% endblock %}

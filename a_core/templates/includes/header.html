@@ -13,9 +13,9 @@
 <header x-data="{ mobilenavOpen: false }" class="md:flex items-center justify-between [&>*]:px-8 bg-gray-800 h-20 text-white sticky top-0 z-40">
     <div class="flex items-center justify-between h-20">
         <logo>
-            <a class="flex items-center gap-1" href="/">
-                <img  id="logo-home" class="w-9 -mt-1" src="{% static 'icons/logo-home.png' %}">
-                <span id="heading-home" class="text-lg font-bold">Colltech Gallery</span>
+            <a class="flex items-center gap-3" href="/">
+                <img  id="logo-home" class="w-6" src="{% static 'icons/home-logo1.png' %}">
+                <span id="heading-home" class="text-lg font-bold">ConnectHive</span>
             </a>
         </logo>
         <mobileicon class="md:hidden">
@@ -30,7 +30,7 @@
     x-transition:enter-start="opacity-0 -translate-y-96"
     x-transition:enter-end="opacity-100 translate-y-0">
         <ul class="flex items-center navitems flex-col md:flex-row gap-2 md:gap-0 justify-center h-full -translate-y-10 md:translate-y-0">
-            <li><a href="/">Timeline</a></li>
+            <li><a href="/">Explore</a></li>
             <li><a href="{% url 'post-create' %}">Add Post</a></li>
             <li class="inbox-wrapper">
                 <div class="notify-container"

@@ -11,8 +11,17 @@
 </style>
 <div class="card p-4">
     <div class="flex items-center mb-4">
-        <img class="w-20 h-20 object-cover rounded-xl mr-4" src="{{ post.image }}">
-        <h3 class="text-lg font-bold">{{ post.title }}</h3>
+        {% if post.media %}
+            {% if 'mp4' in post.media.url %}
+            <video src="{{post.media.url}}" type="mp4" controls ></video>
+            {% else %}
+            <figure>
+                <a href="{% url 'view-post' post.id %}"><img class="w-full" src="{{ post.media.url }}"></a>
+            </figure>
+            {% endif %}
+        {% else %}
+        {% endif %}
+    <h3 class="text-lg font-bold">{{ post.title }}</h3>
     </div>
     
     <div class="pb-2">

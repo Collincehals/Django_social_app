@@ -4,6 +4,7 @@
 
 {% block content %}
 <style>
+
     form input {
         border:none;
         padding:8px;
@@ -32,7 +33,7 @@
     }
 </style>
 <div class="card !p-8">
-    <h2 class="text-orange-500 font-extrabold">Create Post</h2>
+    <p class="text-blue-900 font-bold text-xl pb-1">Create Post</p>
     <form method='POST' enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}

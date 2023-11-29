@@ -1,19 +1,39 @@
-{% extends 'layouts/a.html' %}
+{% extends 'layouts/postpage_layout.html' %}
 
-{% block title %} Post - {{ post.title }} - {{ post.id }} {% endblock %}
+{% block title %} Post {% endblock %}
 
 {% block content %}
 <style>
     #comment-form{
         display:none;
     }
-</style>
+    form input {
+        border:none;
+        padding:8px;
+        background:none;
+        border-bottom:1px solid blue;
+        border-radius: 0;
+    }
+    form textarea {
+        border:none;
+        padding:8px;
+        background:none;
+        border-bottom:1px solid blue;
+        border-radius: 0;
+    }
 
-{% include 'a_posts/post.html' %}
+    form textarea:focus,
+    form input:focus {
+        outline:none;
+        border:none;
+        border-bottom:1px solid blue;
+    }
+</style>
 {% load static %}
 
+{% include 'a_posts/post.html' %}
 {% if user.is_authenticated %}
-<div class="card !pb-0 -mt-3" id="comment-form">
+<div class="post-item-card !pb-0 mt-3" id="comment-form">
     <form  class="flex items-center p-4" autocomplete="off" 
      hx-post="{% url 'sent-post-comment' post.id %}"
      hx-target=".comment-lists"

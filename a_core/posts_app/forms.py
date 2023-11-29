@@ -17,9 +17,9 @@ class SignUpForm(UserCreationForm):
 class CreatePostForm(ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'media', 'body', 'tags']
+        fields = ['media', 'body', 'tags']
         labels = {
-            'body': 'Caption',
+            'body': '',
             'media':'Attach file',
             'tags': 'Category'
         }
@@ -32,15 +32,14 @@ class CreatePostForm(ModelForm):
 class PostEditForm(ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'body','tags']
+        fields = ['body','tags']
         labels = {
             'body':'',
-            'title': '', 
             'tags': 'Category' 
         }
         widgets = {
             'body': forms.Textarea (attrs={'rows':5, 'placeholder':'Enter Caption here...', 'class': 'font1 text 4xl' }),
-             'tags':forms.CheckboxSelectMultiple(),
+            'tags':forms.CheckboxSelectMultiple(),
         }  
         
           
@@ -52,7 +51,7 @@ class PostCommentForm(ModelForm):
             'body': ''
         }
         widgets = {
-            'body': forms.TextInput(attrs={'placeholder':'Enter Comment here...' }),
+            'body': forms.TextInput(attrs={'placeholder':'Enter Comment...' }),
         }
         
 class PostCommentReplyForm(ModelForm):
@@ -63,5 +62,5 @@ class PostCommentReplyForm(ModelForm):
             'body': ''
         }
         widgets = {
-            'body': forms.TextInput(attrs={'placeholder':'Enter Reply here...' }),
+            'body': forms.TextInput(attrs={'placeholder':'Enter Reply...' }),
         }  
