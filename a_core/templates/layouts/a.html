@@ -1,24 +1,83 @@
 {% extends 'base.html' %}
 
 {% block layout %}
-<aside class="hidden md:block md:h-full md:w-[22%] fixed left-3 top-28">
+<style>
+    form input {
+        border-radius:25px;
+        background:rgb(216, 223, 255);
+        padding:8px;
+        cursor:pointer;
+    }
+    form input::placeholder {
+        color:rgb(10, 4, 83);
+        padding-left:5px;
+        font-size: 14px;
+    }
+    .postbtn {
+        border-radius:20px;
+        background:rgb(242, 169, 68);
+        padding:7px 17px;
+        color:white;
+    }
+    #main-content {
+        border-right:.2px solid rgb(65, 71, 113);
+        border-left:.2px solid rgb(65, 71, 113);
+    }
+    
+    @media (min-width: 768px) {
+        form input::placeholder {
+        text-align: center;
+        font-size: 15px;
+    }
+    }
+    @media (max-width: 768px) {
+        #main-content {
+        border-left:none;
+        border-right:none;
+    }
+    form input::placeholder {
+        font-size: 13px;
+    }
+    }
+</style>
+
+<aside class="menu-div hidden md:block md:h-full md:w-[22%] fixed left-3 top-28">
     {% include 'includes/left_sidebar.html' %}
 </aside>
 <content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-3 max-w-7xl mx-auto my-6 md:ml-[25%]">
-    <mobileSidebarNav class="md:hidden col-span-full mx-auto mb-6 z-10 relative">
-        <a @click="mobileSidebarOpen = !mobileSidebarOpen" class="flex items-center cursor-pointer select-none font-bold hover:bg-gray-200 rounded-lg p-3">
-            <span>Categories</span>
-            <img x-bind:class="mobileSidebarOpen && 'rotate-180 duration-300'" class="w-4 ml-1.5" src="https://img.icons8.com/small/32/000000/expand-arrow.png" />
+    <main id="main-content" class="mx-1 col-span-full md:col-span-2 md:mr-5 md:p-4 md:-mt-8">
+        {% if user.is_authenticated %}
+        <a href="{% url 'post-create' %}">
+            <form  class=" flex justify-around items-center p-4" autocomplete="off">
+                <img class="h-8 w-8 md:h-10 md:w-10 rounded-full object-cover mr-3" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
+                <input type="text" placeholder="What's on your mind, {{user.username|title}}?">
+                <button class="block ml-2 postbtn">Post</button>
+            </form>
         </a>
-    </mobileSidebarNav>
-    <main id="main-content" class="col-span-full md:col-span-2 md:mr-5 bg-white">
+        {% endif %}
         {% block content %}
         {% endblock %}
     </main>
-    <div>
+    <div class="sidebar-div">
         {% load sidebar %}
         {% sidebar_view tag user %}
     </div>
 </content>
 
 {% endblock %}
+
+
+
+
+
+
+<!---
+
+    <mobileSidebarNav class="md:hidden col-span-full mx-auto mb-6 z-10 relative">
+        <a @click="mobileSidebarOpen = !mobileSidebarOpen" class="flex items-center cursor-pointer select-none font-bold hover:bg-gray-200 rounded-lg p-3">
+            <span>Categories</span>
+            <img x-bind:class="mobileSidebarOpen && 'rotate-180 duration-300'" class="w-4 ml-1.5" src="https://img.icons8.com/small/32/000000/expand-arrow.png" />
+        </a>
+    </mobileSidebarNav>
+
+-->

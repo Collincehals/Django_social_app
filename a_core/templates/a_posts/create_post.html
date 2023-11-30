@@ -4,6 +4,25 @@
 
 {% block content %}
 <style>
+    .create_post_popup_container {
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index:500;
+        background:rgba(0,0,0,0.3);
+    }
+    .create_post_popup_item {
+        background:rgb(243,241,253);
+        width:100%;
+        max-width:500px;
+        margin:30px auto;
+        border-radius: 2px;
+    }
 
     form input {
         border:none;
@@ -32,13 +51,15 @@
         border-bottom:1px solid blue;
     }
 </style>
-<div class="post-item-card p-3 md:p-8">
-    <p class="text-blue-900 font-bold text-xl pb-1">Create Post</p>
-    <form method='POST' enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="successbtn mt-1">Create Post</button>
-        <a class="editbtn ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
-    </form>
+<div class="create_post_popup_container">
+    <div class="p-3 md:p-8 create_post_popup_item">
+        <p class="text-blue-900 font-bold text-xl pb-1">Create Post</p>
+        <form method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="successbtn mt-1">Create Post</button>
+            <a class="editbtn ml-1" href="{{ request.META.HTTP_REFERER }}">Close</a>
+        </form>
+    </div>
 </div>
 {% endblock %}

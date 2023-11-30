@@ -1,25 +1,25 @@
 {% load static %}
 
-<section class="card p-4">
-    <ul class="hoverlist">
-        <li class="highlight">
-            <a href="/"><i class="fa-solid fa-house text-lg text-blue-900 mr-3"></i><span id="icon-label" class="text-lg text-blue-900">Home</span></a>
+<section class="pl-6">
+    <ul class="leftsidebar_hover">
+        <li>
+            <a href="/"><i class="fa-solid fa-house text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Home</span></a>
         </li>
         <li>
-            <a href="/"><i class="fa-solid fa-compass text-lg text-blue-900 mr-3"></i><span id="icon-label" class="text-lg text-blue-900">Explore</span></a>
+            <a href="/"><i class="fa-solid fa-compass text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Explore</span></a>
         </li>
         <li>
-            <a href="{% url 'post-create' %}"><i class="fa-solid fa-circle-plus text-lg text-blue-900 mr-3"></i><span id="icon-label" class="text-lg text-blue-900">Add Post</span></a>
+            <a href="{% url 'post-create' %}"><i class="fa-solid fa-circle-plus text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Add Post</span></a>
         </li>
         <li>
-            <a id="new-message-button" href="{% url 'inbox' %}"><i class="fa-solid fa-message text-lg text-blue-900 mr-3"></i><span id="icon-label" class="text-lg text-blue-900">Messages</span></a>
+            <a id="new-message-button" href="{% url 'inbox' %}"><i class="fa-solid fa-message text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Messages</span></a>
         </li>
         <li>
-            <a href="{% url 'inbox' %}"><i class="fa-solid fa-envelope text-lg text-blue-900 mr-3"></i><span id="icon-label" class="text-lg text-blue-900">Inbox</span></a>
+            <a href="{% url 'inbox' %}"><i class="fa-solid fa-envelope text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Inbox</span></a>
         </li>
         {% if user.is_authenticated %}
         <li x-data="{ dropdownOpen: false }" class="relative">
-            <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer"><i class="fa-solid fa-gear text-lg text-blue-900 mr-3"></i><span id="icon-label" class="text-lg text-blue-900">Settings</span></a>
+            <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer"><i class="fa-solid fa-gear text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Settings</span></a>
             <div x-show="dropdownOpen" x-cloak class="  bg-white text-black shadow rounded-xl w-auto z-50"
             x-transition:enter="duration-300 ease-out"
             x-transition:enter-start="opacity-0 -translate-y-5 scale-90"
@@ -35,23 +35,9 @@
         </li>
        
         <li class="flex justify-start items-center" >
-            <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
-            <a href="{% url 'view-profile' %}" id="icon-label" class="text-lg text-blue-900">{{ user }} </a>
+            <img class="h-8 w-8 rounded-full object-cover ml-2" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
+            <a href="{% url 'view-profile' %}" id="icon-label" class="text-lg text-white">{{ user }} </a>
         </li>
         {% endif %}
     </ul>
 </section>
-
-<script>
-    const messagebtn = document.getElementById('new-message-button');
-    const searchpopup= document.getElementById('popup-layout');
-    const cancelbtn= document.getElementById('cancelbtn');
-
-    messagebtn.addEventListener('click',function() {
-        searchpopup.style.display='flex';
-    });
-
-    cancelbtn.addEventListener('click',function() {
-        searchpopup.style.display='none';
-    });
-</script>

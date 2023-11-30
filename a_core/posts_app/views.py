@@ -49,6 +49,7 @@ def create_post_view(request):
             return redirect('view-profile')
     return render(request, 'a_posts/create_post.html', {'form': form})
 
+
 def PostView(request, pk):
     post = get_object_or_404(Post, id=pk)
   

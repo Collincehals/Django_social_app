@@ -1,5 +1,9 @@
 {% load static %}
 <style>
+.header {
+    background: rgb(4, 21, 53);
+    border-bottom:.2px solid rgb(65, 71, 113);
+}
 .inbox-wrapper{
     position: relative;
     padding:5px;
@@ -10,7 +14,7 @@
     left:58px;
 }
 </style>
-<header x-data="{ mobilenavOpen: false }" class="md:flex items-center justify-between [&>*]:px-8 bg-gray-800 h-20 text-white sticky top-0 z-40">
+<header x-data="{ mobilenavOpen: false }" class="header md:flex items-center justify-between [&>*]:px-8 h-20 text-white top-0 z-40 sticky">
     <div class="flex items-center justify-between h-20">
         <logo>
             <a class="flex items-center gap-3" href="/">
@@ -25,14 +29,23 @@
             </a>
         </mobileicon>  
     </div>
-    <nav x-show="mobilenavOpen" x-cloak class="md:!block bg-gray-800 h-screen w-screen md:h-auto md:w-auto -mt-20 md:mt-0 absolute md:relative z-[-1]"
+    <nav x-show="mobilenavOpen" x-cloak class="md:!block bg-slate-800 md:bg-transparent h-screen w-[60%] md:h-auto md:w-auto -mt-20 md:mt-0 absolute md:relative z-[-1]"
     x-transition:enter="duration-300 ease-out"
-    x-transition:enter-start="opacity-0 -translate-y-96"
-    x-transition:enter-end="opacity-100 translate-y-0">
+    x-transition:enter-start="opacity-0 -translate-x-96"
+    x-transition:enter-end="opacity-100 translate-x-0">
         <ul class="flex items-center navitems flex-col md:flex-row gap-2 md:gap-0 justify-center h-full -translate-y-10 md:translate-y-0">
-            <li><a href="/">Explore</a></li>
-            <li><a href="{% url 'post-create' %}">Add Post</a></li>
-            <li class="inbox-wrapper">
+            <li class="md:hidden"><a href="/">Explore</a></li>
+            <li class="md:hidden"><a href="{% url 'post-create' %}">Add Post</a></li>
+            <li class="hidden md:block inbox-wrapper">
+                <div class="notify-container"
+                    hx-get="{% url 'notify-inbox' %}"
+                    hx-trigger = 'load'
+                    hx-target = 'this'
+                    hx-swap='innerHTML'>
+                </div>
+                <a href="{% url 'inbox' %}"><i class="fa-solid fa-envelope" style="color: #fafcff;font-size:24px;"></i></a>
+            </li>
+            <li class="md:hidden inbox-wrapper">
                 <div class="notify-container"
                     hx-get="{% url 'notify-inbox' %}"
                     hx-trigger = 'load'
