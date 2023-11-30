@@ -1,0 +1,57 @@
+{% load static %}
+
+<section class="card p-4">
+    <ul class="hoverlist">
+        <li class="highlight">
+            <a href="/"><i class="fa-solid fa-house text-lg text-blue-900 mr-3"></i><span id="icon-label" class="text-lg text-blue-900">Home</span></a>
+        </li>
+        <li>
+            <a href="/"><i class="fa-solid fa-compass text-lg text-blue-900 mr-3"></i><span id="icon-label" class="text-lg text-blue-900">Explore</span></a>
+        </li>
+        <li>
+            <a href="{% url 'post-create' %}"><i class="fa-solid fa-circle-plus text-lg text-blue-900 mr-3"></i><span id="icon-label" class="text-lg text-blue-900">Add Post</span></a>
+        </li>
+        <li>
+            <a id="new-message-button" href="{% url 'inbox' %}"><i class="fa-solid fa-message text-lg text-blue-900 mr-3"></i><span id="icon-label" class="text-lg text-blue-900">Messages</span></a>
+        </li>
+        <li>
+            <a href="{% url 'inbox' %}"><i class="fa-solid fa-envelope text-lg text-blue-900 mr-3"></i><span id="icon-label" class="text-lg text-blue-900">Inbox</span></a>
+        </li>
+        {% if user.is_authenticated %}
+        <li x-data="{ dropdownOpen: false }" class="relative">
+            <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer"><i class="fa-solid fa-gear text-lg text-blue-900 mr-3"></i><span id="icon-label" class="text-lg text-blue-900">Settings</span></a>
+            <div x-show="dropdownOpen" x-cloak class="  bg-white text-black shadow rounded-xl w-auto z-50"
+            x-transition:enter="duration-300 ease-out"
+            x-transition:enter-start="opacity-0 -translate-y-5 scale-90"
+            x-transition:enter-end="opacity-100 translate-y-0 scale-100">
+                <ul class="hoverlist [&>li>a]:justify-start">
+                    <li style="margin-bottom:-5px;"><a href="{% url 'edit-profile' %}"><i class="fa-solid fa-user-pen" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Edit Profile</a></li>
+                    <li style="margin-bottom:-5px;"><a href="{% url 'account_change_password' %}"><i class="fa-solid fa-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Change Password</a></li>
+                    <li style="margin-bottom:-5px;"><a href="{% url 'account_reset_password' %}"><i class="fa-solid fa-user-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Reset Password</a></li>
+                    <li><a href="{% url 'account_logout' %}"><i class="fa-solid fa-power-off" style="color:red;font-size:larger;margin-right:10px;"></i>Log Out</a></li>
+                    
+                </ul>
+            </div>
+        </li>
+       
+        <li class="flex justify-start items-center" >
+            <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
+            <a href="{% url 'view-profile' %}" id="icon-label" class="text-lg text-blue-900">{{ user }} </a>
+        </li>
+        {% endif %}
+    </ul>
+</section>
+
+<script>
+    const messagebtn = document.getElementById('new-message-button');
+    const searchpopup= document.getElementById('popup-layout');
+    const cancelbtn= document.getElementById('cancelbtn');
+
+    messagebtn.addEventListener('click',function() {
+        searchpopup.style.display='flex';
+    });
+
+    cancelbtn.addEventListener('click',function() {
+        searchpopup.style.display='none';
+    });
+</script>

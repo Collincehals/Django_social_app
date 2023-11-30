@@ -15,6 +15,7 @@
       justify-content: center;
   }
   .img-container {
+      padding-top:100px;
       object-fit: cover;
       background-color: rgba(241, 240, 253,.9);
   }
@@ -47,7 +48,7 @@
 {% get_providers as socialaccount_providers %}
 <div class='login-container'>
   <div class="img-container">
-      <img   src="{% static 'icons/social.png' %}" alt="login-img">
+      <img   src="{% static 'icons/login.png' %}" class="w-80 h-80" alt="login-img">
   </div>
   <div class="login-form-container">
     <div style="display:flex;flex-wrap: wrap; justify-content:center; align-items:center; gap:10px;margin-top:20px;">

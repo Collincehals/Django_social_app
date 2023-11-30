@@ -38,7 +38,7 @@ class PostEditForm(ModelForm):
             'tags': 'Category' 
         }
         widgets = {
-            'body': forms.Textarea (attrs={'rows':5, 'placeholder':'Enter Caption here...'}),
+            'body': forms.Textarea (attrs={'rows':5}),
             'tags':forms.CheckboxSelectMultiple(),
         }  
         
@@ -51,7 +51,7 @@ class PostCommentForm(ModelForm):
             'body': ''
         }
         widgets = {
-            'body': forms.TextInput(attrs={'placeholder':'Enter Comment...' }),
+            'body': forms.TextInput(attrs={'placeholder':'Post Comment...' }),
         }
         
 class PostCommentReplyForm(ModelForm):
@@ -62,5 +62,5 @@ class PostCommentReplyForm(ModelForm):
             'body': ''
         }
         widgets = {
-            'body': forms.TextInput(attrs={'placeholder':'Enter Reply...' }),
+            'body': forms.TextInput(attrs={'placeholder':'Post Reply...' }),
         }  

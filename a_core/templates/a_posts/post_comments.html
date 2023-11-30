@@ -19,7 +19,9 @@
                 </svg>
             </div>
             Replies
+            {% if comment.replies.count > 0 %}
             <span hx-swap-oob="true" id="commentrepliescount-{{ comment.id }}" class="font-light text-gray-500 ml-1">{{ comment.replies.count }}</span>
+            {% endif %}
         </a>
         {% endif %}
         
@@ -42,10 +44,12 @@
         </style>
         {% if user.is_authenticated %}
         {% load static %}
-        <form class="replyform flex justify-between" autocomplete="off" 
+        <p class="text-gray-500 pl-10">Replying to <span class="text-orange-500">@{{comment.author.username}}</span></p>
+        <form class="replyform flex justify-between items-center gap-1" autocomplete="off" 
          hx-post="{% url 'sent-post-comment-reply' comment.id %}"
          hx-target="this"
          hx-swap="outerHTML">
+            <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
             {% csrf_token %}
             {{ commentreplyform }}
             <button class="block" type="submit"><img style="width:25px;" src="{% static 'icons/send-icon.png' %}"></button>

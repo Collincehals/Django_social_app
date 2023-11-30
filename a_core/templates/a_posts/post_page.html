@@ -9,20 +9,13 @@
     }
     form input {
         border:none;
+        width:100%;
         padding:8px;
         background:none;
         border-bottom:1px solid blue;
         border-radius: 0;
     }
-    form textarea {
-        border:none;
-        padding:8px;
-        background:none;
-        border-bottom:1px solid blue;
-        border-radius: 0;
-    }
-
-    form textarea:focus,
+    
     form input:focus {
         outline:none;
         border:none;
@@ -30,19 +23,22 @@
     }
 </style>
 {% load static %}
-
+<!--Post here-->
 {% include 'a_posts/post.html' %}
+
 {% if user.is_authenticated %}
-<div class="post-item-card !pb-0 mt-3" id="comment-form">
-    <form  class="flex items-center p-4" autocomplete="off" 
-     hx-post="{% url 'sent-post-comment' post.id %}"
-     hx-target=".comment-lists"
-     hx-swap="afterbegin"
-     _="on htmx:afterRequest reset() me">
-        {% csrf_token %}
-        {{ commentform }}
-        <button @click="open = false" class="block ml-2" type="submit"><img style="width:25px" src="{% static 'icons/send-icon.png' %}"></button>
-    </form>
+<div class="post-item-card !pb-0 mt-1" id="comment-form">
+        <p class="text-gray-500 pl-8 pt-1">Replying to <span class="text-orange-500">@{{post.author.username}}</span></p>
+        <form  class="flex items-center gap-1 p-3" autocomplete="off" 
+         hx-post="{% url 'sent-post-comment' post.id %}"
+         hx-target=".comment-lists"
+         hx-swap="afterbegin"
+         _="on htmx:afterRequest reset() me">
+            <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
+            {% csrf_token %}
+            {{ commentform }}
+            <button @click="open = false" class="block ml-2" type="submit"><img style="width:25px" src="{% static 'icons/send-icon.png' %}"></button>
+        </form>
 </div>
 {% endif %}
 

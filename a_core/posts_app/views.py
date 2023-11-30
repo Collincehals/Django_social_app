@@ -22,7 +22,7 @@ def home_view(request, tag=None):
     try:
         posts = paginator.page(page)
     except:
-        return HttpResponse('<div>No more posts</div>')
+        return HttpResponse('')
     context={
         'posts': posts,
         'page': page,

@@ -1,23 +1,24 @@
 {% extends 'base.html' %}
 
 {% block layout %}
-
-{% include 'includes/hero.html' %}
-
-    <content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-3 max-w-7xl mx-auto my-6 md:px-6">
+<aside class="hidden md:block md:h-full md:w-[22%] fixed left-3 top-28">
+    {% include 'includes/left_sidebar.html' %}
+</aside>
+<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-3 max-w-7xl mx-auto my-6 md:ml-[25%]">
     <mobileSidebarNav class="md:hidden col-span-full mx-auto mb-6 z-10 relative">
         <a @click="mobileSidebarOpen = !mobileSidebarOpen" class="flex items-center cursor-pointer select-none font-bold hover:bg-gray-200 rounded-lg p-3">
             <span>Categories</span>
             <img x-bind:class="mobileSidebarOpen && 'rotate-180 duration-300'" class="w-4 ml-1.5" src="https://img.icons8.com/small/32/000000/expand-arrow.png" />
         </a>
     </mobileSidebarNav>
-    <main  class="col-span-full md:col-span-2 md:mr-[5%] lg:mx-[10%] order-2 md:order-1">
+    <main id="main-content" class="col-span-full md:col-span-2 md:mr-5 bg-white">
         {% block content %}
         {% endblock %}
     </main>
-
-    {% load sidebar %}
-    {% sidebar_view tag user %}
-    </content>
+    <div>
+        {% load sidebar %}
+        {% sidebar_view tag user %}
+    </div>
+</content>
 
 {% endblock %}
