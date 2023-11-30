@@ -7,7 +7,7 @@
             <span class="text-sm font-normal ml-4">{{ comment.created }}</span>
         </a>
     </div>
-    <p class="text-xl px-2">
+    <p class="text-lg px-2">
         {{ comment.body }}
     </p>
     <div x-data="{ repliesOpen: false }" class="flex items-center justify-between flex-wrap text-sm px-2">
@@ -45,14 +45,14 @@
         {% if user.is_authenticated %}
         {% load static %}
         <p class="text-gray-500 pl-10">Replying to <span class="text-orange-500">@{{comment.author.username}}</span></p>
-        <form class="replyform flex justify-between items-center gap-1" autocomplete="off" 
+        <form class="replyform flex justify-between items-center" autocomplete="off" 
          hx-post="{% url 'sent-post-comment-reply' comment.id %}"
          hx-target="this"
          hx-swap="outerHTML">
-            <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
+            <img class="h-8 w-8 mr-3 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
             {% csrf_token %}
             {{ commentreplyform }}
-            <button class="block" type="submit"><img style="width:25px;" src="{% static 'icons/send-icon.png' %}"></button>
+            <button class="block" type="submit"><img style="width:25px;" src="{% static 'icons/send.png' %}"></button>
         </form>
         {% endif %}
         </div>

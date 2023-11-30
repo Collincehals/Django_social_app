@@ -9,7 +9,6 @@
     }
     form input {
         border:none;
-        width:100%;
         padding:8px;
         background:none;
         border-bottom:1px solid blue;
@@ -29,15 +28,15 @@
 {% if user.is_authenticated %}
 <div class="post-item-card !pb-0 mt-1" id="comment-form">
         <p class="text-gray-500 pl-8 pt-1">Replying to <span class="text-orange-500">@{{post.author.username}}</span></p>
-        <form  class="flex items-center gap-1 p-3" autocomplete="off" 
+        <form  class="flex justify-between items-center p-4" autocomplete="off" 
          hx-post="{% url 'sent-post-comment' post.id %}"
          hx-target=".comment-lists"
          hx-swap="afterbegin"
          _="on htmx:afterRequest reset() me">
-            <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
+            <img class="h-8 w-8 rounded-full object-cover mr-3" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
             {% csrf_token %}
             {{ commentform }}
-            <button @click="open = false" class="block ml-2" type="submit"><img style="width:25px" src="{% static 'icons/send-icon.png' %}"></button>
+            <button @click="open = false" class="block ml-2" type="submit"><img style="width:25px" src="{% static 'icons/send.png' %}"></button>
         </form>
 </div>
 {% endif %}
@@ -45,7 +44,7 @@
 
 <div class="mb-20 mt-5">
     {% if post.comments.count %}
-    <div id="tabs" class="ml-4 flex gap-1 mb-4" hx-target="#tab-contents" hx-swap="innerHTML"
+    <div id="tabs" class="ml-4 flex gap-4 mb-4" hx-target="#tab-contents" hx-swap="innerHTML"
     _="on htmx:afterOnLoad take .selected for event.target">
         <a hx-get="{%  url 'view-post' post.id %}" class="tab selected">Newest First</a> 
         <a hx-get="{%  url 'view-post' post.id %}?top" class="tab">Top Comments</a>
