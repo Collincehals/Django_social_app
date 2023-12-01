@@ -15,8 +15,10 @@ def home_view(request, tag=None):
     if tag:
         posts = Post.objects.filter(tags__slug=tag)
         tag = get_object_or_404(Tag, slug=tag)
+        users = User.objects.exclude(pk=request.user.pk).exclude(is_superuser=True)
     else:
         posts = Post.objects.all()
+        users = User.objects.exclude(pk=request.user.pk).exclude(is_superuser=True)
     paginator = Paginator(posts, 3)
     page = int(request.GET.get('page', 1))
     try:
@@ -26,7 +28,8 @@ def home_view(request, tag=None):
     context={
         'posts': posts,
         'page': page,
-        'tag':tag
+        'tag':tag,
+        'users': users,
         }
      
     if request.htmx:

@@ -1,63 +1,11 @@
 <fade-in class="opacity-0 ease-in-out" 
 _="on load transition my opacity to 1 over 0.3 seconds">
-<div class="grid gap:2 lg:gap-8 overflow-hidden mb-10 mx-4 lg:mx-8  
-{% if posts.count == 1 %}grid-cols-1 max-w-xl
-{% elif posts.count == 2 %} grid-cols-1 max-w-xl lg:grid-cols-2 lg:max-w-5xl
-{% else %}grid-cols-1 max-w-xl lg:grid-cols-2 lg:max-w-5xl xl:grid-cols-3 xl:max-w-7xl {% endif %}">
+<div class="mx-2" >
 {% for post in posts %}
-<article class="profile-post rounded-md">
-    <div class="flex items-center justify-between">
-        <a class="flex items-center gap-1 mb-2 mt-3 ml-1" href="{% url 'userprofile' post.author.username %}">
-            <img class="w-8 h-8 object-cover rounded-full" src="{{ post.author.profile.image.url }}">
-            <span class="font-bold hover:underline">{{ post.author.profile.realname }}</span>
-            <span class="text-sm text-gray-400">@ {{ post.author }}</span>
-            <span class="text-sm ml-2 text-gray-500">{{ post.created }}</span>
-        </a>
-       </div>
-    {% if post.media %}
-        {% if 'mp4' in post.media.url %}
-        <video src="{{post.media.url}}" type="mp4" alt="Video not supported" controls></video>  
-        {% else %}
-        <figure>
-            <a href="{% url 'view-post' post.id %}"><img class="w-full" src="{{ post.media.url }}"></a>
-        </figure>
-        {% endif %}
-    {% else %}
-    {% endif %}
-    <div class="pt-2 px-4  ">
-        <p class="text-lg mb-4">{{ post.body }}</p>
-        {%  if not post.media or 'mp4' in post.media.url %}
-        {% else %}
-            <div class="flex items-center gap-2 text-sm mb-5 flex-wrap">
-                {% for tag in post.tags.all %}
-                <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">{{ tag }}</a>
-                {% endfor %}
-            </div>
-        {% endif %}
-        <div style="display: flex; flex-wrap: wrap;justify-content: center; align-items: center;gap:30px;">
-            {% if post.comments.count %}
-            <p><a class="font-bold" href="{% url 'view-post' post.id %}">
-            <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="font-light text-gray-500 ml-1">{{ post.comments.count }}</span></a>
-            </p>
-            {% else %}
-            <p style="font-weight:600;color: darkblue;"><a href="{% url 'view-post' post.id %}">
-            <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="text-black-800">+</span></a>
-            </p>
-            {% endif %}
-            {% if user.is_authenticated %}
-            <p><a href="{% url 'view-post' post.id %}"><i class="fa-solid fa-retweet" style="color:darkblue;font-size:20px;"></i></a></p>
-            {% include 'snippets/posts_likes.html' %}
-            {% if user.is_superuser or user == post.author %}
-            <p><a href="{% url 'edit-post' post.id %}"><i class="fa-regular fa-pen-to-square" style="color:darkblue;font-size:17px;"></i></a></p>
-            <p><a href="{% url 'delete-post' post.id %}"><i class="fa-regular fa-trash-can" style="color:darkblue;font-size:17px;"></i></a></p>
-            {% endif %}
-            {% endif %}
-    </div>
-    </div>
-</article>
+{% include 'a_posts/post.html' %}
 {% empty %}
 <div style="display: flex; justify-content: center;align-items: center; color:white;font-weight: 600;margin-top:60px;">
-    <h3>No Posts Yet :(</h3>
+    <h3>{{profile.user.username}} has no Posts yet :(</h3>
 </div> 
 {% endfor %}
 </div>

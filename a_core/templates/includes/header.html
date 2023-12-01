@@ -13,6 +13,23 @@
     bottom: 32px;
     left:58px;
 }
+.home-search-form input {
+    background:none;
+    color:black;
+    padding:9px;
+    border-radius: 16px;
+}
+.home-search-form input:focus {
+    background:none;
+    border:none;
+    outline:none;
+}
+.home-search-form input::placeholder {
+    color:rgb(10, 4, 83);
+    padding-left:2px;
+    font-size: 14px;
+}
+
 </style>
 <header x-data="{ mobilenavOpen: false }" class="header md:flex items-center justify-between [&>*]:px-8 h-20 text-white top-0 z-40 sticky">
     <div class="flex items-center justify-between h-20">
@@ -28,6 +45,12 @@
                 <img x-show="mobilenavOpen" x-cloak class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/delete-sign.png"/>
             </a>
         </mobileicon>  
+    </div>
+    <div class="hidden md:block">
+        <form class="home-search-form bg-indigo-200 rounded-2xl flex justify-start items-center">
+            <i class="fa-solid fa-magnifying-glass" style="color:rgb(10, 4, 83);padding-left: 10px;"></i>
+            <input role="search" name="search_box"  type="search" placeholder="Search ConnectHive" />
+        </form>
     </div>
     <nav x-show="mobilenavOpen" x-cloak class="md:!block bg-slate-800 md:bg-transparent h-screen w-[60%] md:h-auto md:w-auto -mt-20 md:mt-0 absolute md:relative z-[-1]"
     x-transition:enter="duration-300 ease-out"

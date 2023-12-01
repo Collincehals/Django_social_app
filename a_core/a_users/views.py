@@ -23,21 +23,26 @@ def ProfileView(request, username=None):
         except:
             raise Http404()
     posts = profile.user.posts.all()
+    post_count = len(posts)
+    users = User.objects.all().exclude(id=request.user.id).exclude(is_superuser=True)
+    
+    context = {
+        'profile': profile,
+        'posts': posts,
+        'post_count': post_count,
+        'users': users,
+    }
     if request.htmx:
         if 'top-posts' in request.GET:
             posts = profile.user.posts.annotate(num_likes=Count('likes')).filter(num_likes__gt=0).order_by('-num_likes')
-            return render(request, 'snippets/loop_profile_posts.html',{'posts': posts})
+            return render(request, 'snippets/loop_profile_posts.html',context)
         elif 'top-comments' in request.GET:
             comments = profile.user.comments.annotate(num_likes=Count('likes')).filter(num_likes__gt=0).order_by('-num_likes')
             replyform = PostCommentReplyForm()
             return render(request, 'snippets/loop_profile_comments.html',{'comments': comments, 'replyform': replyform})
         else:
-            return render(request, 'snippets/loop_profile_posts.html',{'posts': posts})
+            return render(request, 'snippets/loop_profile_posts.html',context)
     
-    context = {
-        'profile': profile,
-        'posts': posts,
-    }
     return render(request, 'a_users/profile.html', context)
 
 

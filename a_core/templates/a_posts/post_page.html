@@ -28,12 +28,14 @@
 {% if user.is_authenticated %}
 <div class="post-item-card !pb-0 mt-1" id="comment-form">
         <p class="text-gray-500 pl-8 pt-1">Replying to <span class="text-orange-500">@{{post.author.username}}</span></p>
-        <form  class="flex justify-between items-center p-4" autocomplete="off" 
+        <form  class="flex items-center p-4" autocomplete="off" 
          hx-post="{% url 'sent-post-comment' post.id %}"
          hx-target=".comment-lists"
          hx-swap="afterbegin"
          _="on htmx:afterRequest reset() me">
-            <img class="h-8 w-8 rounded-full object-cover mr-3" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
+            <div class="w-12 h-12"> 
+                <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
+            </div>
             {% csrf_token %}
             {{ commentform }}
             <button @click="open = false" class="block ml-2" type="submit"><img style="width:25px" src="{% static 'icons/send.png' %}"></button>

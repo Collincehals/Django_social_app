@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block layout %}
+<style>
+    #main-content {
+        border-right:.2px solid rgb(51, 58, 114);
+        border-left:.2px solid rgb(65, 71, 113);
+    }
+</style>
+
+<aside class="menu-div hidden md:block md:h-full md:w-[22%] fixed left-3 top-28">
+    {% include 'includes/left_sidebar.html' %}
+</aside>
+<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-3 max-w-7xl mx-auto my-6 md:ml-[25%]">
+    <main id="main-content" class="mx-1 col-span-full md:col-span-2 md:mr-5 md:-mt-8">
+        
+            {% block content %}
+            {% endblock %}
+      
+    </main>
+    <div class="sidebar-div">
+        {% include "includes/right_sidebar_follow.html" %}
+        {% load sidebar %}
+        {% sidebar_view tag user %}
+    </div>
+</content>
+
+{% endblock %}

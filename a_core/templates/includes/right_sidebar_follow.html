@@ -1,0 +1,15 @@
+{% load static %}
+<section class="hidden md:block bg-slate-700 p-6 mx-4 rounded-lg mb-8">
+    <h3 class="mb-3 text-white font-semibold text-lg p-2 bg-blue-600 rounded-xl text-center"><i class="fa-solid fa-users text-lg mr-2" style="color: #f0f2f5;"></i>Who to Follow</h3>
+    <ul>
+        {% for person in users|slice:"20" %}
+        <div class="flex justify-between items-center p-2 hover:bg-indigo-300 rounded-lg">
+            <li class="flex justify-start items-center" >
+                <img class="h-8 w-8 rounded-full object-cover mr-2" src="{{ person.profile.image.url }}" alt="Upload Profile"/>
+                <a href="{% url 'userprofile' person.username %}" class="text-lg text-white">{{ person.username }} </a>
+            </li>
+            <a href="" class="hidden lg:block text-sm py-1 px-4 bg-blue-600 rounded-xl  text-white text-center">Follow</a>
+        </div>
+        {% endfor %}
+     </ul>
+</section>
