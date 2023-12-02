@@ -1,11 +1,17 @@
 {% load static %}
 
-<header x-data="{ mobilenavOpen: false }" class="header md:flex items-center justify-between [&>*]:px-8 h-20 text-white top-0 z-40 sticky">
+<header x-data="{ mobilenavOpen: false }" class="header md:flex items-center justify-between [&>*]:px-7 h-20 text-white top-0 z-40 sticky">
     <div class="flex items-center justify-between h-20">
-        <logo class="mr-4">
+        <mobileicon class="md:hidden -ml-3">
+            <a @click="mobilenavOpen = !mobilenavOpen" class="h-10 w-10 flex items-center justify-center cursor-pointer hover:bg-gray-700 rounded-lg">
+                <img x-show="!mobilenavOpen" class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/menu.png"/> 
+                <img x-show="mobilenavOpen" x-cloak class="w-6 h-6 select-none z-20" src="https://img.icons8.com/small/64/ffffff/delete-sign.png"/>
+            </a>
+        </mobileicon>    
+        <logo class="mr-6">
             <a class="flex items-center gap-3" href="/">
                 <img  id="logo-home" class="w-6" src="{% static 'icons/home-logo1.png' %}">
-                <span id="heading-home" class="text-lg font-bold">ConnectHive</span>
+                <span id="heading-home" class="hidden text-lg font-bold md:block">ConnectHive</span>
             </a>
         </logo>
         <div class="mr-4 cursor-pointer"  id="header-search-icon">
@@ -14,9 +20,10 @@
         <div class="mr-4 cursor-pointer"  id="header-search-cancel-icon">
             <i class="fa-solid fa-times text-xl text-white"></i>
         </div>
-        <li x-data="{ dropdownOpen: false }" class="relative md:hidden flex justify-start items-center gap-1">
-            <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none">
-                <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
+        {% if user.is_authenticated %}
+        <div x-data="{ dropdownOpen: false }" class="relative md:hidden">
+            <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none flex justify-start items-center gap-1">
+                <img class="h-7 w-7 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
                 {{ user }}
                 <img x-bind:class="dropdownOpen && 'rotate-180 duration-300'" class="w-4" src="https://img.icons8.com/small/32/777777/expand-arrow.png"/>
             </a>
@@ -33,22 +40,17 @@
                     
                 </ul>
             </div>
-        </li>
-        <mobileicon class="md:hidden">
-            <a @click="mobilenavOpen = !mobilenavOpen" class="h-10 w-10 flex items-center justify-center cursor-pointer hover:bg-gray-700 rounded-lg">
-                <img x-show="!mobilenavOpen" class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/menu.png"/> 
-                <img x-show="mobilenavOpen" x-cloak class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/delete-sign.png"/>
-            </a>
-        </mobileicon>    
+        </div>
+        {% else %}
+        <div><a href="{% url 'account_login' %}" class="text-xl md:hidden">Login</a></div>
+        {% endif %}
     </div>
     
-    <nav x-show="mobilenavOpen" x-cloak class="md:!block bg-slate-800 md:bg-transparent h-screen w-[70%] md:h-auto md:w-auto -mt-20 md:mt-0 absolute md:relative z-[-1]"
+    <nav x-show="mobilenavOpen" x-cloak class="md:!block bg-slate-800 md:bg-transparent h-screen w-[70%] md:h-auto md:w-auto -mt-20 md:mt-0 absolute md:relative z-10"
     x-transition:enter="duration-300 ease-out"
     x-transition:enter-start="opacity-0 -translate-x-96"
     x-transition:enter-end="opacity-100 translate-x-0">
-        <ul class="flex items-center navitems flex-col md:flex-row gap-2 md:gap-0 justify-center h-full -translate-y-10 md:translate-y-0">
-            <li class="md:hidden"><a href="/">Explore</a></li>
-            <li class="md:hidden"><a href="{% url 'post-create' %}">Add Post</a></li>
+        <ul class="flex items-center navitems flex-col md:flex-row gap-2 md:gap-0 justify-center h-full -translate-y-10 md:translate-y-0 relative">
             <li class="hidden md:block inbox-wrapper">
                 <div class="notify-container"
                     hx-get="{% url 'notify-inbox' %}"
@@ -58,6 +60,15 @@
                 </div>
                 <a href="{% url 'inbox' %}"><i class="fa-regular fa-message text-2xl text-orange-500" ></i></a>
             </li>
+            <li class="md:hidden">
+                <a href="/"><i class="fa-solid fa-house text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Home</span></a>
+            </li>
+            <li class="md:hidden">
+                <a href="/"><i class="fa-solid fa-compass text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Explore</span></a>
+            </li>
+            <li class="md:hidden">
+                <a href="{% url 'post-create' %}"><i class="fa-solid fa-circle-plus text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Add Post</span></a>
+            </li>
             <li class="md:hidden inbox-wrapper">
                 <div class="notify-container"
                     hx-get="{% url 'notify-inbox' %}"
@@ -65,16 +76,16 @@
                     hx-target = 'this'
                     hx-swap='innerHTML'>
                 </div>
-                <a href="{% url 'inbox' %}">Inbox</a>
+                <a href="{% url 'inbox' %}"><i class="fa-solid fa-envelope text-lg text-white mr-3"></i>Inbox</a>
             </li>
             {% if user.is_authenticated %}
-            <li x-data="{ dropdownOpen: false }" class="relative">
+            <li x-data="{ dropdownOpen: false }" class="relative hidden md:!block">
                 <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none">
                     <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
                     {{ user }}
                     <img x-bind:class="dropdownOpen && 'rotate-180 duration-300'" class="w-4" src="https://img.icons8.com/small/32/777777/expand-arrow.png"/>
                 </a>
-                <div x-show="dropdownOpen" x-cloak class="absolute right-0 bg-white text-black shadow rounded-xl w-48 p-2 z-20"
+                <div x-show="dropdownOpen" x-cloak class="absolute right-0 bg-white text-black shadow rounded-xl w-48 p-2"
                 x-transition:enter="duration-300 ease-out"
                 x-transition:enter-start="opacity-0 -translate-y-5 scale-90"
                 x-transition:enter-end="opacity-100 translate-y-0 scale-100">
@@ -89,13 +100,14 @@
                 </div>
             </li>
             {% else %}
-            <li><a href="{% url 'account_login' %}">Login</a></li>
+            <li><a href="{% url 'account_login' %}" class="text-xl">Login</a></li>
             {% endif %}
         </ul>
     </nav>
 </header>
 
 <style>
+   
     #header-search-icon {
         display:block;
     }
@@ -105,6 +117,7 @@
     }
 
     .home-search-form{
+        max-width:500px;
         width:100%;
     }
 
@@ -112,18 +125,16 @@
         display:none;
         position: fixed;
         z-index:1000;
-        transform:translateX(-50%);
+        margin:0 auto;
+        left:0;
         top:-10%;
-        left:50%;
         width:100%;
-        max-width:500px;
-        min-height:300px;
+        height:100%;
         border-radius: 10px;
         background-color: rgba(0,0,0,0.9);
         justify-content: center;
         align-items: center;
         padding:10px;
-        border:0.1px solid rgb(160, 126, 85);
        
     }
 
