@@ -53,7 +53,7 @@
 </style>
 <div class="create_post_popup_container">
     <div class="p-3 md:p-8 create_post_popup_item">
-        <p class="text-blue-900 font-bold text-xl pb-1">Create Post</p>
+        <p class="text-blue-900 font-bold text-xl pb-1">Hello <i class="fa-solid fa-hands text-2xl text-orange-600"></i> <span class="text-blue-900 mr-2">{{user.username|title}}, </span>Create Post</p>
         <form method='POST' enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}

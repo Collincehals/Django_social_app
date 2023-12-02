@@ -4,9 +4,15 @@
 {% load account socialaccount %}
 
 {% block title %} Login {% endblock %}
-
+{% load static %}
 {% block content %}
 <style>
+  body {
+    background-image: url("{% static 'images/profilebg.jpg' %}") !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
   .login-container {
       max-width:800px;
       border: 1px solid #ccc;
@@ -44,45 +50,47 @@
   }
 </style>
 {% load static %}
-
-{% get_providers as socialaccount_providers %}
-<div class='login-container'>
-  <div class="img-container">
-      <img   src="{% static 'icons/login.png' %}" class="w-80 h-80" alt="login-img">
-  </div>
-  <div class="login-form-container">
-    <div style="display:flex;flex-wrap: wrap; justify-content:center; align-items:center; gap:10px;margin-top:20px;">
-      <img  id="logo-home" class="w-6" src="{% static 'icons/home-logo1.png' %}">
-      <h2 style="color:darkblue;text-align: center;">{% trans "Login to ConnectHive" %}</h2>
-  </div>
-    <div style="padding:10px;">
-    {% if socialaccount_providers %}
-      <p style="text-align: center;color:darkblue;">Continue with...</p>
-      <div class="socialaccount_ballot">
-        <ul class="socialaccount_providers">
-          {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-        </ul>
+<body class="bg">
+  {% get_providers as socialaccount_providers %}
+  <div class='login-container'>
+    <div class="img-container">
+        <img   src="{% static 'icons/login.png' %}" class="w-80 h-80" alt="login-img">
+    </div>
+    <div class="login-form-container">
+      <div style="display:flex;flex-wrap: wrap; justify-content:center; align-items:center; gap:10px;margin-top:20px;">
+        <img  id="logo-home" class="w-6" src="{% static 'icons/home-logo1.png' %}">
+        <h2 style="color:darkblue;text-align: center;">{% trans "Login to ConnectHive" %}</h2>
+    </div>
+      <div style="padding:10px;">
+      {% if socialaccount_providers %}
+        <p style="text-align: center;color:darkblue;">Continue with...</p>
+        <div class="socialaccount_ballot">
+          <ul class="socialaccount_providers">
+            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+          </ul>
+        </div>
+  
+        {% include "socialaccount/snippets/login_extra.html" %}
+        {% else %}
+  
+        <p style="padding-left:1rem;">{% blocktrans %}Don't have an account?
+        <a href="{{ signup_url }}" style="color:darkblue;text-decoration: underline;">sign up</a>{% endblocktrans %}</p>
+        {% endif %}
       </div>
-
-      {% include "socialaccount/snippets/login_extra.html" %}
-      {% else %}
-
-      <p style="padding-left:1rem;">{% blocktrans %}Don't have an account?
-      <a href="{{ signup_url }}" style="color:darkblue;text-decoration: underline;">sign up</a>{% endblocktrans %}</p>
-      {% endif %}
+      <div style="display:flex; justify-content:center; align-items: center; color:blue;font-size:16px;margin:0 auto;">
+        <span>-------------</span><b>or</b><span>-------------</span>
+      </div>
+      <p style="text-align:center;color:darkblue;padding:10px 20px;">{% blocktrans with site.name as site_name %}<a href="{{ signup_url }}"><span style="color:blue;">Sign up</span></a>
+        for a {{ site_name }} account and sign in below:{% endblocktrans %}
+      </p>
+  
+      <form class="login-form" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {{ form }}
+        <button style="margin-top:10px;margin-bottom:20px;" class="primaryAction successbtn" type="submit">{% trans "Login" %}&raquo;</button>
+      </form>
     </div>
-    <div style="display:flex; justify-content:center; align-items: center; color:blue;font-size:16px;margin:0 auto;">
-      <span>-------------</span><b>or</b><span>-------------</span>
-    </div>
-    <p style="text-align:center;color:darkblue;padding:10px 20px;">{% blocktrans with site.name as site_name %}<a href="{{ signup_url }}"><span style="color:blue;">Sign up</span></a>
-      for a {{ site_name }} account and sign in below:{% endblocktrans %}
-    </p>
-
-    <form class="login-form" method="POST" action="{% url 'account_login' %}">
-      {% csrf_token %}
-      {{ form }}
-      <button style="margin-top:10px;margin-bottom:20px;" class="primaryAction successbtn" type="submit">{% trans "Login" %}&raquo;</button>
-    </form>
   </div>
-</div>
+</body>
+
 {% endblock content %}

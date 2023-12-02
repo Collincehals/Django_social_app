@@ -3,51 +3,69 @@
 {% block title %} Profile- {{ user.profile.realname }} {% endblock %}
 
 {% block content %}
-<div id="profile" class="flex flex-col items-center ">
-    
-    <div class="bg-slate-600 text-white rounded-md w-full justify-center flex">
-        <div class="p-4">
-            <div class="text-center flex flex-col items-center">
-                <img class="w-20 h-20 rounded-full object-cover mb-4" src="{{ profile.image.url }}" />
-                <div class="text-center max-w-md">
-                    {% if profile.realname %}
-                    <h2 class="text-orange-500">{{ profile.realname }}</h2>
-                    {% else %}
-                    <h2 class="text-orange-500">{{ profile.user.username }}</h2>
-                    {% endif %}
-                    <div class="text-gray-400 mb-2 -mt-3">@ {{ profile.user.username }}</div>
-                    <div class="flex items-center justify-center mx-auto">
-                        <img class="object-cover h-6 mr-1 opacity-60" src="https://img.icons8.com/material-outlined/50/000000/marker.png"> 
-                       {% if profile.location %}
-                       {{ profile.location }}
-                       {% else %}
-                       <p>Planet Earth</p>
-                       {% endif %}
-                    </div>
-                    <div class="my-4">
-                        {% if profile.bio %}
-                        {{ profile.bio }}
-                        {% else %}
-                        <p>Hello people!</p>
-                        {% endif %}
-                    </div> 
-                    <div>
-                        <p>{{post_count}} Posts</p>
-                    </div>
-                    
-                </div>
+{% load static %}
+<div >
+    <img class="w-full h-40 md:h-48 object-cover" src="{% static 'images/profilebg.jpg' %}">
+</div>
+<div class="text-white px-4 pb-2">
+    <div class="flex justify-between items-center">
+        <img class="border-solid border-white rounded-full w-24 h-24 -mt-14 ml-3" src="{{ profile.image.url }}" />
+        <div class="flex justify-start gap-3 items-center">
+            {% if user == profile.user %}
+            <div class="block md:hidden">
+                <a href="{% url 'edit-profile' %}" class="py-2 pl-4 pr-2 bg-orange-400 rounded-full text-white text-center"><i class="fa-regular fa-pen-to-square mr-2" style="color: #f3f4f7;"></i></a>
             </div>
+            <div class="hidden md:block">
+                <a href="{% url 'edit-profile' %}" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl  text-white text-center"><i class="fa-regular fa-pen-to-square mr-2" style="color: #f3f4f7;"></i>Edit Profile</a>
+            </div>
+            {% endif %}
+            {% if user != profile.user %}
+            <div>
+                <a href="" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl text-white text-center">Follow</a>
+            </div>
+            {% endif %}
         </div>
     </div>
+    <div class="mt-4">
+        {% if profile.realname %}
+        <p class="text-white text-2xl mb-3"><b>{{ profile.realname|title }}</b>
+            <span class="text-gray-400 text-xl">@ {{ profile.user.username }}</span>
+        </p>
+        {% else %}
+        <p class="text-white text-2xl mb-3"><b>{{ profile.user.username|title }}</b>
+            <span class="text-gray-400 text-xl">@ {{ profile.user.username }}</span>
+        </p>
+        {% endif %}
 
-    <div id="tabs" style="display:flex; justify-content:center; margin: 40px auto; gap:20px; flex-wrap:wrap" hx-target="#tab-contents" hx-swap="innerHTML"
-    _="on htmx:afterOnLoad take .selected for event.target" > 
-        <a hx-get="{% url 'userprofile' profile.user.username %}" class="tab selected">Latest</a>
-        <a hx-get="{% url 'userprofile' profile.user.username %}?top-posts" class="tab">Top Posts</a>  
-        <a hx-get="{% url 'userprofile' profile.user.username %}?top-comments" class="tab">Top Comments</a>
-    </div>
-    <div id="tab-contents">
-        {% include 'snippets/loop_profile_posts.html' %}
-    </div>
+        {% if profile.bio %}
+        <p><i class="fa-solid fa-briefcase text-orange-500 mr-2 mb-3"></i>{{ profile.bio }}</p>
+        {% else %}
+        <p><i class="fa-solid fa-briefcase text-orange-500 mr-2 mb-3"></i>Hello people!</p>
+        {% endif %}
+
+        <div class="flex flex-wrap justify-start gap-3 md:gap-6 items-center ">
+            <p class="text-gray-400"><span class="text-white">{{post_count}} </span>Posts</p>
+            {% if profile.location %}
+            <p><i class="fa-solid fa-map-pin text-orange-500 mr-2"></i><span class="text-gray-400">{{ profile.location }}</span></p>
+            {% else %}
+            <p><i class="fa-solid fa-map-pin text-orange-500 mr-2"></i><span class="text-gray-400">Planet Mars</span></p>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <p class="text-gray-400"><i class="fa-regular fa-calendar text-orange-500 mr-2"></i>Joined {{user.profile.created|date:'F Y'}}</p>
+            {% endif %}
+        </div>
+    </div> 
+</div>
+
+<div id="tabs" class=" flex items-center mt-2 mb-4 justify-evenly flex-wrap" 
+hx-target="#tab-contents" 
+hx-swap="innerHTML"
+_="on htmx:afterOnLoad take .selected for event.target" > 
+    <a hx-get="{% url 'userprofile' profile.user.username %}" class="tab selected">Latest</a>
+    <a hx-get="{% url 'userprofile' profile.user.username %}?top-posts" class="tab">Top Posts</a>  
+    <a hx-get="{% url 'userprofile' profile.user.username %}?top-comments" class="tab">Top Comments</a>
+</div>
+<div id="tab-contents" class="flex flex-col items-center">
+    {% include 'snippets/loop_profile_posts.html' %}
 </div>
 {% endblock %}

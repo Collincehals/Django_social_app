@@ -16,7 +16,6 @@
     }
     .postbtn {
         border-radius:20px;
-        background:rgb(242, 169, 68);
         padding:7px 17px;
         color:white;
     }
@@ -54,17 +53,18 @@
     {% include 'includes/left_sidebar.html' %}
 </aside>
 <content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-3 max-w-7xl mx-auto my-6 md:ml-[25%]">
-    <main id="main-content" class="mx-1 col-span-full md:col-span-2 md:mr-5 md:-mt-8">
-        <div class="home-tabs flex gap-4 justify-evenly items-end text-lg font-semibold">
+    <main id="main-content" class="mx-1 col-span-full md:col-span-2 md:mr-5 -mt-8 relative">
+        {% if user.is_authenticated %}
+        <div class="home-tabs flex gap-4 justify-evenly items-center text-lg font-semibold ">
             <p class="tab selected">Following</p>
             <p class="tab">For You</p>
             <p class="tab">Your Tags</p>
         </div>
-        {% if user.is_authenticated %}
+        
         <a href="{% url 'post-create' %}"  class=" flex gap-2 justify-center items-center p-4 pt-6">
             <img class="h-8 w-8 md:h-10 md:w-10 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
             <input class="input-x" type="text" placeholder="What's on your mind, {{user.username|title}}?">
-            <button class="block ml-2 postbtn">Post</button>
+            <button class="block ml-2 postbtn bg-orange-500">Post</button>
         </a>
         {% endif %}
         <div class="md:p-6">

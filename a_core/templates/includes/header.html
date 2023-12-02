@@ -1,58 +1,48 @@
 {% load static %}
-<style>
-.header {
-    background: rgb(4, 21, 53);
-    border-bottom:.2px solid rgb(65, 71, 113);
-}
-.inbox-wrapper{
-    position: relative;
-    padding:5px;
-}
-.notify-container {
-    position: absolute;
-    bottom: 32px;
-    left:58px;
-}
-.home-search-form input {
-    background:none;
-    color:black;
-    padding:9px;
-    border-radius: 16px;
-}
-.home-search-form input:focus {
-    background:none;
-    border:none;
-    outline:none;
-}
-.home-search-form input::placeholder {
-    color:rgb(10, 4, 83);
-    padding-left:2px;
-    font-size: 14px;
-}
 
-</style>
 <header x-data="{ mobilenavOpen: false }" class="header md:flex items-center justify-between [&>*]:px-8 h-20 text-white top-0 z-40 sticky">
     <div class="flex items-center justify-between h-20">
-        <logo>
+        <logo class="mr-4">
             <a class="flex items-center gap-3" href="/">
                 <img  id="logo-home" class="w-6" src="{% static 'icons/home-logo1.png' %}">
                 <span id="heading-home" class="text-lg font-bold">ConnectHive</span>
             </a>
         </logo>
+        <div class="mr-4 cursor-pointer"  id="header-search-icon">
+            <i class="fa-solid fa-magnifying-glass text-xl text-white"></i>
+        </div>
+        <div class="mr-4 cursor-pointer"  id="header-search-cancel-icon">
+            <i class="fa-solid fa-times text-xl text-white"></i>
+        </div>
+        <li x-data="{ dropdownOpen: false }" class="relative md:hidden flex justify-start items-center gap-1">
+            <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none">
+                <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
+                {{ user }}
+                <img x-bind:class="dropdownOpen && 'rotate-180 duration-300'" class="w-4" src="https://img.icons8.com/small/32/777777/expand-arrow.png"/>
+            </a>
+            <div x-show="dropdownOpen" x-cloak class="absolute right-0 bg-white text-black shadow rounded-xl w-48 p-2 z-20"
+            x-transition:enter="duration-300 ease-out"
+            x-transition:enter-start="opacity-0 -translate-y-5 scale-90"
+            x-transition:enter-end="opacity-100 translate-y-0 scale-100">
+                <ul class="hoverlist [&>li>a]:justify-start">
+                    <li style="margin-bottom:-5px;"><a href="{% url 'view-profile' %}"><i class="fa-regular fa-user" style="color:darkblue;font-size:larger;margin-right:10px;"></i>My Profile</a></li>
+                    <li style="margin-bottom:-5px;"><a href="{% url 'edit-profile' %}"><i class="fa-solid fa-user-pen" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Edit Profile</a></li>
+                    <li style="margin-bottom:-5px;"><a href="{% url 'account_change_password' %}"><i class="fa-solid fa-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Change Password</a></li>
+                    <li style="margin-bottom:-5px;"><a href="{% url 'account_reset_password' %}"><i class="fa-solid fa-user-lock" style="color:darkblue;font-size:larger;margin-right:10px;"></i>Reset Password</a></li>
+                    <li><a href="{% url 'account_logout' %}"><i class="fa-solid fa-power-off" style="color:red;font-size:larger;margin-right:10px;"></i>Log Out</a></li>
+                    
+                </ul>
+            </div>
+        </li>
         <mobileicon class="md:hidden">
             <a @click="mobilenavOpen = !mobilenavOpen" class="h-10 w-10 flex items-center justify-center cursor-pointer hover:bg-gray-700 rounded-lg">
                 <img x-show="!mobilenavOpen" class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/menu.png"/> 
                 <img x-show="mobilenavOpen" x-cloak class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/delete-sign.png"/>
             </a>
-        </mobileicon>  
+        </mobileicon>    
     </div>
-    <div class="hidden md:block">
-        <form class="home-search-form bg-indigo-200 rounded-2xl flex justify-start items-center">
-            <i class="fa-solid fa-magnifying-glass" style="color:rgb(10, 4, 83);padding-left: 10px;"></i>
-            <input role="search" name="search_box"  type="search" placeholder="Search ConnectHive" />
-        </form>
-    </div>
-    <nav x-show="mobilenavOpen" x-cloak class="md:!block bg-slate-800 md:bg-transparent h-screen w-[60%] md:h-auto md:w-auto -mt-20 md:mt-0 absolute md:relative z-[-1]"
+    
+    <nav x-show="mobilenavOpen" x-cloak class="md:!block bg-slate-800 md:bg-transparent h-screen w-[70%] md:h-auto md:w-auto -mt-20 md:mt-0 absolute md:relative z-[-1]"
     x-transition:enter="duration-300 ease-out"
     x-transition:enter-start="opacity-0 -translate-x-96"
     x-transition:enter-end="opacity-100 translate-x-0">
@@ -66,7 +56,7 @@
                     hx-target = 'this'
                     hx-swap='innerHTML'>
                 </div>
-                <a href="{% url 'inbox' %}"><i class="fa-solid fa-envelope" style="color: #fafcff;font-size:24px;"></i></a>
+                <a href="{% url 'inbox' %}"><i class="fa-regular fa-message text-2xl text-orange-500" ></i></a>
             </li>
             <li class="md:hidden inbox-wrapper">
                 <div class="notify-container"
@@ -104,3 +94,67 @@
         </ul>
     </nav>
 </header>
+
+<style>
+    #header-search-icon {
+        display:block;
+    }
+
+    #header-search-cancel-icon {
+        display:none;
+    }
+
+    .home-search-form{
+        width:100%;
+    }
+
+    #search-form-popup {
+        display:none;
+        position: fixed;
+        z-index:1000;
+        transform:translateX(-50%);
+        top:-10%;
+        left:50%;
+        width:100%;
+        max-width:500px;
+        min-height:300px;
+        border-radius: 10px;
+        background-color: rgba(0,0,0,0.9);
+        justify-content: center;
+        align-items: center;
+        padding:10px;
+        border:0.1px solid rgb(160, 126, 85);
+       
+    }
+
+    #search-form-popup.active {
+        display:flex;
+        top:8%;
+        transition: 5s ease-in-out;
+    }
+</style> 
+<div  id="search-form-popup" >
+    <form class="home-search-form bg-indigo-200 rounded-3xl flex justify-between items-center">
+        <i class="fa-solid fa-magnifying-glass" style="color:rgb(10, 4, 83);padding-left: 10px;"></i>
+        <input role="search" name="search_box"  type="search" placeholder="Search..." />
+    </form>
+</div>
+
+<script>
+    const searchbtn = document.getElementById('header-search-icon');
+    const searchform = document.getElementById('search-form-popup');
+    const searchcancelbtn = document.getElementById('header-search-cancel-icon')  
+
+    searchbtn.addEventListener('click', () =>{
+        searchform.classList.add('active');
+        searchbtn.style.display = 'none';
+        searchcancelbtn.style.display ='block';
+    });
+
+    searchcancelbtn.addEventListener('click', () =>{
+        searchform.classList.remove('active');
+        searchbtn.style.display = 'block';
+        searchcancelbtn.style.display ='none';
+    });
+</script>
+</script>
