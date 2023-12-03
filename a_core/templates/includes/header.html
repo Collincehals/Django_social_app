@@ -100,7 +100,7 @@
                 </div>
             </li>
             {% else %}
-            <li><a href="{% url 'account_login' %}" class="text-xl">Login</a></li>
+            <li class="hidden md:!block"><a href="{% url 'account_login' %}" class="text-xl">Login</a></li>
             {% endif %}
         </ul>
     </nav>
