@@ -24,17 +24,17 @@
         <img style="width:35px;height:35px; border-radius:50%; object-fit:cover;" src="{% static 'images/default.png' %}" alt="...">
         {% endif %}
         <div class="sent-message-body-box">
-            <a href="{% url 'userprofile' message.sender.username %}" style="font-size: 13px;color:darkblue;"><b>{{message.sender.profile.realname}}</b><span style="padding-left:5px;">@{{message.sender.username}}</span></a>
-            <P class="whitespace-pre-wrap text-black">{{message.body_decrypted}}</P>
-            <p style="font-size: 13px;color:rgba(0,0,255,.7);">{{message.created_at}} ({{message.created_at|timesince}} ago.)</p>
+            <a href="{% url 'userprofile' message.sender.username %}" style="font-size: 13px;color:darkblue;margin-bottom: 10px;"><b>{{message.sender.profile.realname}}</b><span style="padding-left:5px;">@{{message.sender.username}}</span></a>
+            <P class="whitespace-pre-wrap text-black mb-3">{{message.body_decrypted}}</P>
+            <p style="font-size: 13px;color:rgba(0,0,255,.5);margin-bottom: 10px;">{{message.created_at}} ({{message.created_at|timesince}} ago.)</p>
         </div>
     </div>
     {% else %}
-    <div id="conversations" class="sent-message-box">
+    <div id="conversations" class="sent-message-box ">
         <div class="received-message-body-box">
-            <a href="{% url 'userprofile' message.sender.username %}" style="font-size: 13px;color:darkblue;"><b>{{message.sender.profile.realname}}</b><span style="padding-left:5px;">@{{message.sender.username}}</span></a>
-            <P class="whitespace-pre-wrap text-black">{{message.body_decrypted}}</P>
-            <p style="font-size: 13px;color:rgba(0,0,255,.7);">{{message.created_at}} ({{message.created_at|timesince}} ago.)</p>
+            <a href="{% url 'userprofile' message.sender.username %}" style="font-size: 13px;color:darkblue;margin-bottom: 10px;"><b>{{message.sender.profile.realname}}</b><span style="padding-left:5px;">@{{message.sender.username}}</span></a>
+            <P class="whitespace-pre-wrap text-black mb-3">{{message.body_decrypted}}</P>
+            <p style="font-size: 13px;color:rgba(0,0,255,.5);margin-bottom: 10px;">{{message.created_at}} ({{message.created_at|timesince}} ago.)</p>
         </div>
         {% if message.sender.profile.image.url %}
         <img style="width:35px;height:35px; border-radius:50%; object-fit:cover;" src="{{message.sender.profile.image.url}}" alt="...">
