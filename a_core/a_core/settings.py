@@ -36,7 +36,7 @@ if ENVIRONMENT == 'development':
 else:
     DEBUG = False
     
-ALLOWED_HOSTS = ['colltechgallery.onrender.com',
+ALLOWED_HOSTS = ['colltechsocial.onrender.com',
                  '127.0.0.1'
                 ]
 INTERNAL_IPS = ('127.0.0.1','localhost:8000')
