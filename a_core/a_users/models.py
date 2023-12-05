@@ -8,6 +8,7 @@ class Profile(models.Model):
     realname = models.CharField(max_length=200, null=True, blank=True)
     email = models.EmailField(max_length=50, unique=True, null=True)
     location = models.CharField(max_length=50, null=True, blank=True)
+    followers = models.ManyToManyField(User, blank=True, related_name="following")
     bio = models.TextField(max_length=500, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     

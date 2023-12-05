@@ -19,11 +19,20 @@
                 <a href="{% url 'edit-profile' %}" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl  text-white text-center"><i class="fa-regular fa-pen-to-square mr-2" style="color: #f3f4f7;"></i>Edit Profile</a>
             </div>
             {% endif %}
-            {% if user != profile.user %}
-            <div>
-                <a href="" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl text-white text-center">Follow</a>
-            </div>
+            {% if request.user != profile.user %}
+                {% if request.user in profile.followers.all %}
+                <form method="POST" action="{% url 'unfollow_user' username=profile.user.username %}">
+                    {% csrf_token %}
+                    <button type="submit" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl text-white text-center">Unfollow</button>
+                </form>
+                {% else %}
+                <form method="POST" action="{% url 'follow_user' username=profile.user.username %}">
+                    {% csrf_token %}
+                    <button type="submit" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl text-white text-center">Follow</button>
+                </form>
+                {% endif %}
             {% endif %}
+
         </div>
     </div>
     <div class="mt-4">
@@ -53,8 +62,30 @@
             {% if user.is_authenticated %}
             <p class="text-gray-400"><i class="fa-regular fa-calendar text-orange-500 mr-2"></i>Joined {{user.profile.created|date:'F Y'}}</p>
             {% endif %}
+            <p class="text-gray-400"><span class="text-white">{{profile.followers.count}} </span>Followers</p>
+            <p class="text-gray-400"><span class="text-white">{{profile.user.following.count}} </span>Following</p>
         </div>
     </div> 
+    <div class="flex justify-between items-start flex-wrap">
+        <ul class="p-2 bg-gray-200 rounded-2xl text-blue-900">
+            <p class="text-orange-500 text-xl font-semibold">Followers:</p>
+            {% for follower in followers %}
+                <li>{{ follower.username }}</li>
+            {% empty %}
+                <li>No followers yet.</li>
+            {% endfor %}
+        </ul>
+        <ul class="p-2 bg-gray-200 rounded-2xl text-blue-900">
+            <p class="text-orange-500 text-xl font-semibold">Following:</p>
+            {% for followed_user in following %}
+                <li>{{ followed_user.realname }}</li>
+            {% empty %}
+                <li>Not following anyone yet.</li>
+            {% endfor %}
+        </ul> 
+    </div>
+    
+
 </div>
 
 <div id="tabs" class=" flex items-center mt-2 mb-4 justify-evenly flex-wrap" 

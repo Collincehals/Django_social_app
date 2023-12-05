@@ -8,7 +8,10 @@ from posts_app.models import Post
 from django.contrib.auth import login, logout, authenticate
 from django.db.models import Count
 from posts_app.forms import PostCommentReplyForm
-# Create your views here.
+from django.urls import reverse
+from django.views.decorators.http import require_POST
+from django.contrib.auth import get_user_model
+
 
 
 def ProfileView(request, username=None):
@@ -25,12 +28,16 @@ def ProfileView(request, username=None):
     posts = profile.user.posts.all()
     post_count = len(posts)
     users = User.objects.all().exclude(id=request.user.id).exclude(is_superuser=True)
+    followers = profile.followers.all()
+    following = profile.user.following.all()
     
     context = {
         'profile': profile,
         'posts': posts,
         'post_count': post_count,
         'users': users,
+        'following': following,
+        'followers': followers,
     }
     if request.htmx:
         if 'top-posts' in request.GET:
@@ -45,7 +52,32 @@ def ProfileView(request, username=None):
     
     return render(request, 'a_users/profile.html', context)
 
+@login_required
+@require_POST
+def follow_user(request, username):
+    user_to_follow = get_object_or_404(get_user_model(), username=username)
+    user_to_follow_profile = user_to_follow.profile
+    if user_to_follow == request.user:
+        messages.error(request, "You cannot follow yourself.")
+    elif request.user in user_to_follow_profile.followers.all():
+        messages.info(request, f"You are already following {user_to_follow}.")
+    else:
+        user_to_follow_profile.followers.add(request.user)
+        messages.success(request, f"You are now following {user_to_follow}.")
+    return redirect(reverse('userprofile', kwargs={'username': username}))
 
+@login_required
+@require_POST
+def unfollow_user(request, username):
+    if request.method == 'POST':
+        user_to_unfollow = get_object_or_404(get_user_model(), username=username)
+        if request.user in user_to_unfollow.profile.followers.all():
+            user_to_unfollow.profile.followers.remove(request.user)
+            messages.success(request, f'You have unfollowed {user_to_unfollow}')
+        return redirect('userprofile', username=username)
+                             
+                             
+@login_required
 def EditProfileView(request):
     form = ProfileEditForm(instance=request.user.profile)
     if request.method == 'POST':

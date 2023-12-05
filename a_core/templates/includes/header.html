@@ -61,6 +61,25 @@
                 <a href="{% url 'inbox' %}"><i class="fa-regular fa-message text-2xl text-orange-500" ></i></a>
             </li>
             <li class="md:hidden">
+                <img class="rounded-full w-10 h-10" src="{{ user.profile.image.url }}" />
+            </li>
+            <li class="md:hidden">
+                {% if profile.realname %}
+                <p class="text-white text-lg">{{ user.profile.realname|title }}
+                <span class="text-gray-400 text-sm">@ {{ user.username }}</span>
+                </p>
+                {% else %}
+                <p class="text-white text-xl mb-1">{{ user.username|title }}
+                <span class="text-gray-400 text-lg">@ {{ user.username }}</span>
+                </p>
+                {% endif %}
+            </li>
+            <li class="md:hidden flex flex-wrap justify-start gap-2">
+                <p href="" class="text-gray-400"><span class="text-white">{{user.following.count}} </span>Following</p>
+                <p href="" class="text-gray-400"><span class="text-white">{{user.profile.followers.count}} </span>Followers</p>
+            </li>
+            <hr>
+            <li class="md:hidden">
                 <a href="/"><i class="fa-solid fa-house text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Home</span></a>
             </li>
             <li class="md:hidden">
