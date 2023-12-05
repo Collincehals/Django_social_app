@@ -62,29 +62,10 @@
             {% if user.is_authenticated %}
             <p class="text-gray-400"><i class="fa-regular fa-calendar text-orange-500 mr-2"></i>Joined {{user.profile.created|date:'F Y'}}</p>
             {% endif %}
-            <p class="text-gray-400"><span class="text-white">{{profile.followers.count}} </span>Followers</p>
-            <p class="text-gray-400"><span class="text-white">{{profile.user.following.count}} </span>Following</p>
+            <a href="{% url 'followers_page' username=profile.user.username %}" class="text-gray-400"><span class="text-white">{{profile.followers.count}} </span>Followers</a>
+            <a href="{% url 'following_page' username=profile.user.username %}" class="text-gray-400"><span class="text-white">{{profile.user.following.count}} </span>Following</a>
         </div>
     </div> 
-    <div class="flex justify-between items-start flex-wrap">
-        <ul class="p-2 bg-gray-200 rounded-2xl text-blue-900">
-            <p class="text-orange-500 text-xl font-semibold">Followers:</p>
-            {% for follower in followers %}
-                <li>{{ follower.username }}</li>
-            {% empty %}
-                <li>No followers yet.</li>
-            {% endfor %}
-        </ul>
-        <ul class="p-2 bg-gray-200 rounded-2xl text-blue-900">
-            <p class="text-orange-500 text-xl font-semibold">Following:</p>
-            {% for followed_user in following %}
-                <li>{{ followed_user.realname }}</li>
-            {% empty %}
-                <li>Not following anyone yet.</li>
-            {% endfor %}
-        </ul> 
-    </div>
-    
 
 </div>
 

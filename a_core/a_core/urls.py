@@ -47,7 +47,8 @@ urlpatterns = [
     path('unfollow/<username>/',unfollow_user, name="unfollow_user"),
     path('profile/edit/',EditProfileView, name="edit-profile"),
     path('profile/delete/',DeleteProfileView, name="delete-profile"),
-    
+    path('<username>/followers/',followers_page, name="followers_page"),
+    path('<username>/following/',following_page, name="following_page"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

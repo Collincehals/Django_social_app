@@ -100,3 +100,30 @@ def DeleteProfileView(request):
        messages.success(request, "Profile deleted successfully")
        return redirect('home')
    return render(request, 'a_users/delete_profile.html')
+
+
+
+def followers_page(request, username):
+    target_user = get_object_or_404(get_user_model(), username=username)
+    followers = target_user.profile.followers.all()
+    following = target_user.following.all()
+    users = User.objects.exclude(username=request.user.username).exclude(is_superuser=True)
+    
+    context = {
+        'followers': followers, 
+        'following': following,
+        'users': users,
+    }
+    return render(request, 'a_users/followers_page.html',context)
+    
+    
+def following_page(request, username):
+    target_user = get_object_or_404(User, username=username)
+    following = target_user.following.all()
+    users = User.objects.exclude(username=request.user.username).exclude(is_superuser=True)
+    
+    context = {
+        'following': following,
+        'users': users,
+    }
+    return render(request, 'a_users/following_page.html',context)
