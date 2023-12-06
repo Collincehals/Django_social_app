@@ -7,7 +7,7 @@ class ProfileEditForm(ModelForm):
     class Meta:
         model = Profile
         
-        exclude = ['user']
+        exclude = ['user','followers']
         labels = {
             'realname': 'First Name',
             'image': 'Profile Photo',

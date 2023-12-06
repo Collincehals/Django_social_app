@@ -2,49 +2,25 @@
 
 {% block layout %}
 <style>
-    .input-x {
-        border-radius:25px;
-        background:rgb(216, 223, 255);
-        padding:8px;
-        cursor:pointer;
-        width:100%;
-    }
-    .input-x::placeholder {
-        color:rgb(10, 4, 83);
-        padding-left:5px;
-        font-size: 14px;
-    }
-    .postbtn {
-        border-radius:20px;
-        padding:7px 17px;
-        color:white;
-    }
     #main-content {
-        border-right:.2px solid rgb(65, 71, 113);
-        border-left:.2px solid rgb(65, 71, 113);
+        border-right:.1px solid rgb(65, 71, 113);
+        border-left:.1px solid rgb(65, 71, 113);
     }
     .home-tabs {
-        border-bottom:.2px solid rgb(65, 71, 113);
+        border-bottom:.1px solid rgb(65, 71, 113);
         padding-top:20px;
-      
+        white-space: nowrap;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* Internet Explorer/Edge */
     }
-    
-    @media (min-width: 768px) {
-        .input-x::placeholder {
-        text-align: center;
-        font-size: 15px;
+    .home-tabs::-webkit-scrollbar {
+        display: none;
     }
-    }
+
     @media (max-width: 768px) {
         #main-content {
         border-left:none;
         border-right:none;
-    }
-    input .iput-x::placeholder {
-        font-size: 13px;
-    }
-    .postbtn {
-        padding:5px 10px;
     }
     }
 </style>
@@ -54,23 +30,23 @@
 </aside>
 <content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-3 max-w-7xl mx-auto my-6 md:ml-[25%]">
     <main id="main-content" class="mx-1 col-span-full md:col-span-2 md:mr-5 -mt-8 relative">
+        <!--Home tabs-->
         {% if user.is_authenticated %}
-        <div class="home-tabs flex gap-4 justify-evenly items-center text-lg font-semibold ">
-            <p class="tab selected">Following</p>
-            <p class="tab">For You</p>
-            <p class="tab">Your Tags</p>
+        <div class="tabs-container relative overflow-hidden">
+            <div class="home-tabs flex gap-2 md:gap-4 justify-start items-center text-sm md:text-lg  overflow-x-auto">
+                <p class="tab selected pb-2">Following</p>
+                <p class="tab pb-2">For You</p>
+                <p class="tab pb-2">Bookmarks</p>
+                <button class="scroll-left hidden absolute left-0 top-0 bottom-0 w-10 text-white bg-transparent border-none cursor-pointer">&lt;</button>
+                <button class="scroll-right hidden absolute right-0 top-0 bottom-0 w-10 text-white bg-transparent border-none cursor-pointer">&gt;</button>
+            </div>
         </div>
-        
-        <a href="{% url 'post-create' %}"  class=" flex gap-2 justify-center items-center p-4 pt-6">
-            <img class="h-8 w-8 md:h-10 md:w-10 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
-            <input class="input-x" type="text" placeholder="What's on your mind, {{user.username|title}}?">
-            <button class="block ml-2 postbtn bg-orange-500">Post</button>
-        </a>
         {% endif %}
-        <div class="md:p-6">
+        <div class="md:p-2">
             {% block content %}
             {% endblock %}
         </div>
+        <a id="postCreateBtn" class="hidden md:hidden fixed bottom-4 right-4 py-2 px-4 rounded-full bg-blue-600 text-white text-lg" href="{% url 'post-create' %}"><i class="fa-solid fa-plus text-white text-lg"></i></a>
     </main>
     <div class="sidebar-div">
         {% load sidebar %}
@@ -79,6 +55,51 @@
     </div>
 </content>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabsContainer = document.querySelector('.home-tabs');
+        const scrollLeftBtn = document.querySelector('.scroll-left');
+        const scrollRightBtn = document.querySelector('.scroll-right');
+
+        scrollLeftBtn.addEventListener('click', function() {
+            tabsContainer.scrollBy({
+                left: -100,
+                behavior: 'smooth'
+            });
+        });
+
+        scrollRightBtn.addEventListener('click', function() {
+            tabsContainer.scrollBy({
+                left: 100,
+                behavior: 'smooth'
+            });
+        });
+
+        tabsContainer.addEventListener('scroll', function() {
+            if (tabsContainer.scrollWidth > tabsContainer.clientWidth) {
+                scrollLeftBtn.classList.remove('hidden');
+                scrollRightBtn.classList.remove('hidden');
+            } else {
+                scrollLeftBtn.classList.add('hidden');
+                scrollRightBtn.classList.add('hidden');
+            }
+        });
+    });
+    
+    //toggling the fixed create button for small and medium devices
+    let lastScrollTop = 0;
+    window.addEventListener("scroll", function() {
+        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (currentScroll > lastScrollTop) {
+            document.getElementById("postCreateBtn").classList.add('hidden')
+        } else {
+            document.getElementById("postCreateBtn").classList.remove('hidden')
+        }
+        lastScrollTop = currentScroll;
+    }, false);
+
+</script>
 {% endblock %}
 
 

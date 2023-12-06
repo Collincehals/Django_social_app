@@ -3,37 +3,30 @@
 {% block title %} Followers- {{profile.realname }} {% endblock %}
 
 {% block content %}
-<style>
-.hr{
-    border:.1px solid darkblue;
-    opacity: .4;
-    margin-bottom:25px;
-}
-</style>
 {% load static %}
-<ul class="p-6 !pl-2 bg-white text-blue-900 h-[100vh]">
-    <div class="flex justify-start mb-2">
-        <a href="{{ request.META.HTTP_REFERER }}"><i class="md:hidden fa fa-arrow-left mr-4 text-blue-900 font-bold text-lg"></i></a>
-        <p class="text-blue-900 font-bold text-lg">Followers</p>
+<a href="{{ request.META.HTTP_REFERER }}"><i class="md:hidden fa fa-arrow-left ml-2 mr-2 text-white font-bold text-lg"></i><span class="text-white md:hidden">{{profile.realname}}@{{profile.user.username}}</span></a>
+<ul class="text-white h-[100vh]">
+    <div class=" p-1 md:p-2  flex justify-evenly items-center text-lg font-semibold bg-slate-700 ">
+        <p class="tab selected">Followers</p>
+        <p class="tab">Following</p>
     </div>
-    <hr class="hr">
     {% for follower in followers %}
-    <li class="flex justify-between items-center p-2 mb-2 hover:shadow-lg rounded-lg">
+    <li class="flex justify-between items-center p-4 pb-1 mb-2 hover:shadow-lg shadow-orange-400 rounded-lg">
         <div class="flex justify-start items-center" >
             <img class="h-8 w-8 rounded-full object-cover mr-2" src="{{ follower.profile.image.url }}" alt="Upload Profile"/>
-            <a href="{% url 'userprofile' follower.username %}" class="text-lg text-blue-900">{{ follower.profile.realname }}<span class="opacity-70 text-blue-900 text-sm">@{{ follower.username }} </span></a>
+            <a href="{% url 'userprofile' follower.username %}" class="text-lg text-white">{{ follower.profile.realname }}<span class="opacity-70 text-whitetext-sm">@{{ follower.username }} </span></a>
         </div>
         {% if request.user in follower.profile.followers.all %}
-        <button type="submit" class="text-sm py-1 px-4 bg-orange-500 hover:bg-blue-800 hover:text-white rounded-xl  text-white text-center">Following</button>
+        <button type="submit" class="text-sm py-1 px-3 bg-orange-500 hover:bg-blue-800 hover:text-white rounded-xl mr-2  text-white text-center">Following</button>
         {% else %}
         <form action="{% url 'follow_user' username=follower.username %}" method="POST">
             {% csrf_token %}
-            <button type="submit" class="text-sm py-1 px-4 bg-blue-600 hover:bg-orange-500 hover:text-white rounded-xl  text-white text-center">Follow back</button>
+            <button type="submit" class="text-sm py-1 px-6 bg-blue-600 hover:bg-orange-500 hover:text-white rounded-xl mr-2 text-white text-center">Follow</button>
         </form>
         {% endif %}
     </li>
     {% empty %}
-    <li class="flex items-center justify-center text-blue-800 text-lg">No followers yet.</li>
+    <li class="flex items-center justify-center text-white text-lg">No followers yet.</li>
     {% endfor %}
 </ul>
 {% endblock %}
