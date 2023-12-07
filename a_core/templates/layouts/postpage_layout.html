@@ -1,20 +1,34 @@
 {% extends 'base.html' %}
 
 {% block layout %}
-    <content class="grid grid-cols-3 max-w-7xl mx-auto my-6 px-2">
-        <main class="col-span-full md:col-span-2 md:mr-[5%] lg:mx-[10%]">
-            <div class="flex justify-start md:hidden ">
-                <a href="{% url 'home' %}"><i class="fa fa-arrow-left mr-4 text-white font-bold text-lg"></i></a>
-                <p class="text-white font-bold text-lg">Post</p>
-            </div>
-            
+<style>
+    #main-content {
+        border-right:.1px solid rgb(65, 71, 113);
+        border-left:.1px solid rgb(65, 71, 113);
+    }
+    @media (max-width: 768px) {
+        #main-content {
+        border-left:none;
+        border-right:none;
+    }
+}
+</style>
+<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-4  max-w-7xl mx-auto">
+    <aside class="pl-6 hidden md:block md:col-span-1">
+        {% include 'includes/left_sidebar.html' %}
+    </aside>
+    <main id="main-content" class="col-span-full md:col-span-2">
+        <div class="md:p-2">
             {% block content %}
             {% endblock %}
-        </main>
-
+        </div>
+        <a id="postCreateBtn" class="hidden md:hidden fixed bottom-4 right-4 py-2 px-4 rounded-full bg-blue-600 text-white text-lg" href="{% url 'post-create' %}"><i class="fa-solid fa-plus text-white text-lg"></i></a>
+    </main>
+    <aside class="right-aside md:col-span-1">
+        {% include "includes/search.html" %}
         {% load sidebar %}
         {% sidebar_view tag user %}
-        
-    </content>
-
+        {% include "includes/right_sidebar_follow.html" %}
+    </aside>
+</content>
 {% endblock %}

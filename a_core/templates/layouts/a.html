@@ -8,7 +8,7 @@
     }
     .home-tabs {
         border-bottom:.1px solid rgb(65, 71, 113);
-        padding-top:20px;
+       
         white-space: nowrap;
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none; /* Internet Explorer/Edge */
@@ -24,15 +24,14 @@
     }
     }
 </style>
-
-<aside class="menu-div hidden md:block md:h-full md:w-[22%] fixed left-3 top-28">
-    {% include 'includes/left_sidebar.html' %}
-</aside>
-<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-3 max-w-7xl mx-auto my-6 md:ml-[25%]">
-    <main id="main-content" class="mx-1 col-span-full md:col-span-2 md:mr-5 -mt-8 relative">
+<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-4  max-w-7xl mx-auto">
+    <aside class="pl-6 hidden md:block md:col-span-1 overflow-y-auto">
+        {% include 'includes/left_sidebar.html' %}
+    </aside>
+    <main id="main-content" class="col-span-full md:col-span-2 overflow-y-auto">
         <!--Home tabs-->
         {% if user.is_authenticated %}
-        <div class="tabs-container relative overflow-hidden">
+        <div class="tabs-container relative overflow-hidden pt-2 px-0 pb-2 md:pb-4">
             <div class="home-tabs flex gap-2 md:gap-4 justify-start items-center text-sm md:text-lg  overflow-x-auto">
                 <p class="tab selected pb-2">Following</p>
                 <p class="tab pb-2">For You</p>
@@ -48,12 +47,14 @@
         </div>
         <a id="postCreateBtn" class="hidden md:hidden fixed bottom-4 right-4 py-2 px-4 rounded-full bg-blue-600 text-white text-lg" href="{% url 'post-create' %}"><i class="fa-solid fa-plus text-white text-lg"></i></a>
     </main>
-    <div class="sidebar-div">
+    <aside class="right-aside md:col-span-1 overflow-y-scroll py-3 px-5">
+        {% include "includes/search.html" %}
         {% load sidebar %}
         {% sidebar_view tag user %}
         {% include "includes/right_sidebar_follow.html" %}
-    </div>
+    </aside>
 </content>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -1,0 +1,13 @@
+{% if user.is_authenticated %}
+    <div class="mb-8 mr-3">
+        <form class="hidden home-search-form w-full bg-indigo-200 rounded-lg md:flex justify-start items-center">
+            <i class="fa-solid fa-magnifying-glass text-blue-950 pl-2"></i>
+            <input role="search" id="search-input" name="search_box"  type="search" placeholder="Search..." />
+        </form>
+        <ul class="web-search-results absolute h-32 w-56 bg-white text-black rounded-md p-2 hidden">
+            <li>Search results found</li>
+            <li>No results found</li>
+            <li>No results found</li>
+        </ul>
+    </div>
+    {% endif %}
