@@ -1,4 +1,4 @@
-{% extends 'layouts/b.html' %}
+{% extends 'layouts/profile_layout.html' %}
 
 {% block title %} Delete Post- {{ post.id }} {% endblock %}
 
@@ -27,7 +27,7 @@
                 {% else %}
                     {% for tag in post.tags.all %}
                     <div class="flex items-center gap-2 text-sm mb-2 flex-wrap">
-                        <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:text-white">{{tag}}</a>
+                        <a href="" class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-800 hover:theme-color">{{tag}}</a>
                     </div>
                     {% endfor %}
                 {% endif %}
@@ -35,8 +35,8 @@
         </article>
     </div>
     <div>
-        <h1 class="text-white font-bold text-2xl pt-2">Delete Post</h1>
-        <p class="text-white mb-6">Are you sure you want to delete this post?</p>
+        <h1 class="theme-color font-bold text-2xl pt-2">Delete Post</h1>
+        <p class="theme-color mb-6">Are you sure you want to delete this post?</p>
         
         <form method='POST'>
             {% csrf_token %}

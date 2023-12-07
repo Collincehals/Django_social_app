@@ -1,13 +1,13 @@
-{% extends 'layouts/b.html' %}
+{% extends 'layouts/profile_layout.html' %}
 
 {% block title %} Edit Post- {{ post.id }} {% endblock %}
 
 {% block content %}
 <div class="flex justify-start md:hidden ">
-    <a href="{{ request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left mr-4 text-white font-bold text-lg"></i></a>
-    <p class="text-white font-bold text-lg">Edit Post</p>
+    <a href="{{ request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left mr-4 theme-color font-bold text-lg"></i></a>
+    <p class="theme-color font-bold text-lg">Edit Post</p>
 </div>
-<p class="hidden text-white font-bold text-xl pb-1 md:block">Edit Post</p>
+<p class="hidden theme-color font-bold text-xl pb-1 md:block">Edit Post</p>
 <style>
     input {
         margin-bottom:15px;

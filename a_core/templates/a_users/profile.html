@@ -7,28 +7,28 @@
 <div >
     <img class="w-full h-40 md:h-48 object-cover" src="{% static 'images/profile_bg.jpg' %}">
 </div>
-<div class="text-white px-4 pb-2">
+<div class="theme-color px-4 pb-2">
     <div class="flex justify-between items-center">
         <img class="border-solid border-white rounded-full w-24 h-24 -mt-14 ml-3" src="{{ profile.image.url }}" />
         <div class="flex justify-start gap-3 items-center">
             {% if user == profile.user %}
             <div class="block md:hidden">
-                <a href="{% url 'edit-profile' %}" class="py-2 pl-4 pr-2 bg-orange-400 rounded-full text-white text-center"><i class="fa-regular fa-pen-to-square mr-2" style="color: #f3f4f7;"></i></a>
+                <a href="{% url 'edit-profile' %}" class="py-2 pl-4 pr-2 bg-orange-400 rounded-full theme-color text-center"><i class="fa-regular fa-pen-to-square mr-2" style="color: #f3f4f7;"></i></a>
             </div>
             <div class="hidden md:block">
-                <a href="{% url 'edit-profile' %}" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl  text-white text-center"><i class="fa-regular fa-pen-to-square mr-2" style="color: #f3f4f7;"></i>Edit Profile</a>
+                <a href="{% url 'edit-profile' %}" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl  theme-color text-center"><i class="fa-regular fa-pen-to-square mr-2" style="color: #f3f4f7;"></i>Edit Profile</a>
             </div>
             {% endif %}
             {% if request.user != profile.user %}
                 {% if request.user in profile.followers.all %}
                 <form method="POST" action="{% url 'unfollow_user' username=profile.user.username %}">
                     {% csrf_token %}
-                    <button type="submit" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl text-white text-center">Unfollow</button>
+                    <button type="submit" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl theme-color text-center">Unfollow</button>
                 </form>
                 {% else %}
                 <form method="POST" action="{% url 'follow_user' username=profile.user.username %}">
                     {% csrf_token %}
-                    <button type="submit" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl text-white text-center">Follow</button>
+                    <button type="submit" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl theme-color text-center">Follow</button>
                 </form>
                 {% endif %}
             {% endif %}
@@ -37,11 +37,11 @@
     </div>
     <div class="mt-4">
         {% if profile.realname %}
-        <p class="text-white text-2xl mb-3"><b>{{ profile.realname|title }}</b>
+        <p class="theme-color text-2xl mb-3"><b>{{ profile.realname|title }}</b>
             <span class="text-gray-400 text-xl">@ {{ profile.user.username }}</span>
         </p>
         {% else %}
-        <p class="text-white text-2xl mb-3"><b>{{ profile.user.username|title }}</b>
+        <p class="theme-color text-2xl mb-3"><b>{{ profile.user.username|title }}</b>
             <span class="text-gray-400 text-xl">@ {{ profile.user.username }}</span>
         </p>
         {% endif %}
@@ -53,7 +53,7 @@
         {% endif %}
 
         <div class="flex flex-wrap justify-start gap-3 md:gap-6 items-center ">
-            <p class="text-gray-400"><span class="text-white">{{post_count}} </span>Posts</p>
+            <p class="text-gray-400"><span class="theme-color">{{post_count}} </span>Posts</p>
             {% if profile.location %}
             <p><i class="fa-solid fa-map-pin text-orange-500 mr-2"></i><span class="text-gray-400">{{ profile.location }}</span></p>
             {% else %}
@@ -62,8 +62,8 @@
             {% if user.is_authenticated %}
             <p class="text-gray-400"><i class="fa-regular fa-calendar text-orange-500 mr-2"></i>Joined {{user.profile.created|date:'F Y'}}</p>
             {% endif %}
-            <a href="{% url 'followers_page' username=profile.user.username %}" class="text-gray-400"><span class="text-white">{{profile.followers.count}} </span>Followers</a>
-            <a href="{% url 'following_page' username=profile.user.username %}" class="text-gray-400"><span class="text-white">{{profile.user.following.count}} </span>Following</a>
+            <a href="{% url 'followers_page' username=profile.user.username %}" class="text-gray-400"><span class="theme-color">{{profile.followers.count}} </span>Followers</a>
+            <a href="{% url 'following_page' username=profile.user.username %}" class="text-gray-400"><span class="theme-color">{{profile.user.following.count}} </span>Following</a>
         </div>
     </div> 
 
@@ -73,9 +73,9 @@
 hx-target="#tab-contents" 
 hx-swap="innerHTML"
 _="on htmx:afterOnLoad take .selected for event.target" > 
-    <a hx-get="{% url 'userprofile' profile.user.username %}" class="tab selected">Latest</a>
-    <a hx-get="{% url 'userprofile' profile.user.username %}?top-posts" class="tab">Top Posts</a>  
-    <a hx-get="{% url 'userprofile' profile.user.username %}?top-comments" class="tab">Top Comments</a>
+    <a hx-get="{% url 'userprofile' profile.user.username %}" class="tab selected theme-color">Latest</a>
+    <a hx-get="{% url 'userprofile' profile.user.username %}?top-posts" class="tab theme-color">Top Posts</a>  
+    <a hx-get="{% url 'userprofile' profile.user.username %}?top-comments" class="tab theme-color">Top Comments</a>
 </div>
 <div id="tab-contents" class="flex flex-col items-center">
     {% include 'snippets/loop_profile_posts.html' %}

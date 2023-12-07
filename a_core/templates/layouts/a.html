@@ -25,29 +25,32 @@
     }
 </style>
 <content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-4  max-w-7xl mx-auto">
-    <aside class="pl-6 hidden md:block md:col-span-1 overflow-y-auto">
+    <aside class="pl-6 hidden md:block md:col-span-1">
         {% include 'includes/left_sidebar.html' %}
     </aside>
-    <main id="main-content" class="col-span-full md:col-span-2 overflow-y-auto">
-        <!--Home tabs-->
-        {% if user.is_authenticated %}
-        <div class="tabs-container relative overflow-hidden pt-2 px-0 pb-2 md:pb-4">
-            <div class="home-tabs flex gap-2 md:gap-4 justify-start items-center text-sm md:text-lg  overflow-x-auto">
-                <p class="tab selected pb-2">Following</p>
-                <p class="tab pb-2">For You</p>
-                <p class="tab pb-2">Bookmarks</p>
-                <button class="scroll-left hidden absolute left-0 top-0 bottom-0 w-10 text-white bg-transparent border-none cursor-pointer">&lt;</button>
-                <button class="scroll-right hidden absolute right-0 top-0 bottom-0 w-10 text-white bg-transparent border-none cursor-pointer">&gt;</button>
+    <main id="main-content" class="col-span-full md:col-span-2 relative">
+            <div class="md:hidden mobile-nav">
+                {% include 'includes/header.html' %}
             </div>
-        </div>
-        {% endif %}
+            <!--Home tabs-->
+            {% if user.is_authenticated %}
+            <div class="tabs-container overflow-hidden pt-2 px-0 pb-2 md:pb-4 mobile-tabs ">
+                <div class="home-tabs flex gap-2 md:gap-4 justify-start items-center text-sm md:text-lg  overflow-x-auto">
+                    <p class="tab selected pb-2 theme-color">Following</p>
+                    <p class="tab pb-2 theme-color">For You</p>
+                    <p class="tab pb-2 theme-color">Bookmarks</p>
+                    <button class="scroll-left hidden absolute left-0 top-0 bottom-0 w-10 theme-color bg-transparent border-none cursor-pointer">&lt;</button>
+                    <button class="scroll-right hidden absolute right-0 top-0 bottom-0 w-10 theme-color bg-transparent border-none cursor-pointer">&gt;</button>
+                </div>
+            </div>
+            {% endif %}
         <div class="md:p-2">
             {% block content %}
             {% endblock %}
         </div>
-        <a id="postCreateBtn" class="hidden md:hidden fixed bottom-4 right-4 py-2 px-4 rounded-full bg-blue-600 text-white text-lg" href="{% url 'post-create' %}"><i class="fa-solid fa-plus text-white text-lg"></i></a>
+        <a id="postCreateBtn" class="hidden md:hidden fixed bottom-4 right-4 py-2 px-4 rounded-full theme-color text-lg" href="{% url 'post-create' %}"><i class="fa-solid fa-plus theme-color text-lg"></i></a>
     </main>
-    <aside class="right-aside md:col-span-1 overflow-y-scroll py-3 px-5">
+    <aside class="right-aside md:col-span-1 py-3 px-5">
         {% include "includes/search.html" %}
         {% load sidebar %}
         {% sidebar_view tag user %}
@@ -86,21 +89,22 @@
             }
         });
     });
-    
-    //toggling the fixed create button for small and medium devices
-    let lastScrollTop = 0;
-    window.addEventListener("scroll", function() {
-        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-        if (currentScroll > lastScrollTop) {
-            document.getElementById("postCreateBtn").classList.add('hidden')
-        } else {
-            document.getElementById("postCreateBtn").classList.remove('hidden')
-        }
-        lastScrollTop = currentScroll;
-    }, false);
-
 </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+let lastScrollTop = 0;
+  $(window).scroll(function() {
+    var st = $(this).scrollTop();
+    if (st < lastScrollTop) {
+      $('#postCreateBtn').fadeIn(); 
+    } else {
+      $('#postCreateBtn').fadeOut();
+    }
+    lastScrollTop = st;
+  });
+</script>
+
 {% endblock %}
 
 

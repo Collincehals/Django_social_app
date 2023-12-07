@@ -3,26 +3,46 @@
 {% block layout %}
 <style>
     #main-content {
-        border-right:.2px solid rgb(51, 58, 114);
-        border-left:.2px solid rgb(65, 71, 113);
+        border-right:.1px solid rgb(65, 71, 113);
+        border-left:.1px solid rgb(65, 71, 113);
+    }
+    .home-tabs {
+        border-bottom:.1px solid rgb(65, 71, 113);
+       
+        white-space: nowrap;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* Internet Explorer/Edge */
+    }
+    .home-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        #main-content {
+        border-left:none;
+        border-right:none;
+    }
     }
 </style>
-
-<aside class="menu-div hidden md:block md:h-full md:w-[22%] fixed left-3 top-28">
-    {% include 'includes/left_sidebar.html' %}
-</aside>
-<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-3 max-w-7xl mx-auto my-6 md:ml-[25%]">
-    <main id="main-content" class="mx-1 col-span-full md:col-span-2 md:mr-5 -mt-4 md:-mt-8">
-        
+<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-4  max-w-7xl mx-auto">
+    <aside class="pl-6 hidden md:block md:col-span-1">
+        {% include 'includes/left_sidebar.html' %}
+    </aside>
+    <main id="main-content" class="col-span-full md:col-span-2 relative">
+            <div class="md:hidden mobile-nav">
+                {% include 'includes/header.html' %}
+            </div>
+        <div class="md:p-2">
             {% block content %}
             {% endblock %}
-      
+        </div>
+        <a id="postCreateBtn" class="hidden md:hidden fixed bottom-4 right-4 py-2 px-4 rounded-full theme-color text-lg" href="{% url 'post-create' %}"><i class="fa-solid fa-plus theme-color text-lg"></i></a>
     </main>
-    <div class="sidebar-div">
-        {% include "includes/right_sidebar_follow.html" %}
+    <aside class="right-aside md:col-span-1 py-3 px-5">
+        {% include "includes/search.html" %}
         {% load sidebar %}
         {% sidebar_view tag user %}
-    </div>
+        {% include "includes/right_sidebar_follow.html" %}
+    </aside>
 </content>
-
 {% endblock %}

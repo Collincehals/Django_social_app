@@ -1,18 +1,18 @@
 {% load static %}
 
-<section class="flex justify-center items-center md:justify-center overflow-x-hidden overflow-y-auto pt-4 pb-40">
+<section class="flex justify-center items-center md:justify-center pt-4">
     <ul class="leftsidebar_hover">
         <logo >
             <a class="flex items-center gap-3" href="/">
-                <img  id="logo-home" class="w-6" src="{% static 'icons/home-logo1.png' %}">
-                <span id="heading-home" class="text-white text-lg font-bold md:block">ConnectHive</span>
+                <img  id="logo-home" class="w-7" src="{% static 'icons/logo1.png' %}">
+                <span id="heading-home" class="theme-color text-lg font-bold md:block">ConnectHive</span>
             </a>
         </logo>
         {% if user.is_authenticated %}
         <li x-data="{ dropdownOpen: false }" class="relative">
             <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none flex justify-start items-center gap-1">
                 <img class="h-7 w-7 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
-                <span class="text-white text-lg">{{ user }}</span>
+                <span class="theme-color text-lg">{{ user }}</span>
                 <img x-bind:class="dropdownOpen && 'rotate-180 duration-300'" class="w-4" src="https://img.icons8.com/small/32/777777/expand-arrow.png"/>
             </a>
             <div x-show="dropdownOpen" x-cloak class="absolute right-0 bg-white text-black shadow rounded-xl w-48 p-2 z-20"
@@ -30,27 +30,27 @@
             </div>
         </li>
         {% else %}
-        <li><a href="{% url 'account_login' %}"><i class="fa-solid fa-user text-white text-lg mr-3"></i><span  class="text-lg text-white">Login</span></a>
+        <li><a href="{% url 'account_login' %}"><i class="fa-solid fa-user theme-color text-lg mr-3"></i><span  class="text-lg theme-color">Login</span></a>
         </li>
         {% endif %}
         <li>
-            <a href="/"><i class="fa-solid fa-house text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Home</span></a>
+            <a href="/"><i class="fa-solid fa-house text-lg theme-color mr-3"></i><span id="icon-label" class="text-lg theme-color">Home</span></a>
         </li>
         <li>
-            <a href="/"><i class="fa-solid fa-compass text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Explore</span></a>
+            <a href="/"><i class="fa-solid fa-compass text-lg theme-color mr-3"></i><span id="icon-label" class="text-lg theme-color">Explore</span></a>
         </li>
         <li>
-            <a href="{% url 'post-create' %}"><i class="fa-solid fa-circle-plus text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Add Post</span></a>
+            <a href="{% url 'post-create' %}"><i class="fa-solid fa-circle-plus text-lg theme-color mr-3"></i><span id="icon-label" class="text-lg theme-color">Add Post</span></a>
         </li>
         <li>
-            <a id="new-message-button" href="{% url 'inbox' %}"><i class="fa-solid fa-message text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Messages</span></a>
+            <a id="new-message-button" href="{% url 'inbox' %}"><i class="fa-solid fa-message text-lg theme-color mr-3"></i><span id="icon-label" class="text-lg theme-color">Messages</span></a>
         </li>
         <li>
-            <a href="{% url 'inbox' %}"><i class="fa-solid fa-envelope text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Inbox</span></a>
+            <a href="{% url 'inbox' %}"><i class="fa-solid fa-envelope text-lg theme-color mr-3"></i><span id="icon-label" class="text-lg theme-color">Inbox</span></a>
         </li>
         <li class="relative">
-            <a class="themes-toggle-icon cursor-pointer"><i class="fa-solid fa-pen-to-square text-lg text-white mr-3 "></i><span class="text-white text-lg">Themes</span></a>
-            <div class="themes-container hidden w-52 rounded-xl p-2 z-50  bg-slate-500">
+            <a class="themes-toggle-icon cursor-pointer"><i class="fa-solid fa-pen-to-square text-lg theme-color mr-3 "></i><span class="theme-color text-lg">Themes</span></a>
+            <div class="themes-container hidden w-52 rounded-xl p-2 z-50  bg-slate-500 absolute">
                 <h5 class="theme-title">Personalize Theme</h5>
                 <div id="theme-options-wrapper">
                     <div data-mode="light" id="light-mode" class="theme-dot"></div>
@@ -61,8 +61,8 @@
             </div>
         </li>
         {% if user.is_authenticated %}
-        <li x-data="{ dropdownOpen: false }" class="relative">
-            <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer"><i class="fa-solid fa-gear text-lg text-white mr-3"></i><span id="icon-label" class="text-lg text-white">Settings</span></a>
+        <li x-data="{ dropdownOpen: false }">
+            <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer"><i class="fa-solid fa-gear text-lg theme-color mr-3"></i><span id="icon-label" class="text-lg theme-color">Settings</span></a>
             <div x-show="dropdownOpen" x-cloak class="  bg-white text-black shadow rounded-xl w-auto z-50"
             x-transition:enter="duration-300 ease-out"
             x-transition:enter-start="opacity-0 -translate-y-5 scale-90"
