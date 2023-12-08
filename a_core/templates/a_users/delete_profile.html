@@ -1,14 +1,16 @@
-{% extends 'layouts/b.html' %}
+{% extends 'layouts/allauth.html' %}
 
 {% block title %} Delete Profile- {{ user.profile.realname }} {% endblock %}
 
 {% block content %}
-<h1 class="theme-color">Delete Account</h1>
-<p class="theme-color pb-8">Are you sure you want to delete your account?</p>
+<h1 class="text-black">Delete Account</h1>
+<p class="text-black pb-8">Are you sure you want to delete your account?</p>
 
 <form method='POST'>
     {% csrf_token %}
-    <button class="deletebtn" type="submit" class="btn-red mt-6">Yes, I want to delete my account</button>
-    <a class="editbtn ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+    <div class="flex justify-start gap-3 items-center flex-wrap">
+        <button class="deletebtn" type="submit" class="btn-red mt-6">Yes, I want to delete my account</button>
+        <a class="editbtn ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+    </div>
 </form>
 {% endblock %}

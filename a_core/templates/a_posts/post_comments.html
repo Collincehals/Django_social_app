@@ -1,3 +1,4 @@
+{% load static %}
 <comment class="post-item-card p-4 !mb-4">
     <div class="flex justify-between items-center"> 
         <a class="flex items-center gap-1 mb-2" href="{% url 'userprofile' comment.author.username %}">
@@ -43,14 +44,13 @@
             }
         </style>
         {% if user.is_authenticated %}
-        {% load static %}
             <form class="replyform flex justify-between items-center" autocomplete="off" 
              hx-post="{% url 'sent-post-comment-reply' comment.id %}"
              hx-target="this"
              hx-swap="outerHTML">
                 {% csrf_token %}
                 {{ commentreplyform }}
-                <button class="block" type="submit"><img style="width:25px;" src="{% static 'icons/send.png' %}"></button>
+                <button class="block" type="submit"><img style="width:25px;" src="{% static 'icons/send_icon.png' %}"></button>
             </form>
         {% endif %}
         </div>

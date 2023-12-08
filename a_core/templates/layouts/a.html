@@ -8,7 +8,6 @@
     }
     .home-tabs {
         border-bottom:.1px solid rgb(65, 71, 113);
-       
         white-space: nowrap;
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none; /* Internet Explorer/Edge */
@@ -104,21 +103,4 @@ let lastScrollTop = 0;
     lastScrollTop = st;
   });
 </script>
-
 {% endblock %}
-
-
-
-
-
-
-<!---
-
-    <mobileSidebarNav class="md:hidden col-span-full mx-auto mb-6 z-10 relative">
-        <a @click="mobileSidebarOpen = !mobileSidebarOpen" class="flex items-center cursor-pointer select-none font-bold hover:bg-gray-200 rounded-lg p-3">
-            <span>Categories</span>
-            <img x-bind:class="mobileSidebarOpen && 'rotate-180 duration-300'" class="w-4 ml-1.5" src="https://img.icons8.com/small/32/000000/expand-arrow.png" />
-        </a>
-    </mobileSidebarNav>
-
--->

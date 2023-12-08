@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block layout %}
+<style>
+    #main-content {
+        border-right:.1px solid rgb(65, 71, 113);
+        border-left:.1px solid rgb(65, 71, 113);
+    }
+    .settings-title{
+        border-bottom:.1px solid rgb(65, 71, 113);
+    }
+    @media (max-width: 768px) {
+        #main-content {
+        border-left:none;
+        border-right:none;
+    }
+    }
+</style>
+<content  class="grid grid-cols-4  max-w-7xl mx-auto">
+    <aside class="hidden md:block md:col-span-1">
+        {% include 'includes/left_sidebar.html' %}
+    </aside>
+    <main id="main-content" class="col-span-full md:col-span-3">
+        <div class="md:hidden mobile-nav">
+            {% include 'includes/header.html' %}
+        </div>
+        <div class="p-0.5 md:p-8 mx-auto ">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+    
+    
+</content>
+{% endblock %}

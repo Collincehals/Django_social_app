@@ -1,4 +1,4 @@
-{% extends "layouts/d.html" %}
+{% extends "layouts/inbox_layout.html" %}
 {% block title %} Inbox {% endblock %}
 
 
@@ -115,7 +115,7 @@
             padding:20px 10px;
             position:fixed;
             left:-40px;
-            top:11.5%;
+            top:0;
             width:60%;
             height:100vh;
             background-color: rgb(197, 198, 210);
@@ -125,6 +125,7 @@
            clip-path: none;
            left:0;
            transition:.4s ease-in-out;
+           z-index: 500;
         }
 
         .inbox-sender-details {
@@ -137,7 +138,6 @@
     <div class="inbox-container">
         <div id="chats-open-menubars" class="absolute md:hidden bg-gray-200 p-2 font-semibold"><i class="fa-solid fa-user-group text-lg text-blue-800"></i><span class="pl-2 text-lg text-blue-800">Chats</span></div>
         <div class="contacts-wrapper">
-            <i id="chats-cancel-btn" class="fa-solid fa-xmark absolute md:hidden right-4 top-2 text-2xl text-red-600"></i>
             <a id="new-message-button" class="new-message"> <i class="fa-regular fa-pen-to-square mx-2"></i>New Message</a>
             {% include 'a_inbox/my_conversations.html' %}
         </div>
@@ -154,19 +154,19 @@
         const openchatsbtn= document.getElementById('chats-open-menubars');
         const conversationslist = document.querySelector('.contacts-wrapper');
         const chatsclosebtn = document.querySelector('#chats-cancel-btn');
-
+    
         messagebtn.addEventListener('click',function() {
             searchpopup.style.display='flex';
         });
-
+    
         cancelbtn.addEventListener('click',function() {
             searchpopup.style.display='none';
         });
-
+    
         openchatsbtn.addEventListener('click',function() {
             conversationslist.classList.add('active');
         });
-
+    
         chatsclosebtn.addEventListener('click',function() {
             conversationslist.classList.remove('active');
         });

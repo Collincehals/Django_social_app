@@ -1,4 +1,4 @@
-{% extends 'layouts/profile_layout.html' %}
+{% extends 'layouts/allauth.html' %}
 
 {% block title %} Edit Profile- {{ user.profile.realname }} {% endblock %}
 
@@ -7,14 +7,6 @@
     .profile-edit-form input {
         padding:12px;
     }
-    .profile-edit-page {
-        max-width:600px;
-        width:100%;
-        background-color: rgb(241, 240, 253);
-        padding:25px; margin:0 auto;
-        border:1px solid #ccc;border-radius:20px;
-    }
-    
 </style>
 <div class="profile-edit-page">
   <h2 class="text-blue-900 mb-2 text-center">Edit Profile</h2>
@@ -28,8 +20,8 @@
 <form method="POST" enctype="multipart/form-data" class="profile-edit-form mb-5">
     {% csrf_token %}
     {{ form.as_p }}
-    <button class="successbtn" type="submit" >Submit</button>
-    <a class="editbtn ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+    <button class="successbtn" type="submit" >Save</button>
+    <a class="editbtn ml-1" href="{{ request.META.HTTP_REFERER }}">Abort</a>
 </form>
 <a class="delete-profile flex justify-center hover:underline " href="{% url 'delete-profile' %}"><span class="text-blue-950 hover:text-red-700 hover:text-xl text-decoration-none ">Delete Profile</span></a>
 

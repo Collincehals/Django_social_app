@@ -1,14 +1,44 @@
 {% extends 'base.html' %}
 
 {% block layout %}
-
-    <content class="max-w-3xl block mx-auto my-12 px-4">
-    <div class="form-card p-8 !pb-10">
-        {% block content %}
-        {% endblock %}
-    </div>
-        
-    
-    </content>
-
+<style>
+    #main-content {
+        border-right:.1px solid rgb(65, 71, 113);
+        border-left:.1px solid rgb(65, 71, 113);
+    }
+    .settings-title{
+        border-bottom:.1px solid rgb(65, 71, 113);
+    }
+    @media (max-width: 768px) {
+        #main-content {
+        border-left:none;
+        border-right:none;
+    }
+    }
+</style>
+<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-4  max-w-7xl mx-auto">
+    <aside class="pl-6 hidden md:block md:col-span-1">
+        {% include 'includes/left_sidebar.html' %}
+    </aside>
+    <main id="main-content" class="col-span-full md:col-span-2 relative">
+        <div class="md:hidden mobile-nav">
+            {% include 'includes/header.html' %}
+        </div>
+        <div class="form-card p-4 md:p-8 mx-auto my-5">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+    <aside class="hidden md:block md:col-span-1">
+        <p class="text-2xl theme-color p-4 block settings-title">Settings</p>
+        <ul class="hoverlist px-4">
+            <hr>
+            <li><a href="{% url 'edit-profile' %}"><i class="fa-solid fa-user-pen theme-color mr-3 text-lg"></i><span class="theme-color text-lg">Edit Profile</span></a></a></li>
+            <li><a href="{% url 'account_change_password' %}"><i class="fa-solid fa-lock theme-color mr-3 text-lg"></i><span class="theme-color text-lg">Change Password</span></a></a></li>
+            <li><a href="{% url 'account_reset_password' %}"><i class="fa-solid fa-user-lock theme-color mr-3 text-lg"></i><span class="theme-color text-lg">Reset Password</span></a></a></li>
+            <li><a href="{% url 'account_email' %}"><i class="fa-solid fa-envelope theme-color mr-3 text-lg"></i><span class="theme-color text-lg">Manage Emails</span></a></a></li>
+            <li><a href="{% url 'delete-profile' %}"><i class="fa-solid fa-trash theme-color hover:text-red mr-3 text-lg"></i><span class="theme-color text-lg">Delete Account</span></a></a></li>
+        </ul>
+    </aside>
+</content>
 {% endblock %}

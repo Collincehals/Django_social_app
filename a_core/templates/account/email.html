@@ -5,6 +5,13 @@
 {% block title %}{% trans "Email Addresses" %}{% endblock title %}
 
 {% block content %}
+<style>
+   input[type="radio"] {
+    
+    display:flex;
+    align-items: center;
+  }
+</style>
     <h1>{% trans "Email Addresses" %}</h1>
 {% if emailaddresses %}
 <p>{% trans 'The following email addresses are associated with your account:' %}</p>
@@ -15,7 +22,7 @@
 
   {% for emailaddress in emailaddresses %}
 <div class="ctrlHolder">
-      <label for="email_radio_{{forloop.counter}}" class="{% if emailaddress.primary %}primary_email{%endif%}">
+      <label id="radio" for="email_radio_{{forloop.counter}}" class="{% if emailaddress.primary %}primary_email{%endif%} block">
 
       <input id="email_radio_{{forloop.counter}}" type="radio" name="email" {% if emailaddress.primary or emailaddresses|length == 1 %}checked="checked"{%endif %} value="{{emailaddress.email}}"/>
 
@@ -30,10 +37,10 @@
 </div>
   {% endfor %}
 
-<div class="buttonHolder">
-      <button class="secondaryAction editbtn" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
-      <button class="secondaryAction editbtn" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
-      <button class="primaryAction editbtn" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+<div class="buttonHolder mt-4 mb-4 flex justify-start items-center gap-2 flex-wrap">
+      <button class="secondaryAction successbtn" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
+      <button class="secondaryAction successbtn" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
+      <button class="primaryAction successbtn" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
 </div>
 
 </fieldset>

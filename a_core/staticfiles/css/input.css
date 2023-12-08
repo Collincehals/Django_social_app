@@ -57,22 +57,17 @@ nav {
     --primary-hover: rgb(77, 22, 255);
     --black: #1f2937;
 }
-#heading-home {
-    font-size:18px;
-}
+
 h1 {
-    @apply text-3xl font-bold mb-4
+    @apply text-2xl mb-4 font-semibold text-blue-800
 }
 h2 {
-    @apply text-2xl font-bold mb-3
+    @apply text-xl font-semibold text-blue-800 mb-3
 }
 h3 {
-    @apply text-lg font-bold 
+    @apply text-lg font-semibold text-blue-800 
 }
-.font1 {
-    font-family: var(--font1);
-    font-weight:600;
-}
+
 
 .successbtn {
     display: inline-flex;
@@ -172,8 +167,7 @@ h3 {
 }
 
 .form-card {
-    border-radius: 0.5rem;
-    margin:auto !important;
+    border-radius: 0.2rem;
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
     margin-bottom: 2rem;
     background-color: rgb(242, 241, 253);
@@ -189,10 +183,6 @@ h3 {
 }
 .post-item-card {
     width: 100%;
-}
-#heading-home {
-    font-size:17px;
-    text-align: center;
 }
 }
 
@@ -280,7 +270,7 @@ input[name="remember"] {
 }
 .textarea, textarea, input {
     border-radius: 0.5rem;
-    padding: 1.1rem 1.2rem;
+    padding:0.8rem 1.2rem;
     background-color: rgb(255, 252, 252);
     outline:none;
 }
