@@ -8,7 +8,7 @@ _="on load transition my opacity to 1 over 0.3 seconds">
         </div>
         <form action="{% url 'unfollow_user' username=followed_profile.user.username %}" method="POST">
             {% csrf_token %}
-            <button type="submit" class="text-sm py-1.5 px-4 bg-blue-600 hover:bg-orange-500 rounded-xl  theme-color text-center "><span class="duration-700 ease-in-out" id="already-following-btn">Following</span><span id="unfollow-btn" class="hidden duration-700 ease-in-out">Unfollow</span></button>
+            <button id="already-following-btn" type="submit" class="text-sm py-1.5 px-4 bg-blue-600 hover:bg-orange-500 rounded-xl  theme-color text-center "><span id="following-text">Following</span><span id="unfollow-text" class="hidden duration-700 ease-in-out">Unfollow</span></button>
         </form>
     </li>
     {% empty %}
@@ -16,25 +16,24 @@ _="on load transition my opacity to 1 over 0.3 seconds">
     {% endfor %}
 </ul>
 </fade-in>
-<style>
-#already-following-btn, #unfollow-btn {
-    transition: 3s ease-in-out;
-    opacity: 1;
-}
-</style>
-<script>
-    const followingBtns = document.querySelectorAll('#already-following-btn');
-    const unfollowBtns = document.querySelectorAll('#unfollow-btn');
 
-    followingBtns.forEach((followingBtn, index) => {
+<script>
+const followingBtns = document.querySelectorAll('#already-following-btn');
+
+followingBtns.forEach((followingBtn) => {
+    const followingText = followingBtn.querySelector('#following-text');
+    const unfollowText = followingBtn.querySelector('#unfollow-text');
+
     followingBtn.addEventListener('mouseover', () => {
-        followingBtn.classList.add('hidden');
-        unfollowBtns[index].classList.remove('hidden');
+        followingText.classList.add('hidden');
+        unfollowText.classList.remove('hidden');
     });
+
     followingBtn.addEventListener('mouseout', () => {
-        followingBtn.classList.remove('hidden');
-        unfollowBtns[index].classList.add('hidden');
+        followingText.classList.remove('hidden');
+        unfollowText.classList.add('hidden');
     });
-    });
+});
+
 
 </script>

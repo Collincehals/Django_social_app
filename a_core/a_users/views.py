@@ -45,8 +45,8 @@ def ProfileView(request, username=None):
             return render(request, 'snippets/loop_profile_posts.html',context)
         elif 'top-comments' in request.GET:
             comments = profile.user.comments.annotate(num_likes=Count('likes')).filter(num_likes__gt=0).order_by('-num_likes')
-            replyform = PostCommentReplyForm()
-            return render(request, 'snippets/loop_profile_comments.html',{'comments': comments, 'replyform': replyform})
+            commentreplyform = PostCommentReplyForm()
+            return render(request, 'snippets/loop_profile_comments.html',{'comments': comments, 'commentreplyform': commentreplyform})
         else:
             return render(request, 'snippets/loop_profile_posts.html',context)
     

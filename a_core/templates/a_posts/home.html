@@ -15,8 +15,8 @@
 {% for post in posts %}
     {% include 'a_posts/post.html' %}
     {% empty %}
-    <div class="theme-color flex justify-center items-center mt-14 font-semibold">
-        <h3>No Posts Yet :(</h3>
+    <div class="flex justify-center items-center mt-14">
+        <h3 class="theme-color">No Posts Yet :(</h3>
     </div>  
  {% endfor %} 
 

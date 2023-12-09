@@ -3,11 +3,12 @@
 {% block layout %}
 <style>
     #main-content {
-        border-right:.1px solid rgb(65, 71, 113);
-        border-left:.1px solid rgb(65, 71, 113);
+        min-height:100vh;
+        border-right:.1px solid var(--borderColor);
+        border-left:.1px solid var(--borderColor);
     }
     .home-tabs {
-        border-bottom:.1px solid rgb(65, 71, 113);
+        border-bottom:.1px solid var(--borderColor);
         white-space: nowrap;
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none; /* Internet Explorer/Edge */
@@ -47,7 +48,7 @@
             {% block content %}
             {% endblock %}
         </div>
-        <a id="postCreateBtn" class="hidden md:hidden fixed bottom-4 right-4 py-2 px-4 rounded-full theme-color text-lg" href="{% url 'post-create' %}"><i class="fa-solid fa-plus theme-color text-lg"></i></a>
+        <a id="postCreateBtn" class="hidden md:hidden fixed bottom-4 right-4 py-2 px-3.5 rounded-full theme-color hover:bg-orange-500 text-sm" href="{% url 'post-create' %}"><i class="fa-solid fa-plus theme-color text-lg"></i></a>
     </main>
     <aside class="right-aside md:col-span-1 py-3 px-5">
         {% include "includes/search.html" %}

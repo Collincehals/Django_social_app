@@ -3,11 +3,12 @@
 {% block layout %}
 <style>
     #main-content {
-        border-right:.1px solid rgb(65, 71, 113);
-        border-left:.1px solid rgb(65, 71, 113);
+        min-height:100vh;
+        border-right:.1px solid var(--borderColor);
+        border-left:.1px solid var(--borderColor);
     }
     .settings-title{
-        border-bottom:.1px solid rgb(65, 71, 113);
+        border-bottom:.1px solid var(--borderColor);
     }
     @media (max-width: 768px) {
         #main-content {

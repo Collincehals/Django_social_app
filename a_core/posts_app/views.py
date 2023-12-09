@@ -25,13 +25,16 @@ def home_view(request, tag=None):
         posts = paginator.page(page)
     except:
         return HttpResponse('')
+    
+    
+        
+    
     context={
         'posts': posts,
         'page': page,
         'tag':tag,
         'users': users,
         }
-     
     if request.htmx:
         return render(request, 'snippets/loops_home_posts.html', context)  
     return render(request, 'a_posts/home.html', context)

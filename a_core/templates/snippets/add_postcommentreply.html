@@ -9,7 +9,7 @@ _="on load transition my margin-top to 0 over 0.2 seconds then transition my opa
          hx-swap="outerHTML">
             {% csrf_token %}
             {{ commentreplyform }}
-            <button class="block" type="submit"><img style="width:25px;" src="{% static 'icons/send-icon.png' %}"></button>
+            <button class="block" type="submit"><img style="width:25px;" src="{% static 'icons/send_icon.png' %}"></button>
         </form>
 </fade-in>
 <span hx-swap-oob="true" id="commentrepliescount-{{ comment.id }}" class="font-light text-gray-500 ml-1">{{ comment.replies.count }}</span>

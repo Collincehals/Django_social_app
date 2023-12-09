@@ -1,14 +1,13 @@
 <fade-in class="opacity-0 ease-in-out" 
 _="on load transition my opacity to 1 over 0.3 seconds">
-<div class="w-full lg:w-[50rem] mx-auto">
+<div class="w-full mx-auto">
 {% for comment in comments %}
-<div class="flex gap-2">
+<div class="flex justify-start items-center gap-1">
     <a href="{% url 'view-post' comment.parent_post.id %}" >
-        <img src="{{ comment.parent_post.image }}" alt="..." class="w-25 h-25 rounded-sm max-w-none">
+        <img class="w-24 h-24 rounded-sm max-w-none" src="{{ comment.parent_post.media.url }}" alt="...">
     </a>
     {% include 'a_posts/post_comments.html' %}
 </div>
-
 {% empty %}
 <div class="theme-color flex justify-center items-center mt-14">
     <h3 class="theme-color" >No Comments for this post yet :(</h3>
