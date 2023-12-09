@@ -1,11 +1,17 @@
 {% extends 'layouts/a.html' %}
-
 {% block title %} ConnectHive{% endblock %}
 
 {% block content %}
-
 {% load static %}
-
+<style>
+    @keyframes postsload {
+        0% { opacity:0;}
+        100%{ opacity: 1;}
+    }
+    .load-box {
+        animation: postsload 0.5s linear infinite;
+    }
+</style>
 {% for post in posts %}
     {% include 'a_posts/post.html' %}
     {% empty %}
@@ -19,6 +25,10 @@
      hx-trigger="revealed"
      hx-target="this"
      hx-swap="outerHTML">
-     Loading...
+     <div class="home-loader-bar flex justify-center items-center gap-2">
+        <p class="load-box p-2 bg-gray-400 rounded-md"></p>
+        <p class="load-box p-2  bg-gray-400 rounded-md"></p>
+        <p class="load-box p-2  bg-gray-400 rounded-md"></p>
+     </div>
  </div>
 {% endblock %}

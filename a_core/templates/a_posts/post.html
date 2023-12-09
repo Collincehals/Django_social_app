@@ -18,7 +18,7 @@
 }
 </style>
 
-<card class="post-item-card">
+<card class="post-item-card" >
     <div class="post-grid">
         <div>
             <img class="w-8 h-8 object-cover rounded-full" src="{{ post.author.profile.image.url }}">
@@ -57,20 +57,20 @@
                 <div style="display: flex; flex-wrap: wrap;justify-content: center; align-items: center;gap:30px;">
                     {% if post.comments.count %}
                     <p id="commentbtn"><a class="font-bold cursor-pointer">
-                    <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i>
+                    <i class="fa-regular fa-comment text-blue-800 text-lg hover:text-green-700"></i>
                     <span id="commentscount-{{ post.id }}" class="font-light text-gray-500 ml-1">{{ post.comments.count }}</span>
                     </a></p>
                     {% else %}
-                    <p id="commentbtn" style="font-weight:600;color: darkblue;cursor:pointer;"><a>
-                    <i style="color:darkblue;font-size:20px;" class="fa-regular fa-comment"></i><span class="text-black-800">+</span></a>
+                    <p id="commentbtn" class="font-semibold text-blue-800 cursor-pointer"><a>
+                    <i class="fa-regular fa-comment text-blue-800 text-lg"></i><span class="text-black-800">+</span></a>
                     </p>
                     {% endif %}
                     
-                    <p><a href="{% url 'view-post' post.id %}"><i class="fa-solid fa-retweet" style="color:darkblue;font-size:20px;"></i></a></p>
+                    <p><a href="{% url 'view-post' post.id %}"><i class="fa-solid fa-retweet text-blue-800 hover:text-yellow-700 text-lg"></i></a></p>
                     {% include 'snippets/posts_likes.html' %}
                     {% if user.is_superuser or user == post.author %}
-                    <p><a href="{% url 'edit-post' post.id %}"><i class="fa-regular fa-pen-to-square" style="color:darkblue;font-size:17px;"></i></a></p>
-                    <p><a href="{% url 'delete-post' post.id %}"><i class="fa-regular fa-trash-can" style="color:darkblue;font-size:17px;"></i></a></p>
+                    <p><a href="{% url 'edit-post' post.id %}"><i class="fa-regular fa-pen-to-square text-blue-800 text-lg"></i></a></p>
+                    <p><a href="{% url 'delete-post' post.id %}"><i class="fa-regular fa-trash-can text-blue-800 hover:text-red-700 text-lg"></i></a></p>
                     {% endif %} 
                 </div>
             </div>

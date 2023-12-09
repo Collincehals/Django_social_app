@@ -62,7 +62,7 @@
             {% if user.is_authenticated %}
             <p class="text-gray-400"><i class="fa-regular fa-calendar text-orange-500 mr-2"></i>Joined {{user.profile.created|date:'F Y'}}</p>
             {% endif %}
-            <a href="{% url 'follow_page' username=profile.user.username %}" class="text-gray-400"><span class="theme-color">{{profile.followers.count}} </span>Followers</a>
+            <a href="{% url 'follow_page' username=profile.user.username %}" class="text-gray-400"><span class="theme-color">{{profile.followers.count}} </span>{{ profile.followers.count|pluralize:"Follower,Followers" }}</a>
             <a href="{% url 'follow_page' username=profile.user.username %}" class="text-gray-400"><span class="theme-color">{{profile.user.following.count}} </span>Following</a>
         </div>
     </div> 

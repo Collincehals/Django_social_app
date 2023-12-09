@@ -8,8 +8,7 @@ _="on load transition my opacity to 1 over 0.3 seconds">
         </div>
         <form action="{% url 'unfollow_user' username=followed_profile.user.username %}" method="POST">
             {% csrf_token %}
-            <a id="already-following-btn" class="cursor-pointer text-sm py-1 px-4 bg-blue-600 hover:bg-orange-500 hover:theme-color rounded-xl  theme-color text-center">Following</a>
-            <button id="unfollow-btn" type="submit" class="hidden text-sm py-1 px-4 bg-blue-600 hover:bg-orange-500 hover:theme-color rounded-xl  theme-color text-center">Unfollow</button>
+            <button type="submit" class="text-sm py-1.5 px-4 bg-blue-600 hover:bg-orange-500 rounded-xl  theme-color text-center "><span class="duration-700 ease-in-out" id="already-following-btn">Following</span><span id="unfollow-btn" class="hidden duration-700 ease-in-out">Unfollow</span></button>
         </form>
     </li>
     {% empty %}

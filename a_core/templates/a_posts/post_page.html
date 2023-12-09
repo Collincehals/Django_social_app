@@ -52,7 +52,7 @@
         <a hx-get="{%  url 'view-post' post.id %}?top" class="tab theme-color">Top Comments</a>
     </div>
     {% endif %}
-    <div id="tab-contents" class="comment-lists">
+    <div id="tab-contents">
         {% for comment in post.comments.all %}
         {% include 'a_posts/post_comments.html' %}
         {% endfor %}
