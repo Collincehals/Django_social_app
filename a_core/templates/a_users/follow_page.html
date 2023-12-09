@@ -1,0 +1,37 @@
+{% extends 'layouts/profile_layout.html' %}
+
+{% block title %} Followers- {{profile.realname }} {% endblock %}
+
+{% block content %}
+{% load static %}
+<a href="{{ request.META.HTTP_REFERER }}"><i class="md:hidden fa fa-arrow-left ml-2 mr-2 theme-color font-bold text-lg"></i><span class="theme-color md:hidden">{{profile.realname}}@{{profile.user.username}}</span></a>
+<ul class="theme-color h-[100vh]">
+    <div class=" p-1 md:p-2  flex justify-evenly items-center text-lg font-semibold bg-slate-500" 
+    hx-target="#follow-page-content" 
+    hx-swap="innerHTML"
+    _="on htmx:afterOnLoad take .selected for event.target">
+        <a hx-get="{% url 'follow_page' profile.user.username %}" class="tab selected">Followers</a>
+        <a hx-get="{% url 'follow_page' profile.user.username %}?following" class="tab">Following</a>
+    </div>
+    <div id="follow-page-content">
+        {% include 'snippets/loop_followers.html' %}
+    </div>
+   
+</ul>
+{% endblock %}
+
+
+
+
+
+
+
+<!--
+<ul class="p-6 bg-white text-blue-900">
+    <p class="text-orange-500 text-xl font-semibold">Followers:</p>
+    {% for follower in followers %}
+        <li>{{ follower.username }}</li>
+    {% empty %}
+        <li>No followers yet.</li>
+    {% endfor %}
+</ul>-->

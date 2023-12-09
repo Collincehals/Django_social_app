@@ -1,0 +1,41 @@
+<fade-in class="opacity-0 ease-in-out" 
+_="on load transition my opacity to 1 over 0.3 seconds">
+    {% for followed_profile in following %}
+    <li class="flex justify-between items-center p-4 pb-1 mb-2 hover:shadow-lg rounded-lg">
+        <div class="flex justify-start items-center" >
+            <img class="h-8 w-8 rounded-full object-cover mr-2" src="{{ followed_profile.image.url }}" alt="Upload Profile"/>
+            <a href="{% url 'userprofile' followed_profile.user.username %}" class="text-lg theme-color">{{ followed_profile.realname }}<span class="opacity-70 theme-color text-sm">@{{ followed_profile.user.username }} </span></a>
+        </div>
+        <form action="{% url 'unfollow_user' username=followed_profile.user.username %}" method="POST">
+            {% csrf_token %}
+            <a id="already-following-btn" class="cursor-pointer text-sm py-1 px-4 bg-blue-600 hover:bg-orange-500 hover:theme-color rounded-xl  theme-color text-center">Following</a>
+            <button id="unfollow-btn" type="submit" class="hidden text-sm py-1 px-4 bg-blue-600 hover:bg-orange-500 hover:theme-color rounded-xl  theme-color text-center">Unfollow</button>
+        </form>
+    </li>
+    {% empty %}
+    <li class="flex items-center justify-center theme-color text-lg">Not following anyone yet.</li>
+    {% endfor %}
+</ul>
+</fade-in>
+<style>
+#already-following-btn, #unfollow-btn {
+    transition: 3s ease-in-out;
+    opacity: 1;
+}
+</style>
+<script>
+    const followingBtns = document.querySelectorAll('#already-following-btn');
+    const unfollowBtns = document.querySelectorAll('#unfollow-btn');
+
+    followingBtns.forEach((followingBtn, index) => {
+    followingBtn.addEventListener('mouseover', () => {
+        followingBtn.classList.add('hidden');
+        unfollowBtns[index].classList.remove('hidden');
+    });
+    followingBtn.addEventListener('mouseout', () => {
+        followingBtn.classList.remove('hidden');
+        unfollowBtns[index].classList.add('hidden');
+    });
+    });
+
+</script>

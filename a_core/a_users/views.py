@@ -102,32 +102,26 @@ def DeleteProfileView(request):
    return render(request, 'a_users/delete_profile.html')
 
 
-
-def followers_page(request, username):
+@login_required
+def followview(request, username):
     target_user = get_object_or_404(get_user_model(), username=username)
     profile = target_user.profile
     followers = target_user.profile.followers.all()
     following = target_user.following.all()
     users = User.objects.exclude(username=request.user.username).exclude(is_superuser=True)
     
-    context = {
-        'followers': followers, 
-        'following': following,
-        'users': users,
-        'profile': profile,
-    }
-    return render(request, 'a_users/followers_page.html',context)
-    
-    
-def following_page(request, username):
-    target_user = get_object_or_404(User, username=username)
-    profile = target_user.profile
-    following = target_user.following.all()
-    users = User.objects.exclude(username=request.user.username).exclude(is_superuser=True)
+    if request.htmx:
+        if 'following' in request.GET:
+            following = target_user.following.all()
+            return render(request, 'snippets/loop_following.html',{'following': following})
+        else:    
+            followers = target_user.profile.followers.all()
+            return render(request, 'snippets/loop_followers.html',{'followers': followers})
     
     context = {
-        'following': following,
         'users': users,
         'profile': profile,
+        'followers': followers,
+        'following': following,
     }
-    return render(request, 'a_users/following_page.html',context)
+    return render(request, 'a_users/follow_page.html',context)

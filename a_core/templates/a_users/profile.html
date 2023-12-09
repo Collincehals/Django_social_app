@@ -23,7 +23,7 @@
                 {% if request.user in profile.followers.all %}
                 <form method="POST" action="{% url 'unfollow_user' username=profile.user.username %}">
                     {% csrf_token %}
-                    <button type="submit" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl theme-color text-center">Unfollow</button>
+                    <button id="already-following-btn" type="submit" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl theme-color text-center">Following</button>
                 </form>
                 {% else %}
                 <form method="POST" action="{% url 'follow_user' username=profile.user.username %}">
@@ -62,8 +62,8 @@
             {% if user.is_authenticated %}
             <p class="text-gray-400"><i class="fa-regular fa-calendar text-orange-500 mr-2"></i>Joined {{user.profile.created|date:'F Y'}}</p>
             {% endif %}
-            <a href="{% url 'followers_page' username=profile.user.username %}" class="text-gray-400"><span class="theme-color">{{profile.followers.count}} </span>Followers</a>
-            <a href="{% url 'following_page' username=profile.user.username %}" class="text-gray-400"><span class="theme-color">{{profile.user.following.count}} </span>Following</a>
+            <a href="{% url 'follow_page' username=profile.user.username %}" class="text-gray-400"><span class="theme-color">{{profile.followers.count}} </span>Followers</a>
+            <a href="{% url 'follow_page' username=profile.user.username %}" class="text-gray-400"><span class="theme-color">{{profile.user.following.count}} </span>Following</a>
         </div>
     </div> 
 
