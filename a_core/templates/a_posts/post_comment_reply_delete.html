@@ -25,7 +25,9 @@
 
 <form method='POST'>
     {% csrf_token %}
-    <button class="deletebtn" type="submit">Confirm</button>
-    <a class="editbtn" type="submit" href="{{ request.META.HTTP_REFERER }}">Go Back</a>
+    <div class="flex justify-start gap-3 items-center flex-wrap">
+        <button class="deletebtn" type="submit">Confirm</button>
+        <a class="editbtn" type="submit" href="{{ request.META.HTTP_REFERER }}">Go Back</a>
+    </div>
 </form>
 {% endblock %}

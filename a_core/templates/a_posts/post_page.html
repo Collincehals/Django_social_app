@@ -45,15 +45,17 @@
 
 <div class="mb-20 mt-5">
     {% if post.comments.count %}
-    <div id="tabs" class="ml-4 flex gap-4 mb-4" hx-target="#tab-contents" hx-swap="innerHTML"
+    <div id="tabs" class="ml-4 flex gap-6 mb-4" hx-target="#tab-contents" hx-swap="innerHTML"
     _="on htmx:afterOnLoad take .selected for event.target">
-        <a hx-get="{%  url 'view-post' post.id %}" class="tab selected theme-color">Newest First</a> 
-        <a hx-get="{%  url 'view-post' post.id %}?top" class="tab theme-color">Top Comments</a>
+        <a hx-get="{%  url 'view-post' post.id %}" class="tab selected p-1 theme-color">Newest First</a> 
+        <a hx-get="{%  url 'view-post' post.id %}?top" class="tab p-1 theme-color">Top Comments</a>
     </div>
     {% endif %}
     <div id="tab-contents">
         {% for comment in post.comments.all %}
         {% include 'a_posts/post_comments.html' %}
+        {% empty %}
+        <p class="theme-color flex text-center items-center justify-center text-lg">No comments for this post, be the first to comment!</p>
         {% endfor %}
     </div>
 </div>

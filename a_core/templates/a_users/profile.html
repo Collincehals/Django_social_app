@@ -89,7 +89,7 @@
 hx-target="#tab-contents" 
 hx-swap="innerHTML"
 _="on htmx:afterOnLoad take .selected for event.target" > 
-    <a hx-get="{% url 'userprofile' profile.user.username %}" class="tab p-1 selected theme-color">Latest</a>
+    <a hx-get="{% url 'userprofile' profile.user.username %}" class="tab selected p-1 theme-color">Latest</a>
     <a hx-get="{% url 'userprofile' profile.user.username %}?reposts" class="tab p-1 theme-color">Reposts</a>  
     <a hx-get="{% url 'userprofile' profile.user.username %}?top-posts" class="tab p-1 theme-color">Top Posts</a>  
     <a hx-get="{% url 'userprofile' profile.user.username %}?top-comments" class="tab p-1 theme-color">Top Comments</a>

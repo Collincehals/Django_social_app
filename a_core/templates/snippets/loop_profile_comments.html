@@ -3,14 +3,20 @@ _="on load transition my opacity to 1 over 0.3 seconds">
 <div class="w-full mx-auto">
 {% for comment in comments %}
 <div class="flex justify-start items-center gap-1">
+    {% if media in comment.parent_post.media %}
     <a href="{% url 'view-post' comment.parent_post.id %}" >
+        {% if 'mp4' in comment.parent_post.media.url %}
+        <video class="w-24 h-24 rounded-sm max-w-none" src="{{comment.parent_post.media.url}}" type="video/mp4" controls></video>
+        {% else %}
         <img class="w-24 h-24 rounded-sm max-w-none" src="{{ comment.parent_post.media.url }}" alt="...">
+        {% endif %}
     </a>
+    {% endif %}
     {% include 'a_posts/post_comments.html' %}
 </div>
 {% empty %}
 <div class="theme-color flex justify-center items-center mt-14">
-    <h3 class="theme-color" >No Comments for this post yet :(</h3>
+    <p class="theme-color text-lg" >No liked Comments yet, be the first to like :(</p>
 </div> 
 {% endfor %}
 </div>

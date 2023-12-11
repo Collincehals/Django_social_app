@@ -163,11 +163,12 @@ def post_comment_sent_view(request, pk):
  
 def PostCommentDeleteView(request, pk):
     comment = get_object_or_404(PostComment, id=pk, author=request.user)
+    commentreplyform = PostCommentReplyForm()
     if request.method == 'POST':
         comment.delete()
         messages.success(request, 'Comment deleted successfully!')
         return redirect('view-post',comment.parent_post.id)
-    return render(request, 'a_posts/comment_delete.html', {'comment': comment})
+    return render(request, 'a_posts/comment_delete.html', {'comment': comment,'commentreplyform':commentreplyform})
 
 @login_required(login_url='account_login')
 def post_comment_reply_sent_view(request, pk):

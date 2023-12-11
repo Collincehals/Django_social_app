@@ -1,6 +1,8 @@
 <fade-in class="opacity-0 ease-in-out" 
 _="on load transition my opacity to 1 over 0.3 seconds">
 {% for comment in comments %}
-        {% include 'a_posts/post_comments.html' %}
-        {% endfor %}
+ {% include 'a_posts/post_comments.html' %}
+ {% empty %}
+ <p class="theme-color flex text-center items-center justify-center">No liked comments yet, be the first to like!</p>
+{% endfor %}
 </fade-in>
