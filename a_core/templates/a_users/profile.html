@@ -4,12 +4,28 @@
 
 {% block content %}
 {% load static %}
-<div >
-    <img class="w-full h-40 md:h-48 object-cover" src="{% static 'images/profile_bg.jpg' %}">
+<style>
+    :root {
+    --bg-image-fallback-url: url('{% static 'images/profile_bg.jpg' %}');
+}
+</style>
+{% if profile.profilebackground %}
+<div class="w-full  h-32 md:h-48" 
+    style="background-image: url('{{ profile.profilebackground.url }}');background-size: cover;background-position:center center;background-repeat: no-repeat;">
 </div>
+
+{% else %}
+<div class="w-full h-32 md:h-48" 
+    style="background-image:var(--bg-image-fallback-url);background-size: cover;background-position: center center;background-repeat: no-repeat;">
+</div>
+{% endif %}
 <div class="theme-color px-4 pb-2">
     <div class="flex justify-between items-center">
+        {% if profile.image %}
         <img class="border-solid border-white rounded-full w-24 h-24 -mt-14 ml-3" src="{{ profile.image.url }}" />
+        {% else %}
+        <img class="w-full h-40 md:h-48 object-cover" src="{% static 'images/default.png' %}">
+        {% endif %}
         <div class="flex justify-start gap-3 items-center">
             {% if user == profile.user %}
             <div class="block md:hidden">

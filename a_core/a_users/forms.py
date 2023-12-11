@@ -11,10 +11,12 @@ class ProfileEditForm(ModelForm):
         labels = {
             'realname': 'First Name',
             'image': 'Profile Photo',
+            'profilebackground': 'Background',
         }
         
         widgets = {
             'image': forms.FileInput(),
-            'bio': forms.Textarea(attrs={'rows':3})
+            'profilebackground': forms.FileInput(),
+            'bio': forms.Textarea(attrs={'rows':3}),
         }
     

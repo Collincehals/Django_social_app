@@ -5,6 +5,7 @@ from django_resized import ResizedImageField
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = ResizedImageField(size=[600, 600],quality=85, upload_to='profilepics/', blank=True, null=True, default='static/images/default.png')
+    profilebackground = ResizedImageField(quality=70, upload_to='profilepics/', blank=True, null=True, default='static/images/profile_bg.jpg')
     realname = models.CharField(max_length=200, null=True, blank=True)
     email = models.EmailField(max_length=50, unique=True, null=True)
     location = models.CharField(max_length=50, null=True, blank=True)

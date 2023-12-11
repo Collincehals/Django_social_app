@@ -3,20 +3,34 @@
 {% block title %} Edit Profile- {{ user.profile.realname }} {% endblock %}
 
 {% block content %}
+{% load static %}
 <style>
+    :root {
+    --bg-image-fallback-url: url('{% static 'images/profile_bg.jpg' %}');
+    }
     .profile-edit-form input {
-        padding:12px;
+    padding:12px;
     }
 </style>
 <div class="profile-edit-page">
   <h2 class="text-blue-900 mb-2 text-center">Edit Profile</h2>
-<div class="text-center flex flex-col items-center">
-    <img id="avatar" class="w-20 h-20 rounded-full object-cover mb-4" src="{{ user.profile.image.url }}" />
-    <div class="text-center max-w-md">
+{% if user.profile.profilebackground %}
+<div id="bg" class="text-center flex flex-col items-center"  style="background-image:url('{{user.profile.profilebackground.url}}');background-size: cover;background-position: center center;background-repeat: no-repeat;">
+    <img id="avatar" class="w-20 h-20 rounded-full object-cover mb-4" src="{{ user.profile.image.url }}"/>
+    <div class="text-center max-w-md bg-white p-2 rounded-md">
         <h2 id="realname">{{ user.profile.realname }}</h2>
         <div class="text-gray-400 mb-2 -mt-3">@{{ user.username }}</div>
     </div>
 </div>
+{% else %}
+<div id="bg" class="text-center flex flex-col items-center"  style="background-image:var(--bg-image-fallback-url);background-size: cover;background-position: center center;background-repeat: no-repeat;">
+    <img id="avatar" class="w-20 h-20 rounded-full object-cover mb-4" src="{{ user.profile.image.url }}"/>
+    <div class="text-center max-w-md bg-white p-2 rounded-md">
+        <h2 id="realname">{{ user.profile.realname }}</h2>
+        <div class="text-gray-400 mb-2 -mt-3">@{{ user.username }}</div>
+    </div>
+</div>
+{% endif %}
 <form method="POST" enctype="multipart/form-data" class="profile-edit-form mb-5">
     {% csrf_token %}
     {{ form.as_p }}
