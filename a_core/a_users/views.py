@@ -11,7 +11,7 @@ from posts_app.forms import PostCommentReplyForm
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.contrib.auth import get_user_model
-
+from posts_app.models import Repost
 
 
 def ProfileView(request, username=None):
@@ -47,6 +47,9 @@ def ProfileView(request, username=None):
             comments = profile.user.comments.annotate(num_likes=Count('likes')).filter(num_likes__gt=0).order_by('-num_likes')
             commentreplyform = PostCommentReplyForm()
             return render(request, 'snippets/loop_profile_comments.html',{'comments': comments, 'commentreplyform': commentreplyform})
+        elif 'reposts' in request.GET:
+             reposts = Repost.objects.filter(user=profile.user)
+             return render(request, 'snippets/loop_profile_reposts.html',{'reposts':reposts})
         else:
             return render(request, 'snippets/loop_profile_posts.html',context)
     
@@ -65,6 +68,7 @@ def follow_user(request, username):
         user_to_follow_profile.followers.add(request.user)
         messages.success(request, f"You are now following {user_to_follow}.")
     return redirect(reverse('userprofile', kwargs={'username': username}))
+
 
 @login_required
 @require_POST

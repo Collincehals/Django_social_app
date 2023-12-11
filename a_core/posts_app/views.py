@@ -198,6 +198,21 @@ def PostCommentReplyDeleteView(request, pk):
         return redirect('view-post',reply.parent_comment.parent_post.id)
     return render(request, 'a_posts/post_comment_reply_delete.html', {'reply': reply})
 
+@login_required
+def repost(request, pk):
+    original_post = get_object_or_404(Post, id=pk)
+    repost = Repost(user=request.user, original_post=original_post)
+    repost.save()
+    messages.success(request,f"You reposted {original_post.author.username}'s post")
+    return redirect('view-profile')
+
+def undorepostsview(request, pk):
+    reposted_post = get_object_or_404(Repost, id=pk)
+    if request.user == reposted_post.user:
+        reposted_post.delete()
+        messages.success(request,'Repost undone successfully!')
+        return redirect('view-profile')
+    
 """
 def like_note (request, pk):
     note = get_object_or_404(Note, id=pk)

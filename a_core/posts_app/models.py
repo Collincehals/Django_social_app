@@ -10,7 +10,7 @@ class Post(models.Model):
     tags= models.ManyToManyField('Tag')
     likes = models.ManyToManyField(User, related_name="likedposts", through="LikedPost")
     created = models.DateTimeField(auto_now_add=True)
-    id=models.CharField(max_length=100, unique=True, default=uuid.uuid4, primary_key=True, editable=False)
+    id=models.CharField(unique=True, default=uuid.uuid4, primary_key=True, editable=False)
     
     def __str__(self):
         return str(self.title)
@@ -52,7 +52,7 @@ class PostComment(models.Model):
     body = models.CharField(max_length=150)
     likes = models.ManyToManyField(User, related_name="likedpostcomments", through="LikedPostComment")
     created = models.DateTimeField(auto_now_add=True)
-    id = models.CharField(primary_key=True, max_length=50, unique=True, editable=False, default=uuid.uuid4)
+    id = models.CharField(primary_key=True, unique=True, editable=False, default=uuid.uuid4)
      
     def __str__(self):
         try:
@@ -93,3 +93,15 @@ class LikedPostCommentReply(models.Model):
     
     def __str__(self):
         return f'{self.user.username} : {self.reply}'
+    
+class Repost(models.Model):
+    id = models.CharField(max_length=200, null=False, blank=False, unique=True, default=uuid.uuid4, primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    original_post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    date_reposted = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'{self.user } reposted { self.original_post.title} on { self.date_reposted }'
+    
+    class Meta:
+        ordering =['-date_reposted']

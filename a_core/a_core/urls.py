@@ -42,12 +42,14 @@ urlpatterns = [
     path('delete/post/comment/reply/<pk>/', PostCommentReplyDeleteView, name="post-comment-reply-delete"),
     path('delete/post/comment/<pk>/',PostCommentDeleteView, name="delete-post-comment"),
     path('profile/',ProfileView, name="view-profile"),
-    path('<username>/',ProfileView, name="userprofile"),
+    path('profile/<username>/',ProfileView, name="userprofile"),
     path('follow/<username>/',follow_user, name="follow_user"),
     path('unfollow/<username>/',unfollow_user, name="unfollow_user"),
     path('profile/edit/',EditProfileView, name="edit-profile"),
     path('profile/delete/',DeleteProfileView, name="delete-profile"),
     path('<username>/follow/',followview, name="follow_page"),
+    path('repost/<pk>/',repost, name="repost"),
+    path('repost/undo/<pk>/',undorepostsview, name="undoreposts-view"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
