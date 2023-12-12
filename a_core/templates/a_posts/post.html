@@ -32,7 +32,7 @@
                 <span class="text-sm ml-2 text-gray-500">{{ post.created }}</span>
             </a> 
             <!--User-details-popup starts-->
-            <div class="user-details-popup absolute left-6 top-6 hidden duration-700 ease-in-out">
+            <div class="user-details-popup absolute left-6 top-6 hidden duration-700 ease-in-out z-40">
                 <div class="bg-black p-3 rounded-xl w-72 h-56 mt-2 border-solid border-2 border-gray-500">
                     <div class="flex justify-between items-center">
                         <img class="w-16 h-16 rounded-full object-cover" src="{{post.author.profile.image.url}}" alt="...">
@@ -108,6 +108,7 @@
         
             profiles.forEach(profile => {
                 profile.addEventListener('mouseenter', function () {
+                   
                     const popup = this.nextElementSibling;
                     if (popup.classList.contains('user-details-popup')) {
                         popup.style.display = 'block';
@@ -120,6 +121,7 @@
                         popup.style.display = 'none';
                     }
                 });
+            
             });
         });
     </script>

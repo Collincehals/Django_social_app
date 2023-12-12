@@ -51,7 +51,7 @@ class PostCommentForm(ModelForm):
             'body': ''
         }
         widgets = {
-            'body': forms.TextInput(attrs={'placeholder':'Post Comment...' }),
+            'body': forms.TextInput(attrs={'placeholder':'Post Comment...'}),
         }
         
 class PostCommentReplyForm(ModelForm):

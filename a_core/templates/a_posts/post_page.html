@@ -13,6 +13,7 @@
         background:none;
         border-bottom:1px solid blue;
         border-radius: 0;
+        width:100%;
     }
     
     form input:focus {
@@ -39,7 +40,7 @@
             {% csrf_token %}
             {{ commentform }}
             <button @click="open = false" class="block ml-2" type="submit"><img style="width:25px" src="{% static 'icons/send_icon.png' %}"></button>
-        </form>
+        </form> 
 </div>
 {% endif %}
 
@@ -59,8 +60,6 @@
         {% endfor %}
     </div>
 </div>
-
-
 <script>
     const commentbutton = document.getElementById('commentbtn');
     const commentform = document.getElementById('comment-form');
@@ -70,4 +69,5 @@
     });
     
 </script>
+
 {% endblock %}
