@@ -9,9 +9,10 @@
         100%{ opacity: 1;}
     }
     .load-box {
-        animation: postsload 0.5s linear infinite;
+        animation: postsload 0.6s linear infinite;
     }
 </style>
+
 {% for post in posts %}
     {% include 'a_posts/post.html' %}
 {% empty %}

@@ -1,0 +1,11 @@
+<fade-in class="opacity-0" 
+_="on load transition my opacity to 1 over 0.2 seconds">
+{% for post in posts %}
+        {% load static %}
+        {% include 'a_posts/post.html' %}
+        {% empty %}
+        <div class="flex justify-center items-center mt-14">
+            <p class="theme-color text-lg">None of the people you are following has posted yet :(</p>
+        </div>  
+ {% endfor %} 
+</fade-in>

@@ -19,15 +19,22 @@ def home_view(request, tag=None):
     else:
         posts = Post.objects.all()
         users = User.objects.exclude(pk=request.user.pk).exclude(is_superuser=True)
+    
+    if request.htmx:
+        if 'bookmarks' in request.GET:
+            reposts = Repost.objects.filter(user=request.user)
+            return render(request, 'snippets/bookmarks.html', {'reposts': reposts})
+        elif 'following' in request.GET:
+            following_users = request.user.following.all().values_list('user', flat=True)
+            posts = Post.objects.filter(author__in=following_users)
+            return render(request, 'snippets/loop_following_posts.html', {'posts': posts})  
+                   
     paginator = Paginator(posts, 3)
     page = int(request.GET.get('page', 1))
     try:
         posts = paginator.page(page)
     except:
         return HttpResponse('')
-    
-    
-        
     
     context={
         'posts': posts,
@@ -40,7 +47,6 @@ def home_view(request, tag=None):
     return render(request, 'a_posts/home.html', context)
 
 
-#POSTS VIEWS
 @login_required(login_url="account_login")      
 def create_post_view(request):
     form = CreatePostForm ()

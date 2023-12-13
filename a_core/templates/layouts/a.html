@@ -34,12 +34,12 @@
             </div>
             <!--Home tabs-->
             {% if user.is_authenticated %}
-            <div class="tabs-container overflow-hidden pt-2 px-0 pb-2 md:pb-4 mobile-tabs ">
+            <div class="tabs-container overflow-hidden mobile-tabs ">
                 <div class="home-tabs p-3 flex gap-2 md:gap-8 justify-evenly md:justify-start items-center text-sm md:text-lg  overflow-x-auto"
                  hx-target="#all_posts" hx-swap="innerHTML" 
                  _="on htmx:afterOnLoad take .selected for event.target">
-                    <a hx-get="{% url 'home' %}" class="tab pb-3 theme-color">For You</a>
-                    <a hx-get="{% url 'home' %}?following" class="tab selected pb-3 theme-color">Following</a>
+                    <a hx-get="{% url 'home' %}" class="tab selected pb-3 theme-color">For You</a>
+                    <a hx-get="{% url 'home' %}?following" class="tab pb-3 theme-color">Following</a>
                     <a hx-get="{% url 'home' %}?bookmarks" class="tab pb-3 theme-color">Bookmarks</a>
                     <button class="scroll-left hidden absolute left-0 top-0 bottom-0 w-10 theme-color bg-transparent border-none cursor-pointer">&lt;</button>
                     <button class="scroll-right hidden absolute right-0 top-0 bottom-0 w-10 theme-color bg-transparent border-none cursor-pointer">&gt;</button>
@@ -52,7 +52,7 @@
         </div>
         <a id="postCreateBtn" class="hidden md:hidden fixed bottom-4 right-4 py-2 px-3.5 rounded-full theme-color hover:bg-orange-500 text-sm" href="{% url 'post-create' %}"><i class="fa-solid fa-plus theme-color text-lg"></i></a>
     </main>
-    <aside class="right-aside md:col-span-1 py-3 px-5">
+    <aside class="right-aside md:col-span-1 px-5">
         {% include "includes/search.html" %}
         {% load sidebar %}
         {% sidebar_view tag user %}

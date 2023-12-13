@@ -1,18 +1,12 @@
-{% extends 'layouts/profile_layout.html' %}
+{% extends 'layouts/postpage_layout.html' %}
 
 {% block title %} Edit Post- {{ post.id }} {% endblock %}
 
 {% block content %}
-<div class="flex justify-start md:hidden ">
-    <a href="{{ request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left mr-4 theme-color font-bold text-lg"></i></a>
-    <p class="theme-color font-bold text-lg">Edit Post</p>
+<div class="flex justify-start items-center py-2 px-3">
+    <a href="{{ request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left-long mr-2 theme-color text-lg"></i></a>
+    <p class="theme-color text-lg">Edit Post</p>
 </div>
-<p class="hidden theme-color font-bold text-xl pb-1 md:block">Edit Post</p>
-<style>
-    input {
-        margin-bottom:15px;
-    }
-</style>
 <div class="post-item-card p-2">
     <div class="flex items-center mb-4">
         {% if post.media %}
