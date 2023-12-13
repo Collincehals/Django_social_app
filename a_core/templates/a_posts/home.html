@@ -14,11 +14,11 @@
 </style>
 {% for post in posts %}
     {% include 'a_posts/post.html' %}
-    {% empty %}
+{% empty %}
     <div class="flex justify-center items-center mt-14">
         <p class="theme-color text-lg">No Posts Yet :(</p>
     </div>  
- {% endfor %} 
+{% endfor %} 
 
  <div hx-get="{% if tag %}{% url 'category' tag.slug %}{% else %}
  {% url 'home' %}{% endif %}?page={{ page|add:1 }}"

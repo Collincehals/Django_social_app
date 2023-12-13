@@ -1,0 +1,16 @@
+{% if request.user != profile.user %}
+    {% if request.user in profile.followers.all %}
+        <form method="POST" action="{% url 'unfollow_user' username=profile.user.username %}">
+            {% csrf_token %}
+            <button id="already-following-btn" type="submit" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl theme-color text-center">Following</button>
+        </form>
+    {% else %}
+        <form
+            hx-post="{% url 'follow_user' username=profile.user.username %}"
+            hx-target="this"
+            hx-swap="outerHTML">
+            {% csrf_token %}
+            <button type="submit" class="text-sm py-2 px-4 bg-orange-400 rounded-3xl theme-color text-center">Follow</button>
+        </form>
+    {% endif %}
+{% endif %}

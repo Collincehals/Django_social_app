@@ -4,7 +4,7 @@
 
 {% block content %}
 {% load static %}
-<a href="{{ request.META.HTTP_REFERER }}"><i class="md:hidden fa fa-arrow-left ml-2 mr-2 theme-color font-bold text-lg"></i><span class="theme-color md:hidden">{{profile.realname}}@{{profile.user.username}}</span></a>
+<a class="my-2" href="{{ request.META.HTTP_REFERER }}"><i class="fa fa-arrow-left ml-2 mr-2 theme-color font-bold text-lg"></i><span class="theme-color">{{profile.realname}}@{{profile.user.username}}</span></a>
 <ul class="theme-color h-[100vh]">
     <div class=" p-2 md:p-4  flex justify-start gap-4 md:gap-8 items-center text-lg font-semibold bg-slate-500" 
     hx-target="#follow-page-content" 

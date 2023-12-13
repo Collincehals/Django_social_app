@@ -24,7 +24,11 @@
                 <li>
                     <a href="{% url 'view-post' post.id %}" class="flex items-stretch justify-between">
                         <div class="flex items-center truncate">
-                            <img class="w-10 h-10 rounded-lg object-cover mr-3 shrink-0" src="{{ post.media }}">
+                            {% if post.media %}
+                            <img class="w-10 h-10 rounded-lg object-cover mr-3 shrink-0" src="{{ post.media.url }}">
+                            {% else %}
+                            <span class="font-bold text-sm mr-1 truncate">{{post.body|truncatechars:10}}</span>
+                            {% endif %}
                             <img class="w-6 h-6 rounded-full object-cover mr-1" src="{{post.author.profile.image.url}}">
                             <span class="font-bold text-sm mr-1">{{post.author.username}}</span>
                         </div>
