@@ -129,3 +129,8 @@ def followview(request, username):
         'following': following,
     }
     return render(request, 'a_users/follow_page.html',context)
+
+def site_users_view(request):
+    following_users= request.user.following.all()
+    site_users = User.objects.exclude(pk=request.user.pk).exclude(is_superuser=True).exclude(pk__in = following_users)
+    return render(request, 'a_users/users.html', {'site_users':site_users})

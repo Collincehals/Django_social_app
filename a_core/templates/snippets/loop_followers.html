@@ -4,18 +4,20 @@ _="on load transition my opacity to 1 over 0.3 seconds">
 <li class="flex justify-between items-center p-4 pb-1 mb-2 hover:shadow-lg shadow-orange-400 rounded-lg">
     <div class="flex justify-start items-center" >
         <img class="h-8 w-8 rounded-full object-cover mr-2" src="{{ follower.profile.image.url }}" alt="Upload Profile"/>
-        <a href="{% url 'userprofile' follower.username %}" class="text-lg theme-color">{{ follower.profile.realname }}<span class="opacity-70 theme-colortext-sm">@{{ follower.username }} </span></a>
+        <a href="{% url 'userprofile' follower.username %}" class="text-lg theme-color">{{ follower.profile.realname }}<span class="opacity-70 theme-color text-sm">@{{ follower.username }} </span></a>
     </div>
     {% if request.user in follower.profile.followers.all %}
-    <button type="submit" class="text-sm py-1 px-3 bg-orange-500 hover:bg-blue-800 hover:theme-color rounded-xl mr-2  theme-color text-center">Following</button>
+    <button type="submit" class="text-sm py-1 px-3 bg-orange-500 hover:bg-blue-800 hover:theme-color rounded-xl mr-2  text-white text-center">Following</button>
     {% else %}
     <form action="{% url 'follow_user' username=follower.username %}" method="POST">
         {% csrf_token %}
-        <button type="submit" class="text-sm py-1.5 px-6 bg-blue-600 hover:bg-orange-500 hover:theme-color rounded-xl mr-2 theme-color text-center">Follow</button>
+        <button type="submit" class="text-sm py-1.5 px-6 bg-blue-600 hover:bg-orange-500 hover:theme-color rounded-xl mr-2 text-white text-center">Follow</button>
     </form>
     {% endif %}
 </li>
 {% empty %}
-<p class="flex items-center justify-center theme-color text-lg">No followers yet.</p>
+<div class="theme-color flex justify-center items-center mt-14">
+    <p class="theme-color text-lg" >No Followers yet :(</p>
+</div> 
 {% endfor %}
 </fade-in>

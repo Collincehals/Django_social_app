@@ -51,6 +51,7 @@ urlpatterns = [
     path('repost/<pk>/',repost, name="repost"),
     path('repost/undo/<pk>/',undorepostsview, name="undoreposts-view"),
     path('search/',search_all, name='search_all'),
+    path('users/', site_users_view, name='site_users'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

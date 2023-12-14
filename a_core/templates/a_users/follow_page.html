@@ -13,8 +13,8 @@
     hx-target="#follow-page-content" 
     hx-swap="innerHTML"
     _="on htmx:afterOnLoad take .selected for event.target">
-        <a hx-get="{% url 'follow_page' profile.user.username %}" class="tab p-1 selected">Followers</a>
-        <a hx-get="{% url 'follow_page' profile.user.username %}?following" class="tab p-1">Following</a>
+        <a hx-get="{% url 'follow_page' profile.user.username %}" class="tab p-1 selected text-white">Followers</a>
+        <a hx-get="{% url 'follow_page' profile.user.username %}?following" class="tab p-1 text-white">Following</a>
     </div>
     <div id="follow-page-content">
         {% include 'snippets/loop_followers.html' %}

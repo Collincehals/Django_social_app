@@ -1,0 +1,30 @@
+{% extends 'layouts/profile_layout.html' %}
+
+{% block title %} users {% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="flex justify-start items-center py-2 px-3">
+    <a href="{{ request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left-long mr-4 theme-color text-lg"></i></a>
+    <p class="text-orange-500 font-semibold text-lg">Who to connect with.</p>
+</div>
+<ul class="theme-color h-[100vh]">
+    {% for site_user in site_users %}
+   
+    <li class="flex justify-between items-center p-4 pb-1 mb-2 hover:shadow-lg shadow-orange-400 rounded-lg">
+        <div class="flex justify-start items-center" >
+            <img class="h-8 w-8 md:h-12 md:w-12 rounded-full object-cover mr-2" src="{{ site_user.profile.image.url }}" alt="Upload Profile"/>
+            <div >
+                <a href="{% url 'userprofile' site_user.username %}" class="text-lg theme-color hover:underline">{{ site_user.profile.realname }}<span class="opacity-70 theme-colortext-sm">@{{ site_user.username }} </span></a>
+                <p class="hidden theme-color md:block">{{site_user.profile.bio}}</p>
+            </div>
+        </div>
+        <form action="{% url 'follow_user' username=site_user.username %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="text-sm py-1.5 px-6 bg-blue-600 hover:bg-orange-500 hover:theme-color rounded-xl mr-2 text-white text-center">Follow</button>
+        </form>
+  
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
