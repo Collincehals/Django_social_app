@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
@@ -8,6 +8,8 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.db.models import Count
+from a_users.models import Profile
+from django.db.models import Q
 
 
 # Create your views here.
@@ -219,6 +221,23 @@ def undorepostsview(request, pk):
         reposted_post.delete()
         messages.success(request,'Repost undone successfully!')
         return redirect('view-profile')
+    
+    
+def search_all(request):
+    letters = request.GET.get('search_all')
+    if request.htmx:
+        if len(letters) > 0:
+            searched_profiles =Profile.objects.filter(realname__icontains = letters).exclude(realname=request.user.profile.realname)
+            users_id = searched_profiles.values_list('user', flat=True)
+            searched_users = User.objects.filter(
+                Q(username__icontains=letters) | Q(id__in=users_id)
+            ).exclude(username=request.user.username)
+            return render(request, 'snippets/search_all_results.html',{'searched_users': searched_users,'searched_profiles': searched_profiles}) 
+        else:
+            return HttpResponse ("")
+    else:
+        raise Http404()
+
     
 """
 def like_note (request, pk):

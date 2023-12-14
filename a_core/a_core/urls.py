@@ -50,6 +50,7 @@ urlpatterns = [
     path('<username>/follow/',followview, name="follow_page"),
     path('repost/<pk>/',repost, name="repost"),
     path('repost/undo/<pk>/',undorepostsview, name="undoreposts-view"),
+    path('search/',search_all, name='search_all'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

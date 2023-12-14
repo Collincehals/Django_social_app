@@ -114,29 +114,22 @@
         color:white;
 
     }
-    .home-search-form{
-        max-width:300px;
-        width:100%;
-    }
+  
     #search-form-popup {
         display:none;
         position: fixed;
         z-index:1000;
-        margin:0 auto;
         left:0;
-        top:-10%;
+        top:0;
         width:100%;
         height:100%;
-        border-radius: 10px;
-        background-color: rgba(0,0,0,0.9);
+        background-color: rgba(0,0,0,0.8);
         justify-content: center;
-        padding:10px;
-        align-items:center;
+        align-items: center;
     }
 
     #search-form-popup.active {
         display:flex;
-        top:0;
         transition: 5s ease-in-out;
     }
     @media (max-width: 768px) {
@@ -150,10 +143,19 @@
     <div class="cursor-pointer"  id="header-search-cancel-icon">
         <i class="fa-solid fa-times text-xl theme-color"></i>
     </div>
-    <form class="home-search-form bg-indigo-200 rounded-2xl flex justify-between items-center">
-        <i class="fa-solid fa-magnifying-glass" style="color:rgb(10, 4, 83);padding-left: 10px;"></i>
-        <input role="search" name="search_box"  type="search" placeholder="Search..." />
-    </form>
+    <div class="relative" >
+        <form class="home-search-form w-full bg-indigo-200 rounded-lg flex justify-start items-center">
+            <i class="fa-solid fa-magnifying-glass text-blue-950 pl-2"></i>
+            <input role="search" id="sm-search-input" name="search_all"  type="search" placeholder="Search..."
+            hx-get="{% url 'search_all' %}"
+            hx-trigger="keyup changed"
+            hx-target="#all_results"
+            hx-swap="innerHTML">
+        </form>
+        <div id="all_results" class="absolute left-0 right-0">
+            
+        </div>
+    </div>
 </div>
 
 <script>

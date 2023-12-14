@@ -1,0 +1,20 @@
+<ul class="bg-indigo-200 text-black h-56 p-2 rounded-lg overflow-y-auto shadow-lg border-solid border-2 border-indigo-300">
+    {% for searched_user in searched_users %}
+    <li class="flex justify-between flex-wrap items-center gap-1 p-3 rounded-lg hover:bg-white">
+        <div class="flex justify-start items-center gap-1">
+            <img style="width:25px;height:25px;border-radius: 50%;" src="{{searched_user.profile.image.url}}">
+            <a href="{% url 'userprofile' searched_user.username %}">{{searched_user.profile.realname}}<span>@{{searched_user.username}}</span></a>
+        </div>
+        {% if request.user in searched_user.profile.followers.all %}
+        <button type="submit" class="py-0.5 px-2 bg-orange-500 rounded-lg text-white text-sm">Following</button>
+        {% else %}
+        <form method="POST" action="{% url 'follow_user' searched_user.username %}">
+            {% csrf_token %}
+            <button type="submit" class="py-0.5 px-4 bg-blue-700 hover:bg-orange-500 rounded-lg text-white text-sm">Follow</button>
+        </form>
+        {% endif %}
+    </li>
+    {% empty %}
+    <p class="flex items-center justify-center text-blue-900 pt-14">No results found...</p>
+    {% endfor %}
+</ul>

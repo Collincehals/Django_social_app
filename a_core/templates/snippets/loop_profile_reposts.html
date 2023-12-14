@@ -74,8 +74,11 @@ _="on load transition my opacity to 1 over 0.3 seconds">
                         <i class="fa-regular fa-comment text-blue-800 text-lg"></i><span class="text-black-800">+</span></a>
                         </p>
                         {% endif %}
-                        
+                        {% if request.user == repost.user %}
                         <p><a href="{% url 'undoreposts-view' repost.id %}"><i class="fa-solid fa-retweet text-pink-600 hover:text-yellow-700 text-lg"></i></a></p>
+                        {% else %}
+                        <p><a href="{% url 'repost' repost.original_post.id %}"><i class="fa-solid fa-retweet text-blue-800 hover:text-yellow-700 text-lg"></i></a></p>
+                        {% endif %}
                         <div>
                             <p style='display:flex; gap:10px;cursor:pointer; align-items: center;'>
                             <a  
