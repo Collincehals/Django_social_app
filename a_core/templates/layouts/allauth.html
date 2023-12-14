@@ -25,7 +25,11 @@
         <div class="md:hidden mobile-nav">
             {% include 'includes/header.html' %}
         </div>
-        <div class="form-card p-4 md:p-8 mx-auto my-5">
+        <div class="flex justify-start items-center px-3 py-2">
+            <a href="{{ request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left-long mr-2 theme-color text-lg"></i></a>
+            <p class="theme-color text-lg">Back</p>
+        </div>
+        <div class="form-card p-4 md:p-4 mx-auto my-2">
             {% block content %}
             {% endblock %}
         </div>

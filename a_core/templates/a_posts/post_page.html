@@ -21,6 +21,9 @@
         border:none;
         border-bottom:1px solid blue;
     }
+    .emoji-picker-container {
+        width:100%;
+    }
 </style>
 {% load static %}
 <!--Post here-->
@@ -41,7 +44,10 @@
                 <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
             </div>
             {% csrf_token %}
-            {{ commentform }}
+            <!--<div class="emoji-picker-container">--->
+                {{ commentform }}
+            <!--</div>-->
+            
             <button @click="open = false" class="block ml-2" type="submit"><img style="width:25px" src="{% static 'icons/send_icon.png' %}"></button>
         </form> 
 </div>
