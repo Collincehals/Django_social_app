@@ -3,7 +3,6 @@
 {% block layout %}
 <style>
     #main-content {
-        min-height:100vh;
         border-right:.1px solid var(--borderColor);
         border-left:.1px solid var(--borderColor);
     }
@@ -13,7 +12,12 @@
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none; /* Internet Explorer/Edge */
     }
-    .home-tabs::-webkit-scrollbar {
+    #main-content {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* Internet Explorer/Edge */
+    }
+    .home-tabs::-webkit-scrollbar,
+    #main-content::-webkit-scrollbar {
         display: none;
     }
 
@@ -24,11 +28,11 @@
     }
     }
 </style>
-<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-4  max-w-7xl mx-auto">
-    <aside class="pl-6 hidden md:block md:col-span-1">
+<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-4  max-w-7xl mx-auto h-[100vh]">
+    <aside class="pl-6 hidden md:block md:col-span-1 overflow-y-auto">
         {% include 'includes/left_sidebar.html' %}
     </aside>
-    <main id="main-content" class="col-span-full md:col-span-2 relative">
+    <main id="main-content" class="col-span-full md:col-span-2 relative overflow-y-auto">
             <div class="md:hidden mobile-nav">
                 {% include 'includes/header.html' %}
             </div>
@@ -50,9 +54,9 @@
             {% block content %}
             {% endblock %}
         </div>
-        <a id="postCreateBtn" class="hidden md:hidden fixed bottom-4 right-4 py-2 px-3.5 rounded-full theme-color hover:bg-orange-500 text-sm" href="{% url 'post-create' %}"><i class="fa-solid fa-plus theme-color text-lg"></i></a>
+        <a id="postCreateBtn" class="hidden fixed bottom-4 right-4 py-2 px-3.5 rounded-full bg-blue-600 text-white hover:bg-orange-500 text-sm" href="{% url 'post-create' %}"><i class="fa-solid fa-plus theme-color text-lg"></i></a>
     </main>
-    <aside class="right-aside md:col-span-1 px-5">
+    <aside class="right-aside md:col-span-1 px-5 overflow-y-auto">
         {% include "includes/search.html" %}
         {% load sidebar %}
         {% sidebar_view tag user %}

@@ -23,20 +23,27 @@ _="on load transition my opacity to 1 over 0.3 seconds">
 {% for repost in reposts %}
 <div class="p-1">
     {% if request.user == repost.user %}
-    <p class="theme-color"><i class="fa-solid fa-retweet theme-color mr-2 hover:text-yellow-700 text-lg"></i>You reposted</p>
+    <p class="theme-color pl-2 opacity-70"><i class="fa-solid fa-retweet theme-color mr-2 hover:text-yellow-700 text-lg"></i>You reposted</p>
     {% else %}
-    <p class="theme-color">{{repost.user.username}} reposted</p>
+    <p class="theme-color pl-2 opacity-70"><i class="fa-solid fa-retweet theme-color mr-2 hover:text-yellow-700 text-lg"></i>{{repost.user.username|title}} reposted</p>
     {% endif %}
     <card class="post-item-card" >
         <div class="post-grid">
             <div>
-                <img class="w-8 h-8 object-cover rounded-full" src="{{ repost.original_post.author.profile.image.url }}">
+                {% if repost.original_post.author.profile.image %}
+                <img class="h-8 w-8 rounded-full object-cover" src="{{ repost.original_post.author.profile.imageURL }}" alt="Upload Profile"/>
+                {% else %}
+                <img class="h-8 w-8 rounded-full object-cover" src="{% static 'images/default.png' %}" alt="Upload Profile"/>
+                {% endif %}
             </div>
         
             <div class="pr-5">
-    
                 <a href="{% url 'userprofile' repost.original_post.author.username %}">
-                <span class="font-bold hover:underline">{{ repost.original_post.author.profile.realname }}</span>
+                {% if repost.original_post.author.profile.realname %}
+                <span class="font-bold hover:underline">{{ repost.original_post.author.profile.realname|title }}</span>
+                {% else %}
+                <span class="font-bold hover:underline">{{ repost.original_post.author|title }}</span>
+                {% endif %}
                 <span class="text-sm text-gray-500">@ {{ repost.original_post.author }}</span>
                 <span class="text-sm ml-2 text-gray-500">{{ repost.original_post.created }}</span>
                 </a> 

@@ -3,18 +3,8 @@
 {% block layout %}
 <style>
     #main-content {
-        min-height:100vh;
         border-right:.1px solid var(--borderColor);
         border-left:.1px solid var(--borderColor);
-    }
-    .settings-title{
-        border-bottom:.1px solid var(--borderColor);
-    }
-    @media (max-width: 768px) {
-        #main-content {
-        border-left:none;
-        border-right:none;
-    }
     }
 </style>
 <content  class="grid grid-cols-4  max-w-7xl mx-auto">
@@ -25,7 +15,7 @@
         <div class="md:hidden mobile-nav">
             {% include 'includes/header.html' %}
         </div>
-        <div class="p-0.5 md:p-8 mx-auto ">
+        <div >
             {% block content %}
             {% endblock %}
         </div>

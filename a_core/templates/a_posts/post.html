@@ -31,7 +31,11 @@
     
         <div class="pr-5">
             <a href="{% url 'userprofile' post.author.username %}" class="user-profile">
-                <span class="font-bold hover:underline">{{ post.author.profile.realname }}</span>
+                {% if post.author.profile.realname %}
+                <span class="font-bold hover:underline">{{ post.author.profile.realname|title }}</span>
+                {% else %}
+                <span class="font-bold hover:underline">{{ post.author.username|title }}</span>
+                {% endif %}
                 <span class="text-sm text-gray-400">@ {{ post.author }}</span>
                 <span class="text-sm ml-2 text-gray-500">{{ post.created }}</span>
             </a> 

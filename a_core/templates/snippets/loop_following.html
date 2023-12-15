@@ -1,9 +1,14 @@
+{% load static %}
 <fade-in class="opacity-0 ease-in-out" 
 _="on load transition my opacity to 1 over 0.3 seconds">
     {% for followed_profile in following %}
     <li class="flex justify-between items-center p-4 pb-1 mb-2 hover:shadow-lg rounded-lg">
         <div class="flex justify-start items-center" >
-            <img class="h-8 w-8 rounded-full object-cover mr-2" src="{{ followed_profile.image.url }}" alt="Upload Profile"/>
+            {% if followed_profile.image %}
+            <img class="h-8 w-8 rounded-full object-cover mr-2" src="{{ followed_profile.imageURL }}" alt="Upload Profile"/>
+            {% else %}
+            <img class="h-8 w-8 rounded-full object-cover mr-2" src="{% static 'images/default.png' %}" alt="Upload Profile"/>
+            {% endif %}
             <a href="{% url 'userprofile' followed_profile.user.username %}" class="text-lg theme-color">{{ followed_profile.realname }}<span class="opacity-70 theme-color text-sm">@{{ followed_profile.user.username }} </span></a>
         </div>
         <form action="{% url 'unfollow_user' username=followed_profile.user.username %}" method="POST">
