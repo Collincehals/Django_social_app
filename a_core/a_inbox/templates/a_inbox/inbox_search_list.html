@@ -1,8 +1,13 @@
-<ul class="users-list">
+{% load static %}
+<ul class="py-3 overflow-y-auto">
     {% for user in users %}
-    <li>
-        <img style="width:25px;height:25px;border-radius: 50%;" src="{{user.profile.image.url}}">
-        <a 
+    <li class="flex items-center justify-start p-2 mb-4 text-lg rounded-lg gap-2 hover:bg-gray-300 cursor-pointer">
+        {% if user.profile.image %}
+        <img class="rounded-full object-cover w-7 h-7" src="{{user.profile.imageURL}}">
+        {% else %}
+        <img class="rounded-full object-cover w-7 h-7" src="{% static 'images/default.png' %}">
+        {% endif %}
+        <a class="text-blue-900"
         hx-get="{% url 'create_message' user.id %}"
         hx-target="#new-message"
         hx-swap="innerHTML">

@@ -29,7 +29,11 @@
                             {% else %}
                             <span class="font-bold text-sm mr-1 truncate">{{post.body|truncatechars:10}}</span>
                             {% endif %}
-                            <img class="w-6 h-6 rounded-full object-cover mr-1" src="{{post.author.profile.image.url}}">
+                            {% if post.author.profile.image %}
+                            <img class="h-6 w-6 rounded-full object-cover" src="{{ post.author.profile.imageURL }}" alt="Upload Profile"/>
+                            {% else %}
+                            <img class="h-6 w-6 rounded-full object-cover" src="{% static 'images/default.png' %}" alt="Upload Profile"/>
+                            {% endif %}
                             <span class="font-bold text-sm mr-1">{{post.author.username}}</span>
                         </div>
                         <span class="{% if user in post.likes.all %}font-bold {% else %} font-light {% endif %}  text-sm text-grey-500 shrink-0">{{post.likes.count}} Like{{post.likes.count|pluralize:'s'}} / {{post.comments.count}}</span>
@@ -47,7 +51,11 @@
                 <li>
                     <a href="{% url 'view-post' comment.parent_post.id %}" class="flex items-stretch justify-between">
                         <div class="flex items-center truncate">
-                            <img class="w-6 h-6 rounded-full object-cover mr-1" src="{{comment.author.profile.image.url}}">
+                            {% if comment.author.profile.image %}
+                            <img class="h-6 w-6 rounded-full object-cover mr-1" src="{{ comment.author.profile.imageURL }}" alt="Upload Profile"/>
+                            {% else %}
+                            <img class="h-6 w-6 rounded-full object-cover mr-1" src="{% static 'images/default.png' %}" alt="Upload Profile"/>
+                            {% endif %}
                             <span class="font-bold text-sm mr-1 truncate">{{comment.author.username}}: {{comment.body|truncatechars:10}}</span>
                         </div>
                         <span class="{% if user in comment.likes.all %}font-bold {% else %}font-light {% endif %}text-sm text-grey-500 shrink-0">{{comment.likes.count}} Like{{comment.likes.count|pluralize:'s'}} / {{comment.replies.count}}</span>

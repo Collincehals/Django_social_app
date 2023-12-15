@@ -21,7 +21,11 @@
         {% if user.is_authenticated %}
         <div x-data="{ dropdownOpen: false }" class="relative md:hidden">
             <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none flex justify-start items-center gap-1">
-                <img class="h-7 w-7 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
+                {% if profile.image %}
+                <img class="rounded-full w-7 h-7" src="{{ user.profile.imageURL }}" />
+                {% else %}
+                <img class="rounded-full w-7 h-7" src="{% static 'images/default.png' %}"/>
+                {% endif %}
                 {{ user }}
                 <img x-bind:class="dropdownOpen && 'rotate-180 duration-300'" class="w-4" src="https://img.icons8.com/small/32/777777/expand-arrow.png"/>
             </a>
@@ -50,7 +54,11 @@
         <ul class="flex navitems flex-col md:flex-row gap-2 md:gap-0 justify-center h-full -translate-y-10 md:translate-y-0 relative">
             {% if user.is_authenticated %}
             <li class="md:hidden">
-                <img class="rounded-full w-10 h-10" src="{{ user.profile.image.url }}" />
+                {% if profile.imageURL %}
+                <img class="rounded-full w-10 h-10" src="{{ user.profile.imageURL }}" />
+                {% else %}
+                <img class="rounded-full w-10 h-10" src="{% static 'images/default.png' %}"/>
+                {% endif %}
             </li>
             <li class="md:hidden">
                 {% if profile.realname %}

@@ -11,7 +11,11 @@
         {% if user.is_authenticated %}
         <li x-data="{ dropdownOpen: false }" class="relative">
             <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none flex justify-start items-center gap-1">
-                <img class="h-7 w-7 rounded-full object-cover" src="{{ user.profile.image.url }}" alt="Upload Profile"/>
+                {% if user.profile.imageURL %}
+                <img class="h-7 w-7 rounded-full object-cover" src="{{ user.profile.imageURL }}" alt="Upload Profile"/>
+                {% else %}
+                <img class="h-7 w-7 rounded-full object-cover" src="{% static 'images/default.png' %}" alt="...">
+                {% endif %}
                 <span class="theme-color text-lg">{{ user }}</span>
                 <img x-bind:class="dropdownOpen && 'rotate-180 duration-300'" class="w-4" src="https://img.icons8.com/small/32/777777/expand-arrow.png"/>
             </a>

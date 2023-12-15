@@ -6,7 +6,11 @@
         {% if request.user not in person.profile.followers.all %}
         <div class="flex justify-between items-center p-2 hover:bg-indigo-300 rounded-lg">
             <li class="flex justify-start items-center" >
-                <img class="h-8 w-8 rounded-full object-cover mr-2" src="{{ person.profile.image.url }}" alt="Upload Profile"/>
+                {% if person.profile.image %}
+                <img class="h-8 w-8 rounded-full object-cover mr-2" src="{{ person.profile.imageURL }}" alt="Upload Profile"/>
+                {% else %}
+                <img class="h-8 w-8 rounded-full object-cover mr-2" src="{% static 'images/default/png' %}" alt="Upload Profile"/>
+                {% endif %}
                 <a href="{% url 'userprofile' person.username %}" class="text-lg text-white">{{ person.username }} </a>
             </li>
             <form action="{% url 'follow_user' username=person.username %}" method="POST">

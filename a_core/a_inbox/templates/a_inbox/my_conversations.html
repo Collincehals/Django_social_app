@@ -1,22 +1,20 @@
-<style>
-    .dot-container {
-        position: absolute;
-        left:55px;
-    }
-</style>
-
-<ul class="contact-inbox">
+{% load static %}
+<ul class="relative py-4">
     {% for c in my_conversations %}
-    <a href="{% url 'inbox' c.id %}" class="{% if conversation == c %} highlight {% endif %}">
+    <a href="{% url 'inbox' c.id %}" class="{% if conversation == c %} highlight {% endif %} flex items-center justify-start p-2 mb-4 flex-wrap rounded-lg gap-2 hover:bg-gray-300">
         {% for participant in c.participants.all %}
             {% if participant != request.user %}
-            <div class="dot-container"
+            <div class=""
                 hx-get="{% url 'notify-newmessage' c.id %}"
                 hx-trigger = 'load'
                 hx-target = 'this'
                 hx-swap='innerHTML'>
             </div>
-            <img style="width:35px;height:35px; border-radius: 50%;object-fit:cover;" src="{{ participant.profile.image.url }}">{{ participant.profile.realname }}
+            {% if participant.profile.image %}
+            <img class="w-9 h-9 object-cover rounded-full" src="{{ participant.profile.imageURL }}">{{ participant.profile.realname }}
+            {% else %}
+            <img class="w-9 h-9 object-cover rounded-full" src="{% static 'images/default.png' %}">{{ participant.profile.realname }}
+            {% endif %}
             {% endif %}
         {% endfor %}
     </a>

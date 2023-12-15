@@ -1,7 +1,12 @@
+{% load static %}
 <reply class="flex items-end justify-between py-4 border-t">
     <div class="flex">
         <a href="{% url 'userprofile' reply.author.username %}">
-            <img class="w-8 h-8 object-cover rounded-full mr-2" src="{{ reply.author.profile.image.url }}">
+            {% if reply.author.profile.image %}
+            <img class="h-8 w-8 rounded-full object-cover" src="{{ reply.author.profile.imageURL }}" alt="Upload Profile"/>
+            {% else %}
+            <img class="h-8 w-8 rounded-full object-cover" src="{% static 'images/default.png' %}" alt="Upload Profile"/>
+            {% endif %}
         </a>
         <div class="w-fit">
             <a class="block" href="{% url 'userprofile' reply.author.username %}">

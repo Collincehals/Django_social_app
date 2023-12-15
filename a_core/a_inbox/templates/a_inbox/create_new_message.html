@@ -1,20 +1,17 @@
-<style>
-    .user-details{
-        display:flex;
-        justify-content: flex-start;
-        gap:5px;
-    }
-</style>
-
-<div class="user-details">
+{% load static %}
+<div class="flex justify-start gap-1 mb-2">
     <p>To: </p>
-    <img style="width:25px;height:25px;border-radius: 50%;" src="{{recipient.profile.image.url}}">
+    {% if recipient.profile.image %}
+    <img class="w-7 h-7 rounded-full object-cover" src="{{recipient.profile.imageURL}}">
+    {% else %}
+    <img class="w-7 h-7 rounded-full object-cover" src="{% static 'images/default.png' %}">
+    {% endif %}
     <a href="">{{recipient.profile.realname}}<span>@{{recipient.username}}</span></a>
 </div>
 
 <form method="POST" action="{% url 'create_message' recipient.id %}">
     {% csrf_token %}
     {{new_message_form}}
-    <button type="submit" class="successbtn">Send Message</button>
-    <a href="{{request.META.HTTP_REFERER}}" class="deletebtn">Cancel</a>
+    <button type="submit" class="py-2 px-4 rounded-3xl bg-blue-700 text-white">Send</button>
+    <a href="{{request.META.HTTP_REFERER}}" class="py-2 px-3 rounded-3xl bg-gray-600 text-white">Cancel</a>
 </form>

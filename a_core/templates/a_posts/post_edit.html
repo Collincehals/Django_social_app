@@ -25,9 +25,9 @@
         <form method='POST'>
             {% csrf_token %}
             {{ form }}
-            <div class="pt-4">
-                <button class="successbtn" type="submit">Submit</button>
-                <a class="editbtn" type="submit" href="{{ request.META.HTTP_REFERER }}">Go Back</a>
+            <div class="pt-3 flex flex-start gap-3 flex-wrap">
+                <button class="px-4 py-1.5 bg-blue-700 rounded-3xl text-white" type="submit">Submit</button>
+                <a class="px-4 py-1.5 bg-gray-600 rounded-3xl text-white" href="{{ request.META.HTTP_REFERER }}">Go Back</a>
             </div>
         </form>
     </div>

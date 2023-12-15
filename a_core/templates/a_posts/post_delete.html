@@ -1,13 +1,17 @@
 {% extends 'layouts/postpage_layout.html' %}
 
 {% block title %} Delete Post- {{ post.id }} {% endblock %}
-
+{% load static %}
 {% block content %}
 <div class="md:flex items-center gap-3">
     <div class="w-full mr-2">
         <article class="post-item-card">
             <a class="flex items-center gap-1 m-2" href="">
-                <img class="w-6 h-6 object-cover rounded-full" src="{{post.author.profile.image.url}}">
+                {% if post.author.profile.image %}
+                <img class="h-8 w-8 rounded-full object-cover" src="{{post.author.profile.imageURL}}" alt="Upload Profile"/>
+                {% else %}
+                <img class="h-8 w-8 rounded-full object-cover" src="{% static 'images/default.png' %}" alt="Upload Profile"/>
+                {% endif %}
                 <span class="font-bold hover:underline">{{ post.author }}</span>
                 <span class="text-sm text-gray-400"> @ {{ post.author }} </span>
             </a>
@@ -40,9 +44,9 @@
         
         <form method='POST'>
             {% csrf_token %}
-            <div class="flex justify-start gap-3 items-center flex-wrap">
-                <button class="deletebtn" type="submit">Confirm</button>
-                <a id="backbtn" class="editbtn" type="submit" href="{{ request.META.HTTP_REFERER }}">Go Back</a>
+            <div class="pt-4 flex flex-start gap-3 flex-wrap">
+                <button class="px-4 py-1.5 bg-blue-700 rounded-3xl text-white" type="submit">Confirm</button>
+                <a class="px-4 py-1.5 bg-gray-600 rounded-3xl text-white" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
             </div>
         </form>
     </div>

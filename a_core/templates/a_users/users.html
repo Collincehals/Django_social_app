@@ -13,7 +13,11 @@
    
     <li class="flex justify-between items-center p-4 pb-1 mb-2 hover:shadow-lg shadow-orange-400 rounded-lg">
         <div class="flex justify-start items-center" >
-            <img class="h-8 w-8 md:h-12 md:w-12 rounded-full object-cover mr-2" src="{{ site_user.profile.image.url }}" alt="Upload Profile"/>
+            {% if site_user.profile.image %}
+            <img class="h-8 w-8 md:h-10 md:w-10 rounded-full object-cover" src="{{ site_user.profile.imageURL }}" alt="Upload Profile"/>
+            {% else %}
+            <img class="h-8 w-8 md:h-10 md:w-10 rounded-full object-cover" src="{% static 'images/default.png' %}" alt="Upload Profile"/>
+            {% endif %}
             <div >
                 <a href="{% url 'userprofile' site_user.username %}" class="text-lg theme-color hover:underline">{{ site_user.profile.realname }}<span class="opacity-70 theme-colortext-sm">@{{ site_user.username }} </span></a>
                 <p class="hidden theme-color md:block">{{site_user.profile.bio}}</p>

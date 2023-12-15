@@ -1,116 +1,12 @@
 {% extends "layouts/inbox_layout.html" %}
 {% block title %} Inbox {% endblock %}
 
-
-
 {% block content %}
 <style>
-    * {
-        padding:0;
-        margin:0;
-        box-sizing: border-box;
-    }
-    
-    .inbox-container {
-        display:grid;
-        grid-template-columns:1fr 3fr;
-        background:rgb(241,240,253);
-        border-radius: 8px;
-        box-shadow: 0 0 12px 0 rgba(255,255,255,.3);
-        max-width:1000px;
-        width:100%;
-        min-height:450px;
-        margin:20px auto;
-    }
-    .contact-inbox {
-        padding:20px;
-        position: relative;
-    }
-    .contact-inbox a  {
-        display:flex;
-        gap:10px;
-        flex-wrap:wrap;
-        margin-bottom:15px;
-        padding:10px 10px;
-        border-radius:10px;
-    }
-
-    .contact-inbox a:hover  {
-        background:rgb(197, 198, 210);
-        border-radius:10px;
-    }
-    .contacts-wrapper {
-        padding:20px 10px;
-       
-    }
-
-    .messages-wrapper {
-        padding:30px;
-        background:white;
-        
-    }
-    .new-message {
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        background:blue;
-        padding:10px 25px;
-        border-radius: 20px;
-        text-align: center;
-        color:white;
-        cursor:pointer;
-    }
-    
-    .sent-message-box {
-        display:flex;
-        flex-wrap: nowrap;
-        gap:5px;
-        justify-content: flex-start;
-        margin-bottom:20px;
-    }
-
-    .sent-message-body-box {
-        border:1px solid #ccc;
-        border-radius: 5px 30px 30px 30px;
-        padding:10px; 
-        padding-bottom:1px !important;
-        width:100%;
-        background-color:  #d2d2f6;
-    }
-
-    .received-message-body-box {
-        border:1px solid #ccc; 
-        padding:10px; 
-        padding-bottom:1px !important;
-        border-radius: 30px 5px 30px 30px;
-        width:100%;
-        background-color: #e6e6e6;
-    }
-    
-    .inbox-sender-details {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom:50px;
-    }
-    
-
-
+  .inbox-reply-form textarea {
+    border:1px solid #ccc;
+  }
     @media (max-width:768px) {
-        .inbox-container {
-            grid-template-columns:100%;
-            margin:0 auto;
-            margin-top:-24px !important;
-            height:100vh;
-        }
-
-        .messages-wrapper {
-            padding:10px;
-        }
-       
-        .new-message {
-            margin-top:35px;
-        }
         .contacts-wrapper {
             padding:20px 10px;
             position:fixed;
@@ -125,42 +21,51 @@
            clip-path: none;
            left:0;
            transition:.4s ease-in-out;
-           z-index: 500;
+           z-index: 100;
         }
-
-        .inbox-sender-details {
-            margin-bottom:5px;
-        }
-
     }
-
 </style>
-    <div class="inbox-container">
+    <div class="inbox-container md:grid md:grid-cols-4 w-full max-w-5xl min-h-[90%] shadow-lg mx-auto my-6 bg-violet-200">
         <div id="chats-open-menubars" class="absolute md:hidden bg-gray-200 p-2 font-semibold"><i class="fa-solid fa-user-group text-lg text-blue-800"></i><span class="pl-2 text-lg text-blue-800">Chats</span></div>
-        <div class="contacts-wrapper">
-            <a id="new-message-button" class="new-message"> <i class="fa-regular fa-pen-to-square mx-2"></i>New Message</a>
+        <div class="contacts-wrapper md:col-span-1 py-5 px-3">
+            <button id="new-message-button" class="bg-blue-700 py-2 px-3 rounded-3xl text-center text-white cursor-pointer whitespace-nowrap "> <i class="fa-regular fa-pen-to-square mx-1"></i>New Message</button>
             {% include 'a_inbox/my_conversations.html' %}
         </div>
         {% include 'a_inbox/search_users.html' %}
-        <div class="messages-wrapper">
+        <div class="messages-wrapper w-full md:col-span-3 md:p-6 p-2 bg-white">
         {% include 'a_inbox/messages.html' %}
         </div>
     </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script>
-        const messagebtn = document.getElementById('new-message-button');
-        const searchpopup= document.getElementById('popup-layout');
-        const cancelbtn= document.getElementById('cancelbtn');
         const openchatsbtn= document.getElementById('chats-open-menubars');
         const conversationslist = document.querySelector('.contacts-wrapper');
         const chatsclosebtn = document.querySelector('#chats-cancel-btn');
     
-        messagebtn.addEventListener('click',function() {
-            searchpopup.style.display='flex';
+        document.getElementById('new-message-button').addEventListener('click',function() {
+            document.getElementById('popup-layout').classList.toggle('hidden')
+            document.getElementById('popup-layout').classList.add('flex')
         });
     
-        cancelbtn.addEventListener('click',function() {
-            searchpopup.style.display='none';
+        document.getElementById('cancelbtn').addEventListener('click',function() {
+            document.getElementById('popup-layout').classList.add('hidden')
         });
     
         openchatsbtn.addEventListener('click',function() {

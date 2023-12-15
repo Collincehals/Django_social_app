@@ -2,7 +2,11 @@
 <comment class="post-item-card p-4 ">
     <div class="flex justify-between items-center"> 
         <a class="flex items-center gap-1 mb-2" href="{% url 'userprofile' comment.author.username %}">
-            <img class="w-8 h-8 object-cover rounded-full" src="{{ comment.author.profile.image.url }}"> 
+            {% if comment.author.profile.image %}
+            <img class="h-8 w-8 rounded-full object-cover" src="{{ comment.author.profile.imageURL }}" alt="Upload Profile"/>
+            {% else %}
+            <img class="h-8 w-8 rounded-full object-cover" src="{% static 'images/default.png' %}" alt="Upload Profile"/>
+            {% endif %}
             <span class="font-bold hover:underline">{{ comment.author.profile.realname }}</span>
             <span class="text-sm font-normal text-gray-400">@ {{ comment.author.username }}</span>
             <span class="text-sm font-normal ml-4">{{ comment.created }}</span>

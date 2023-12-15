@@ -54,7 +54,7 @@
     }
  @media (max-width: 768px) {
     .create_post_popup_item {
-        margin:30px 10px;
+        margin:28px 10px;
     }
 
  }
@@ -65,8 +65,10 @@
         <form method='POST' enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="successbtn mt-1">Create Post</button>
-            <a class="editbtn ml-1" href="{{ request.META.HTTP_REFERER }}">Close</a>
+            <div class="pt-4 flex flex-start gap-3 flex-wrap">
+                <button class="px-4 py-1.5 bg-blue-700 rounded-3xl text-white" type="submit">Post</button>
+                <a class="px-4 py-1.5 bg-gray-600 rounded-3xl text-white" href="{{ request.META.HTTP_REFERER }}">Abort</a>
+            </div>
         </form>
     </div>
 </div>

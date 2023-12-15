@@ -4,8 +4,8 @@ from django_resized import ResizedImageField
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = ResizedImageField(size=[600, 600],quality=85, upload_to='profilepics/', blank=True, null=True, default='defaults/default.png')
-    profilebackground = ResizedImageField(size=[1200, 1200], quality=70, upload_to='profilepics/', blank=True, null=True, default='defaults/profile_bg.jpg')
+    image = ResizedImageField(size=[600, 600],quality=85, upload_to='profilepics/', blank=True, null=True)
+    profilebackground = ResizedImageField(size=[1200, 1200], quality=70, upload_to='profilepics/', blank=True, null=True)
     realname = models.CharField(max_length=200, null=True, blank=True)
     email = models.EmailField(max_length=50, unique=True, null=True)
     location = models.CharField(max_length=50, null=True, blank=True)
@@ -15,3 +15,22 @@ class Profile(models.Model):
     
     def __str__(self):
         return str(self.user)
+    
+    @property
+    def imageURL(self):
+        try:
+            url=self.image.url
+        except:
+            url=''
+        return url
+    
+    @property
+    def profilebackgroundURL(self):
+        try:
+            url=self.profilebackground.url
+        except:
+            url=''
+        return url
+        
+            
+            

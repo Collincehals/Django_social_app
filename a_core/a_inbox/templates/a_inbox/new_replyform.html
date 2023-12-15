@@ -1,22 +1,18 @@
-<style>
-  .inbox-reply-form textarea {
-    border:1px solid #ccc;
-  }
-</style>
-
+{% load static %}
 <div class="flex flex-col md:flex-row gap-1 md:gap-6 w-full">
-    <img class="w-9 h-9 object-cover rounded-full" src="{{ user.profile.image.url }}">
-
+    {% if user.profile.image %}
+    <img class="w-9 h-9 object-cover rounded-full" src="{{ user.profile.imageURL }}">
+    {% else %}
+    <img class="w-9 h-9 object-cover rounded-full" src="{% static 'images/default.png' %}">
+    {% endif %}
     <form method='POST' action="{% url 'inbox-newreply' conversation.id %}" class="w-full">
-      {% csrf_token %}
-      <div class="inbox-reply-form">
-        {{ new_message_form }}
-      </div>
-            
-
-      <div class="flex justify-between">
-        <button type="submit" class="successbtn">Send Message</button>
-        <a class="deletebtn secondaryAction ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
-      </div>
+        {% csrf_token %}
+        <div class="inbox-reply-form">
+          {{ new_message_form }}
+        </div>
+        <div class="flex justify-between">
+          <button type="submit" class="py-2 px-5 bg-blue-700 text-white rounded-3xl">Send</button>
+          <a class="py-2 px-3 bg-gray-600 text-white text-center rounded-3xl" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+        </div>
     </form>
 </div>

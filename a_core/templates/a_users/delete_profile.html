@@ -3,10 +3,10 @@
 {% block title %} Delete Profile- {{ user.profile.realname }} {% endblock %}
 
 {% block content %}
-<h1 class="text-black">Delete Account</h1>
-<p class="text-black pb-8">Are you sure you want to delete your account?</p>
+<h1 class="text-black text-center">Delete Account</h1>
+<p class="text-black pb-8 text-center">Are you sure you want to delete your account?</p>
 
-<form method='POST'>
+<form method='POST' class="flex items-center justify-center text-center">
     {% csrf_token %}
     <div class="flex justify-start gap-3 items-center flex-wrap">
         <button class="deletebtn" type="submit" class="btn-red mt-6">Yes, I want to delete my account</button>
