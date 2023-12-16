@@ -44,7 +44,7 @@
             </div>
         </div>
         {% else %}
-        <div><a href="{% url 'account_login' %}" class="text-xl md:hidden">Login</a></div>
+        <div><a href="{% url 'account_login' %}" class="text-xl md:hidden"><i class="fa-solid fa-user text-sm theme-color mr-1"></i><span class=" text-lg theme-color ">Login</span></a></div>
         {% endif %}
     </div>
     <nav x-show="mobilenavOpen" x-cloak class="md:hidden h-screen w-[70%] top-0 fixed z-5"
@@ -150,7 +150,7 @@
 </style> 
 <div  id="search-form-popup" >
     <div class="cursor-pointer"  id="header-search-cancel-icon">
-        <i class="fa-solid fa-times text-xl theme-color"></i>
+        <i class="fa-solid fa-times text-xl text-white"></i>
     </div>
     <div class="relative" >
         <form class="home-search-form w-full bg-indigo-200 rounded-lg flex justify-start items-center">
