@@ -4,8 +4,8 @@
     <div class="flex items-center justify-between h-20">
         <mobileicon class="-ml-3 md:hidden">
             <a @click="mobilenavOpen = !mobilenavOpen" class="h-10 w-10 flex items-center justify-center cursor-pointer hover:bg-gray-700 rounded-lg">
-                <img x-show="!mobilenavOpen" class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/menu.png"/> 
-                <img x-show="mobilenavOpen" x-cloak class="w-6 h-6 select-none z-20" src="https://img.icons8.com/small/64/ffffff/delete-sign.png"/>
+                <i x-show="!mobilenavOpen" class="fa-solid fa-bars theme-color text-xl"></i>
+                <i x-show="mobilenavOpen" x-cloak class="fa-solid fa-xmark theme-color text-2xl z-20"></i>
             </a>
         </mobileicon>    
         <logo class="mr-6">
@@ -21,7 +21,7 @@
         {% if user.is_authenticated %}
         <div x-data="{ dropdownOpen: false }" class="relative md:hidden">
             <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none flex justify-start items-center gap-1">
-                {% if profile.image %}
+                {% if user.profile.image %}
                 <img class="rounded-full w-7 h-7" src="{{ user.profile.imageURL }}" />
                 {% else %}
                 <img class="rounded-full w-7 h-7" src="{% static 'images/default.png' %}"/>
@@ -54,7 +54,7 @@
         <ul class="flex navitems flex-col md:flex-row gap-2 md:gap-0 justify-center h-full -translate-y-10 md:translate-y-0 relative">
             {% if user.is_authenticated %}
             <li class="md:hidden">
-                {% if profile.imageURL %}
+                {% if user.profile.image %}
                 <img class="rounded-full w-10 h-10" src="{{ user.profile.imageURL }}" />
                 {% else %}
                 <img class="rounded-full w-10 h-10" src="{% static 'images/default.png' %}"/>

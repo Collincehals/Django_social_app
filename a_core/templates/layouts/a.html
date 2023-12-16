@@ -28,11 +28,11 @@
     }
     }
 </style>
-<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-4  max-w-7xl mx-auto h-[100vh]">
+<content x-data="{ mobileSidebarOpen: false }" class="grid grid-cols-4  max-w-7xl mx-auto">
     <aside class="pl-6 hidden md:block md:col-span-1 overflow-y-auto">
         {% include 'includes/left_sidebar.html' %}
     </aside>
-    <main id="main-content" class="col-span-full md:col-span-2 relative overflow-y-auto">
+    <main id="main-content" class="col-span-full md:col-span-2 relative  overflow-y-auto">
             <div class="md:hidden mobile-nav">
                 {% include 'includes/header.html' %}
             </div>
