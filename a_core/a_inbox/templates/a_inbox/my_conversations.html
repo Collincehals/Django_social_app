@@ -1,7 +1,7 @@
 {% load static %}
-<ul class="relative py-4">
+<ul class="relative py-10 md:py-4 ">
     {% for c in my_conversations %}
-    <a href="{% url 'inbox' c.id %}" class="{% if conversation == c %} highlight {% endif %} flex items-center justify-start p-2 mb-4 flex-wrap rounded-lg gap-2 hover:bg-gray-300">
+    <a href="{% url 'inbox' c.id %}" class="{% if conversation == c %} highlighted texthighlight {% endif %} flex items-center justify-start p-2 mb-4 flex-wrap rounded-lg gap-2 hover:bg-gray-300">
         {% for participant in c.participants.all %}
             {% if participant != request.user %}
             <div class=""
@@ -11,9 +11,9 @@
                 hx-swap='innerHTML'>
             </div>
             {% if participant.profile.image %}
-            <img class="w-9 h-9 object-cover rounded-full" src="{{ participant.profile.imageURL }}">{{ participant.profile.realname }}
+            <img class="w-9 h-9 object-cover rounded-full" src="{{ participant.profile.imageURL }}"><span class="theme-color md:text-black">{{ participant.profile.realname }}</span>
             {% else %}
-            <img class="w-9 h-9 object-cover rounded-full" src="{% static 'images/default.png' %}">{{ participant.profile.realname }}
+            <img class="w-9 h-9 object-cover rounded-full" src="{% static 'images/default.png' %}"><span class="theme-color md:text-black">{{ participant.profile.realname }}</span>
             {% endif %}
             {% endif %}
         {% endfor %}

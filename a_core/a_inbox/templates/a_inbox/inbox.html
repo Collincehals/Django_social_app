@@ -9,10 +9,10 @@
     @media (max-width:768px) {
         .contacts-wrapper {
             left:-100%;
-            top:12%;
-            width:60%;
+            top:0;
+            width:70%;
             height:100vh;
-            background-color: rgb(240, 241, 255);
+            background-color: var(--mainColor);
             clip-path: polygon(0 0, 0 0, 0 0, 0 0);
         }
         .contacts-wrapper.active {
@@ -26,7 +26,7 @@
     <div class="inbox-container md:grid md:grid-cols-6 w-full max-w-5xl h-[100vh] shadow-lg mx-auto bg-violet-200">
         <div id="chats-open-menubars" class="absolute md:hidden bg-gray-200 p-2 font-semibold"><i class="fa-solid fa-user-group text-lg text-blue-800"></i><span class="pl-2 text-lg text-blue-800">Chats</span></div>
         <div class="contacts-wrapper md:col-span-2 pt-12 md:pt-4 px-3 fixed md:relative overflow-y-auto">
-            <i id="chats-cancel-btn" class="fa-solid fa-xmark text-2xl text-blue-800 absolute md:hidden top-3 right-4"></i>
+            <i id="chats-cancel-btn" class="fa-solid fa-angles-left text-2xl theme-color absolute md:hidden top-3 right-4"></i>
             <button id="new-message-button" class="bg-blue-700 py-2 px-3 rounded-3xl text-center text-white cursor-pointer whitespace-nowrap "> <i class="fa-regular fa-pen-to-square mx-1"></i>New Message</button>
             {% include 'a_inbox/my_conversations.html' %}
         </div>
