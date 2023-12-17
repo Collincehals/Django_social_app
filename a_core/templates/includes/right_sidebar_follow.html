@@ -1,4 +1,5 @@
 {% load static %}
+{% if users %}
 <section class="hidden md:block mb-8">
     <h3 class="mb-3 text-white font-semibold text-lg p-2 bg-blue-600 rounded-xl text-center"><i class="fa-solid fa-users text-lg mr-2" style="color: #f0f2f5;"></i>Who to Follow</h3>
     <ul class="bg-slate-700 rounded-lg pb-3 ">
@@ -20,6 +21,7 @@
         </div>
         {% endif %}
         {% endfor %}
-        <a href="{% url 'site_users' %}" class="text-lg px-4 text-orange-600 hover:underline">Show more...</a>
-     </ul>
+        <a href="{% url 'site_users' %}" class="text-lg px-4 text-white hover:text-orange-500 hover:underline">Show more...</a>
+     </ul>  
 </section>
+{% endif %}

@@ -27,7 +27,8 @@ def ProfileView(request, username=None):
             raise Http404()
     posts = profile.user.posts.all()
     post_count = len(posts)
-    users = User.objects.all().exclude(id=request.user.id).exclude(is_superuser=True)
+    following_users = profile.user.following.all()
+    users = User.objects.all().exclude(id=request.user.id).exclude(is_superuser=True).exclude(pk__in=following_users)
     followers = profile.followers.all()
     following = profile.user.following.all()
     
@@ -110,16 +111,16 @@ def DeleteProfileView(request):
 def followview(request, username):
     target_user = get_object_or_404(get_user_model(), username=username)
     profile = target_user.profile
-    followers = target_user.profile.followers.all()
-    following = target_user.following.all()
+    followers = target_user.profile.followers.all().exclude(id=request.user.id)
+    following = target_user.following.all().exclude(id=request.user.id)
     users = User.objects.exclude(username=request.user.username).exclude(is_superuser=True)
     
     if request.htmx:
         if 'following' in request.GET:
-            following = target_user.following.all()
+            following = target_user.following.all().exclude(id=request.user.id)
             return render(request, 'snippets/loop_following.html',{'following': following})
         else:    
-            followers = target_user.profile.followers.all()
+            followers = target_user.profile.followers.all().exclude(id=request.user.id)
             return render(request, 'snippets/loop_followers.html',{'followers': followers})
     
     context = {

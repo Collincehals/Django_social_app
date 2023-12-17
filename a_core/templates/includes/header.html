@@ -3,7 +3,7 @@
 <header x-data="{ mobilenavOpen: false }" class="header md:flex items-center justify-between [&>*]:px-7 h-20 theme-color top-0 z-40 sticky">
     <div class="flex items-center justify-between h-20">
         <mobileicon class="-ml-3 md:hidden">
-            <a @click="mobilenavOpen = !mobilenavOpen" class="h-10 w-10 flex items-center justify-center cursor-pointer hover:bg-gray-700 rounded-lg">
+            <a @click="mobilenavOpen = !mobilenavOpen" class="h-10 w-10 flex items-center justify-center cursor-pointer hover:bg-gray-400 rounded-lg">
                 <i x-show="!mobilenavOpen" class="fa-solid fa-bars theme-color text-xl"></i>
                 <i x-show="mobilenavOpen" x-cloak class="fa-solid fa-xmark theme-color text-2xl z-20"></i>
             </a>
@@ -16,6 +16,20 @@
         {% if user.is_authenticated %}
         <div class="mr-4 cursor-pointer md:hidden"  id="header-search-icon">
             <i class="fa-solid fa-magnifying-glass text-xl theme-color"></i>
+        </div>
+        <div id="search-form-popup" class="hidden absolute z-50 top-2 left-0 w-full p-1">
+            <div class="home-search-form w-full p-1 bg-indigo-200 rounded-lg flex justify-start items-center">
+                <i class="fa-solid fa-magnifying-glass text-blue-950 pl-2"></i>
+                <input  id="sm-search-input" name="search_all" placeholder="Search... " autocomplete="off"
+                hx-get="{% url 'search_all' %}"
+                hx-trigger="keyup changed"
+                hx-target="#all_results"
+                hx-swap="innerHTML">
+                <i id="header-search-cancel-icon" class="fa-solid fa-times text-2xl text-black cursor-pointer"></i>
+            </div>
+            <div id="all_results" class="absolute left-0 right-0">
+                
+            </div>
         </div>
         {% endif %}
         {% if user.is_authenticated %}
@@ -62,18 +76,18 @@
             </li>
             <li class="md:hidden">
                 {% if profile.realname %}
-                <p class="theme-color text-lg">{{ user.profile.realname|title }}
-                <span class="text-gray-400 text-sm">@ {{ user.username }}</span>
+                <p class="theme-color text-lg"><a href="{% url 'view-profile' %}">{{ user.profile.realname|title }}
+                    <span class="text-gray-400 text-sm">@ {{ user.username }}</span></a>
                 </p>
                 {% else %}
-                <p class="theme-color text-xl mb-1">{{ user.username|title }}
-                <span class="text-gray-400 text-lg">@ {{ user.username }}</span>
+                <p class="theme-color text-xl mb-1"><a href="{% url 'view-profile' %}">{{ user.username|title }}
+                    <span class="text-gray-400 text-lg">@ {{ user.username }}</span></a>
                 </p>
                 {% endif %}
             </li>
             <li class="md:hidden flex flex-wrap justify-start gap-2">
-                <p href="" class="text-gray-400"><span class="theme-color">{{user.following.count}} </span>Following</p>
-                <p href="" class="text-gray-400"><span class="theme-color">{{user.profile.followers.count}} </span>Followers</p>
+                <p class="text-gray-400"><a href="{% url 'follow_page' user.username %}" ><span class="theme-color">{{user.following.count}} </span>Following</a></p>
+                <p class="text-gray-400"><a href="{% url 'follow_page' user.username %}" ><span class="theme-color">{{user.profile.followers.count}} </span>Followers</a></p>
             </li>
             {% endif %}
             <hr>
@@ -98,7 +112,8 @@
             <li class="relative">
                 <a class="themes-toggle cursor-pointer"><i class="fa-solid fa-pen-to-square text-lg theme-color mr-3 "></i><span class="theme-color text-lg">Themes</span></a>
                 <div class="themes hidden rounded-xl p-2 z-20  bg-slate-500 absolute">
-                    <h5 class="theme-title">Personalize Theme</h5>
+                    <i id="themeclose" class="fa-solid fa-times absolute right-1.5 top-0.5 text-xl text-white"></i>
+                    <h5 class="theme-title pt-1">Personalize Theme</h5>
                     <div id="theme-options-wrapper">
                         <div data-mode="light" id="light-mode" class="theme-dot"></div>
                         <div data-mode="blue" id="blue-mode" class="theme-dot"></div>
@@ -107,79 +122,31 @@
                     </div>
                 </div>
             </li>
+            <li>
+                <a href="{% url 'site_users' %}"><i class="fa-solid fa-users text-lg theme-color mr-3"></i><span id="icon-label" class="text-lg theme-color">Find people</span></a>
+            </li>
         </ul>
     </nav>
 </header>
 
-<style>
-    #header-search-icon {
-        display:none;
-    }
-    #header-search-cancel-icon {
-        position: absolute;
-        top:50px;
-        right:50px;
-        color:white;
-
-    }
-  
-    #search-form-popup {
-        display:none;
-        position: fixed;
-        z-index:1000;
-        left:0;
-        top:0;
-        width:100%;
-        height:100%;
-        background-color: rgba(0,0,0,0.8);
-        justify-content: center;
-        padding-top: 100px;
-
-    }
-
-    #search-form-popup.active {
-        display:flex;
-        transition: 5s ease-in-out;
-    }
-    @media (max-width: 768px) {
-        #header-search-icon {
-        display:block;
-    }
-    }
-
-</style> 
-<div  id="search-form-popup" >
-    <div class="cursor-pointer"  id="header-search-cancel-icon">
-        <i class="fa-solid fa-times text-xl text-white"></i>
-    </div>
-    <div class="relative" >
-        <form class="home-search-form w-full bg-indigo-200 rounded-lg flex justify-start items-center">
-            <i class="fa-solid fa-magnifying-glass text-blue-950 pl-2"></i>
-            <input role="search" id="sm-search-input" name="search_all"  type="search" placeholder="Search..."
-            hx-get="{% url 'search_all' %}"
-            hx-trigger="keyup changed"
-            hx-target="#all_results"
-            hx-swap="innerHTML">
-        </form>
-        <div id="all_results" class="absolute left-0 right-0">
-            
-        </div>
-    </div>
-</div>
-
 <script>
     const themestogglebtn = document.querySelector('.themes-toggle');
     const themes = document.querySelector('.themes');
+    const themeclose = document.getElementById('themeclose');
 
     document.getElementById('header-search-icon').addEventListener('click', function() {
-        document.getElementById('search-form-popup').classList.add('active');
+        document.getElementById('search-form-popup').classList.remove('hidden');
+        document.getElementById('search-form-popup').classList.toggle('block');
     });
 
     document.getElementById('header-search-cancel-icon').addEventListener('click', () =>{
-        document.getElementById('search-form-popup').classList.remove('active');
+        document.getElementById('search-form-popup').classList.add('hidden');
     });
 
     themestogglebtn.addEventListener('click', function() {
         themes.classList.toggle('hidden');
+    });
+    themeclose.addEventListener('click', function() {
+        themes.classList.add('hidden');
     });
 </script>

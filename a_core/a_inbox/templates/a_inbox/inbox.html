@@ -9,16 +9,16 @@
     @media (max-width:768px) {
         .contacts-wrapper {
             left:-100%;
-            top:0;
+            top:12%;
             width:60%;
             height:100vh;
-            background-color: rgb(241, 240, 255);
+            background-color: rgb(240, 241, 255);
             clip-path: polygon(0 0, 0 0, 0 0, 0 0);
         }
         .contacts-wrapper.active {
            clip-path: none;
            left:0;
-           transition:.2s linear;
+           transition:.4s ease-in-out;
            z-index: 100;
         }
     }

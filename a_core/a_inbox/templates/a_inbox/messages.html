@@ -27,11 +27,12 @@
         {% else %} 
         <img class="w-8 h-8 rounded-full object-cover" src="{% static 'images/default.png' %}" alt="...">
         {% endif %}
-        <div class="bg-indigo-200 py-2 px-4 w-full rounded-br-3xl rounded-tr-3xl rounded-bl-3xl">
+        <div class="bg-indigo-200 py-2 px-4 w-full rounded-br-3xl rounded-tr-3xl rounded-bl-3xl relative">
             <a href="{% url 'userprofile' message.sender.username %}" style="font-size: 13px;color:darkblue;margin-bottom: 10px;"><b>{{message.sender.profile.realname}}</b><span style="padding-left:5px;">@{{message.sender.username}}</span></a>
             <P class="whitespace-pre-wrap text-black mb-3">{{message.body_decrypted}}</P>
             <p style="font-size: 13px;color:rgba(0,0,255,.5);margin-bottom: 10px;">{{message.created_at}} ({{message.created_at|timesince}} ago.)</p>
         </div>
+      
     </div>
     {% else %}
     <div id="conversation" class="flex flex-nowrap gap-2 justify-start mb-5">
