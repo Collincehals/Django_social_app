@@ -6,14 +6,14 @@
     <div>
         {% if participant.profile.image %}
         <div class="flex items-center justify-center">
-            <img class="w-10 h-10 object-cover rounded-full"  src="{{participant.profile.imageURL}}" alt="...">
+            <img class="w-9 h-9 object-cover rounded-full"  src="{{participant.profile.imageURL}}" alt="...">
         </div>
         {% else %}
         <div class="flex items-center justify-center">
-            <img class="w-10 h-10 object-cover rounded-full"  src="{% static 'images/default.png' %}" alt="...">
+            <img class="w-9 h-9 object-cover rounded-full"  src="{% static 'images/default.png' %}" alt="...">
         </div>
         {% endif %}
-        <div class="flex items-center justify-center text-lg mt-2 mb-6" >
+        <div class="flex items-center justify-center text-lg mb-2" >
             <a href="{% url 'userprofile' participant.username %}">
                 <p class="theme-color">{{participant.profile.realname}}<span class="ml-1 theme-color">@{{participant.username}}</span></p>
             </a>

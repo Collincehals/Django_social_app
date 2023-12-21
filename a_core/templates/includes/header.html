@@ -1,5 +1,9 @@
 {% load static %}
-
+<style>
+    .header {
+        border-bottom:.1px solid var(--borderColor);
+    }
+</style>
 <header x-data="{ mobilenavOpen: false }" class="header md:flex items-center justify-between [&>*]:px-7 h-20 theme-color top-0 z-40 sticky">
     <div class="flex items-center justify-between h-20">
         <mobileicon class="-ml-3 md:hidden">
