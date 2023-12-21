@@ -4,20 +4,20 @@
     }
 </style>
 <div id="popup-layout" class="popup-layout fixed hidden left-0 top-0 h-[100%] w-full bg-black bg-opacity-70 justify-center items-center">
-    <div class="popup-content relative w-96 h-96 bg-gray-200 text-black p-4 rounded-lg md:rounded-3xl z-50" id="new-message">
+    <div class="popup-content relative h-96 w-96 bg-gray-200 text-black p-4 rounded-sm z-50" id="new-message">
         <i id="cancelbtn" class="fa-solid fa-xmark absolute cursor-pointer top-2 right-4 text-blue-700 text-2xl hover:text-red-500 hover:scale-110"></i>
         <p class="text-lg text-blue-800 pb-2 font-semibold">New Message</p>
         <div class="flex justify-start items-center gap-2 text-blue-950">
             <span class="text-blue-800"> To: </span>
-            <input  type="text" id="message" name="search_user" placeholder="Search User..."
+            <input  type="text" id="message" name="search_user" placeholder="Search User..." autocomplete="off"
             hx-get="{% url 'inbox_search_users' %}"
             hx-trigger="keyup changed"
             hx-target="#search_results"
             hx-swap="innerHTML">
         </div>
-        <div id="search_results" class="overflow-y-auto">
+        <div id="search_results"  class="absolute left-0 right-0">
            
         </div>
-        
     </div>
+    
 </div>
