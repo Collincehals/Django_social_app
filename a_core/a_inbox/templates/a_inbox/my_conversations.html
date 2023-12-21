@@ -1,18 +1,24 @@
 {% load static %}
-<ul class="relative py-10 md:py-4 ">
+<ul class="py-10 md:py-4">
     {% for c in my_conversations %}
-    <a href="{% url 'inbox' c.id %}" class="{% if conversation == c %} highlighted texthighlight {% endif %} flex items-center justify-start p-2 mb-4 flex-wrap rounded-lg gap-2 hover:bg-gray-300">
+    <a href="{% url 'inbox' c.id %}" class="{% if conversation == c %} highlighted texthighlight {% endif %} flex items-center justify-start p-2 mb-4 flex-wrap rounded-lg gap-2 hover:bg-gray-300 relative">
         {% for participant in c.participants.all %}
             {% if participant != request.user %}
-            <div class=""
+            {% if participant.profile.image %}
+            <div class="absolute left-4 top-2"
                 hx-get="{% url 'notify-newmessage' c.id %}"
                 hx-trigger = 'load'
                 hx-target = 'this'
                 hx-swap='innerHTML'>
             </div>
-            {% if participant.profile.image %}
             <img class="w-9 h-9 object-cover rounded-full" src="{{ participant.profile.imageURL }}"><span class="theme-color md:text-black">{{ participant.profile.realname }}</span>
             {% else %}
+            <div class="absolute left-4 top-2"
+                hx-get="{% url 'notify-newmessage' c.id %}"
+                hx-trigger = 'load'
+                hx-target = 'this'
+                hx-swap='innerHTML'>
+            </div>
             <img class="w-9 h-9 object-cover rounded-full" src="{% static 'images/default.png' %}"><span class="theme-color md:text-black">{{ participant.profile.realname }}</span>
             {% endif %}
             {% endif %}

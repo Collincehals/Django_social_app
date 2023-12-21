@@ -11,7 +11,7 @@ _="on load transition my opacity to 1 over 0.3 seconds">
             {% endif %}
             <a href="{% url 'userprofile' followed_profile.user.username %}" class="text-lg theme-color">{{ followed_profile.realname }}<span class="opacity-70 theme-color text-sm">@{{ followed_profile.user.username }} </span></a>
         </div>
-        <form action="{% url 'unfollow_user' username=followed_profile.user.username %}" method="POST">
+        <form action="{% url 'follow_user' username=followed_profile.user.username %}" method="POST">
             {% csrf_token %}
             <button id="already-following-btn" type="submit" class="text-sm py-1.5 px-4 bg-blue-600 hover:bg-orange-500 rounded-xl  text-white text-center "><span id="following-text">Following</span><span id="unfollow-text" class="hidden duration-700 ease-in-out">Unfollow</span></button>
         </form>

@@ -12,6 +12,8 @@ from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.contrib.auth import get_user_model
 from posts_app.models import Repost
+from django.core.paginator import Paginator
+from django.http import HttpResponse
 
 
 def ProfileView(request, username=None):
@@ -57,31 +59,21 @@ def ProfileView(request, username=None):
     return render(request, 'a_users/profile.html', context)
 
 @login_required
-@require_POST
 def follow_user(request, username):
-    user_to_follow = get_object_or_404(get_user_model(), username=username)
+    user_to_follow = get_object_or_404(User, username=username)
+    print('User to follow:', user_to_follow)
     user_to_follow_profile = user_to_follow.profile
-    if user_to_follow == request.user:
-        messages.error(request, "You cannot follow yourself.")
-    elif request.user in user_to_follow_profile.followers.all():
-        messages.info(request, f"You are already following {user_to_follow}.")
+    
+    user_exists = user_to_follow_profile.followers.filter(username=request.user.username).exists()
+    print('User exists:', user_exists)
+    
+    if user_exists:
+        user_to_follow_profile.followers.remove(request.user)
     else:
         user_to_follow_profile.followers.add(request.user)
-        messages.success(request, f"You are now following {user_to_follow}.")
-    return redirect(reverse('userprofile', kwargs={'username': username}))
+    return redirect('userprofile', username = username)
 
-
-@login_required
-@require_POST
-def unfollow_user(request, username):
-    if request.method == 'POST':
-        user_to_unfollow = get_object_or_404(get_user_model(), username=username)
-        if request.user in user_to_unfollow.profile.followers.all():
-            user_to_unfollow.profile.followers.remove(request.user)
-            messages.success(request, f'You have unfollowed {user_to_unfollow}')
-        return redirect('userprofile', username=username)
-                             
-                             
+                                                   
 @login_required
 def EditProfileView(request):
     form = ProfileEditForm(instance=request.user.profile)
@@ -108,7 +100,7 @@ def DeleteProfileView(request):
 
 
 @login_required
-def followview(request, username):
+def userfollowview(request, username):
     target_user = get_object_or_404(get_user_model(), username=username)
     profile = target_user.profile
     followers = target_user.profile.followers.all().exclude(id=request.user.id)
@@ -134,5 +126,10 @@ def followview(request, username):
 @login_required
 def site_users_view(request):
     following_users= request.user.following.all()
-    site_users = User.objects.exclude(pk=request.user.pk).exclude(is_superuser=True).exclude(pk__in = following_users)
-    return render(request, 'a_users/users.html', {'site_users':site_users})
+    site_users = User.objects.exclude(pk=request.user.pk).exclude(is_superuser=True).exclude(pk__in = following_users).order_by('username')
+    paginator = Paginator(site_users, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'a_users/users.html',
+                  {'page_obj':page_obj,})

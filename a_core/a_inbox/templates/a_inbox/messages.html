@@ -1,5 +1,5 @@
 {% load static %}
-    {% if conversation %}
+{% if conversation %}
     {% for participant in conversation.participants.all %}
         {% if participant != request.user %}
             {% if participant.profile.image %}

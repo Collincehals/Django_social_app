@@ -9,32 +9,52 @@
            border-bottom:.1px solid var(--borderColor);
        }
    </style>
-<div class="flex justify-start items-center py-2 px-3 users_all">
-    <a href="{{ request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left-long mr-4 theme-color text-lg"></i></a>
-    <p class="text-orange-500 font-semibold text-lg">Who to connect with.</p>
-</div>
-<ul class="theme-color h-[100vh]">
-    {% for site_user in site_users %}
-    {% if request.user not in site_user.profile.followers.all %}
-    <li class="flex justify-between items-center p-4 pb-1 mb-2 hover:shadow-lg shadow-orange-400 rounded-lg">
-        <div class="flex justify-start items-center gap-2" >
-            {% if site_user.profile.image %}
-            <img class="h-8 w-8 md:h-10 md:w-10 rounded-full object-cover mr-1" src="{{ site_user.profile.imageURL }}" alt="Upload Profile"/>
-            {% else %}
-            <img class="h-8 w-8 md:h-10 md:w-10 rounded-full object-cover mr-1" src="{% static 'images/default.png' %}" alt="Upload Profile"/>
-            {% endif %}
-            <div >
-                <a href="{% url 'userprofile' site_user.username %}" class="text-lg theme-color hover:underline">{{ site_user.profile.realname }}<span class="opacity-70 theme-colortext-sm">@{{ site_user.username }} </span></a>
-                <p class="hidden theme-color md:block">{{site_user.profile.bio}}</p>
+<div class="h-[100vh]">
+    <div class="flex justify-start items-center py-2 px-3 users_all">
+        <a href="{{ request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left-long mr-4 theme-color text-lg"></i></a>
+        <p class="text-orange-500 font-semibold text-lg">Who to connect with.</p>
+    </div>
+    <div class="theme-color ">
+        {% for site_user in page_obj %}
+        {% if request.user not in site_user.profile.followers.all %}
+        <li class="flex justify-between items-center p-4 pb-1 mb-2 hover:shadow-lg shadow-orange-400 rounded-lg">
+            <div class="flex justify-start items-center gap-2" >
+                {% if site_user.profile.image %}
+                <img class="h-8 w-8 md:h-10 md:w-10 rounded-full object-cover mr-1" src="{{ site_user.profile.imageURL }}" alt="Upload Profile"/>
+                {% else %}
+                <img class="h-8 w-8 md:h-10 md:w-10 rounded-full object-cover mr-1" src="{% static 'images/default.png' %}" alt="Upload Profile"/>
+                {% endif %}
+                <div >
+                    <a href="{% url 'userprofile' site_user.username %}" class="text-lg theme-color hover:underline">{{ site_user.profile.realname }}<span class="opacity-70 theme-colortext-sm">@{{ site_user.username }} </span></a>
+                    <p class="hidden theme-color md:block">{{site_user.profile.bio}}</p>
+                </div>
             </div>
-        </div>
-        <form action="{% url 'follow_user' username=site_user.username %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="text-sm py-1.5 px-6 bg-blue-600 hover:bg-orange-500 hover:theme-color rounded-xl mr-2 text-white text-center">Follow</button>
-        </form>
-  
-    </li>
-    {% endif %}
-    {% endfor %}
-</ul>
+            <form action="{% url 'follow_user' username=site_user.username %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="text-sm py-1.5 px-6 bg-blue-600 hover:bg-orange-500 hover:theme-color rounded-xl mr-2 text-white text-center">Follow</button>
+            </form>
+    
+        </li>
+        {% endif %}
+        {% endfor %}
+    </div>
+    
+    <div class="pagination theme-color text-xl flex justify-center mt-8">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}"><i class="fa-solid fa-arrow-left-long py-2 px-3 rounded-full bg-orange-500 text-white text-sm"></i></a>
+            {% endif %}
+
+            <span class="current opacity-60">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+        
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}"><i class="fa-solid fa-arrow-right-long py-2 px-3 rounded-full bg-orange-500 text-white text-sm"></i></a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
 {% endblock %}

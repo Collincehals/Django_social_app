@@ -1,0 +1,10 @@
+<div>
+    <a class="text-sm py-2 px-4 bg-orange-400 rounded-3xl theme-color text-center cursor-pointer"
+     href="{% url 'follow_user' username=profile.user.username %}">
+     {% if request.user in profile.followers.all %}
+     Unfollow
+     {% else %}
+     Follow
+     {% endif %}
+    </a>
+</div>
