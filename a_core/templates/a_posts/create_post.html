@@ -66,8 +66,8 @@
             {% csrf_token %}
             {{ form.as_p }}
             <div class="pt-4 flex flex-start gap-3 flex-wrap">
-                <button class="px-8 py-2 bg-blue-700 rounded-3xl text-white" type="submit">Post</button>
-                <a class="px-2.5 py-1.5 bg-gray-600 rounded-3xl text-white" href="{{ request.META.HTTP_REFERER }}">Abort</a>
+                <button class="px-8 py-2 bg-blue-700 rounded-3xl text-white hover:bg-orange-500" type="submit">Post</button>
+                <a class="px-4 py-2 bg-gray-600 rounded-3xl text-white" href="{{ request.META.HTTP_REFERER }}">Close</a>
             </div>
         </form>
     </div>
