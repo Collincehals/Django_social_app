@@ -13,7 +13,7 @@ class Post(models.Model):
     id=models.CharField(max_length=100, unique=True, default=uuid.uuid4, primary_key=True, editable=False)
     
     def __str__(self):
-        return str(self.title)
+        return str(self.body[:10])
     class Meta:
         ordering = ['-created']
 
@@ -44,7 +44,7 @@ class LikedPost(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f'{self.user.username} : {self.post.title}'
+        return f'{self.user.username} : {self.post.body[:10]}'
 
 class PostComment(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="comments")
