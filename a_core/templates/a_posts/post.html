@@ -69,7 +69,7 @@
             </div>
              <!--User-details-popup ends-->
             <div class="mt-3">
-                {% if post.media %}
+            {% if post.media %}
                 {% if 'mp4' in post.media.url %}
                 <video src="{{post.media.url}}" type="mp4" controls ></video>
                 {% else %}
