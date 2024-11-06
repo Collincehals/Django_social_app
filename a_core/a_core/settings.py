@@ -31,10 +31,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 ENCRYPT_KEY = env('MESSAGES_ENCRYPT_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-if ENVIRONMENT == 'development':
-    DEBUG = True
-else:
-    DEBUG = False
+#if ENVIRONMENT == 'development':
+   # DEBUG = True
+#else:
+DEBUG = False
     
 ALLOWED_HOSTS = ['colltechsocial.onrender.com',
                  '127.0.0.1'

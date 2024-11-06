@@ -2,8 +2,5 @@
 /venv
 venv/
 .venv/
-static/
-media/
 node/
 __pycache__
-db.sqlite3
